@@ -6,7 +6,7 @@ param = sys.argv[1:]
 parser = argparse.ArgumentParser(description='arg')
 parser.add_argument('--host', '-ip', help= "host/ip para conexão", default='localhost')
 parser.add_argument('--port', '-p', type=int, help= "porta usada para a conexão", default=8082)
-parser.add_argument('--data_payload', '-dp', help= "A quantidade maxima de dados recebidos de uma vez",
+parser.add_argument('--data_payload', '-dp', type=int, help= "A quantidade maxima de dados recebidos de uma vez",
                     default='2048')
 args = parser.parse_args()
 
@@ -26,7 +26,7 @@ def client(host = args.host, port = args.port):
             sock.sendall(message.encode('utf-8')) 
             # Look for the response  
             data = sock.recv(args.data_payload)
-            print ("Received: %s" % data) 
+            print (data) 
         except socket.error as e: 
             print ("Socket error: %s" %str(e)) 
         except Exception as e: 
