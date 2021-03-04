@@ -7,9 +7,9 @@ param = sys.argv[1:]
 parser = argparse.ArgumentParser(description='arg')
 parser.add_argument('--host', '-ip',help= "host/ip para conexão", default='localhost')
 parser.add_argument('--port', '-p', type=int, help= "porta usada para a conexão", default=8082)
-parser.add_argument('--data_payload', '-dp',, type=int,help= "A quantidade maxima de dados recebidos de uma vez",
+parser.add_argument('--data_payload', '-dp', type=int,help= "A quantidade maxima de dados recebidos de uma vez",
                     default='2048')
-parser.add_argument('--listen_qtd', '-l',, type=int,help= "Numero maximo de conexões ativas.",
+parser.add_argument('--listen_qtd', '-l', type=int,help= "Numero maximo de conexões ativas.",
                     default='2048')
 args = parser.parse_args()
 
