@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import Flask
 from flask_restplus import Api, Resource 
 from src.server.instance import server

@@ -1,3 +1,4 @@
+# coding=utf-8
 import socket
 
 def client(host='25.11.202.228', port=5555): 
