@@ -1,7 +1,7 @@
+# coding=utf-8
 import socket
 import sys
 import argparse
-
 param = sys.argv[1:]
 parser = argparse.ArgumentParser(description='arg')
 parser.add_argument('--host', '-ip', help= "host/ip para conexão", default='localhost')
