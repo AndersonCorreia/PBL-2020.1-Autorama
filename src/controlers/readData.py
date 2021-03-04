@@ -16,7 +16,7 @@ class readData(Resource):
 
     def post(self, ):
         response = api.payload
-        autorama.dados = append(response)
+        autorama.dadosAPi = append(response)
         return response, 200
 
 autorama.save()
