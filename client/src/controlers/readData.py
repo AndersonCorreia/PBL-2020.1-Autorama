@@ -5,9 +5,6 @@ from src.server.instance import server
 
 app, api = server.app, server.api
 
-from autorama import Autorama
-
-autorama = Autorama()
 
 @api.route('/api')
 
@@ -19,5 +16,3 @@ class readData(Resource):
         response = api.payload
         autorama.dadosAPi = append(response)
         return response, 200
-
-autorama.save()

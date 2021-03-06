@@ -1,14 +1,22 @@
 # coding=utf-8
-'''
-from autorama import Autorama
-
-autorama = Autorama()
-
-print(autorama.dados)
-
-autorama.save()
-'''
 from src.server.instance import server
 from src.controlers.readData import *
+from socket.Client import Client
+import sys
+import argparse
 
-server.run()
+param = sys.argv[1:]
+parser = argparse.ArgumentParser(description='arg')
+parser.add_argument('--host', '-ip', help= "host/ip para conexão", default='172.16.1.0')
+parser.add_argument('--port', '-p', type=int, help= "porta usada para a conexão", default=202)
+parser.add_argument('--data_payload', '-dp', type=int, help= "A quantidade maxima de dados recebidos de uma vez",
+                    default='2048')
+args = parser.parse_args()
+
+Connection = Client(args.host, args.port, args.data_payload)
+
+Connection.request()#rota padrão devolve todos os dados do arquivo autorama.json
+Connection.request("/autorama/tags/read")#requisitando a leitura de uma tag
+Connection.request("/autorama/tags/last")#pegando ultima tag lida
+
+#server.run()
