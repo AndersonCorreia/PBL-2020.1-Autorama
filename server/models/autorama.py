@@ -9,3 +9,7 @@ class Autorama:
     
     def save(self):
         open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False,))
+
+    def setLastTag(tag):
+        self.dados["tags"]["last"] = tag
+        self.save()

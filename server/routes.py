@@ -10,10 +10,14 @@ def response(data):
         return json.dumps({'success': False, "response": {"erro": "O path e/ou method não foram informados"} })
 
 def redirecionamento( path, method, headers=[]):
-    if data['path'] == "autorama/all":
+    if data['path'] == "/autorama/all":
             if data['method'] == "GET":
                 return AutoramaController.getAll()
-            
-    if data['path'] == "autorama/tags/last":
+
+    if data['path'] == "/autorama/tags/read":
+        if data['method'] == "GET":
+                return AutoramaController.readTag()
+
+    if data['path'] == "/autorama/tags/last":
         if data['method'] == "GET":
                 return AutoramaController.getLastTag()

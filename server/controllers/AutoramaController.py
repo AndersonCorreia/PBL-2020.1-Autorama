@@ -1,6 +1,6 @@
 # coding=utf-8
-from models.autorama import Autorama
-
+from models.Autorama import Autorama
+import mercury.sensor
 class AutoramaController:
     
     @staticmethod
@@ -12,4 +12,8 @@ class AutoramaController:
     def getLastTag():
         autorama = Autorama()
         return autorama.dados['tags']['last']
+    
+    @staticmethod
+    def readTag():
+        return read()
     
