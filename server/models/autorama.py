@@ -1,8 +1,8 @@
 # coding=utf-8
 import json
-
+import os
 class Autorama:
-    def __init__(self, file="autorama.json"):
+    def __init__(self, file=os.path.dirname(os.path.realpath(__file__))+"/autorama.json"):
         self.fileName = file
         self.dados = json.loads(open(file, 'r').read() )
         self.carros = self.dados['carros']
