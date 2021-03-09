@@ -1,7 +1,7 @@
 # coding=utf-8
 # from server.instance import server
 # from controlers.readData import *
-from socket.Client import Client
+from socket_.Client import Client
 import sys
 import argparse
 
