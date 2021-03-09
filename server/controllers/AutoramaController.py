@@ -1,6 +1,6 @@
 # coding=utf-8
 from models.Autorama import Autorama
-import mercury.sensor
+import mercury_.sensor
 class AutoramaController:
     
     @staticmethod
