@@ -1,6 +1,6 @@
 # coding=utf-8
-from src.server.instance import server
-from src.controlers.readData import *
+# from server.instance import server
+# from controlers.readData import *
 from socket.Client import Client
 import sys
 import argparse
