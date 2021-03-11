@@ -21,7 +21,7 @@ def server(host = args.host, port = args.port, listen = args.listen_qtd):
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     # Bind the socket to the port
     server_address = (host, port)
-    print ("Starting up echo server  on %s port %s" % server_address)
+    print ("Starting server on %s port %s" % server_address)
     sock.bind(server_address)
     # Listen to clients, argument specifies the max no. of queued connections
     sock.listen(listen) 
@@ -30,7 +30,7 @@ def server(host = args.host, port = args.port, listen = args.listen_qtd):
         client, address = sock.accept() 
         data = client.recv(data_payload) 
         if data:
-            response = response(data)
+            response = route(data)
             client.send(response.encode('utf-8'))
         # end connection
         client.close()       

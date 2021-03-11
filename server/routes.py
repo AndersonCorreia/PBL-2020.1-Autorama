@@ -1,7 +1,8 @@
 # coding=utf-8
 from controllers.AutoramaController import AutoramaController
+import json
 
-def response(data):
+def route(data):
     data = json.loads(data)
     if data['path'] and data['method']:
         dados = redirecionamento(data['path'], data['method'], data['headers'])

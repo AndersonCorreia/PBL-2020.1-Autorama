@@ -1,5 +1,6 @@
 # coding=utf-8
 import socket
+import json
 
 class Client():
     
@@ -23,7 +24,7 @@ class Client():
             print ("Sending %s" % message) 
             sock.sendall(message.encode('utf-8')) 
             # Look for the response  
-            data = sock.recv(args.data_payload)
+            data = sock.recv(self.payload)
             print (data)
             return data
         except socket.error as e: 
