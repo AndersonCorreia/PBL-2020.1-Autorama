@@ -17,7 +17,7 @@ reader.set_read_plan([1], "GEN2", read_power=1500)
 def read():
     tags = reader.read()
     print(tags)
-    if( len(tags) )
+    if len(tags):
         autorama.setLastTag(tags[0])
         return tags[0]
     
@@ -26,7 +26,7 @@ def read():
 def readAll():
     tags = reader.read()
     print(tags)
-    if( len(tags) )
+    if len(tags):
         autorama.setLastTag(tags[-1])
         return tags
 
