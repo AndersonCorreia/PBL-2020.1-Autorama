@@ -2,7 +2,7 @@
 import socket 
 import sys
 import argparse
-import routes
+from routes import *
 
 parser = argparse.ArgumentParser(description='arg')
 parser.add_argument('--host', '-ip',help= "host/ip para conexão", default='172.16.1.0')
