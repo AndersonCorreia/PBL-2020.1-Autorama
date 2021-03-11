@@ -11,6 +11,8 @@ class AutoramaController:
     @staticmethod
     def getLastTag():
         autorama = Autorama()
+        print("ultima tag")
+        print(autorama.dados['tags']['last'])
         return autorama.dados['tags']['last']
     
     @staticmethod
