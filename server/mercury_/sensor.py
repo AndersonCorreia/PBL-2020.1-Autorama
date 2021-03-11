@@ -15,7 +15,7 @@ reader.set_region("EU3")
 reader.set_read_plan([1], "GEN2", read_power=1500)
 
 def read():
-    tags = reader.read()
+    tags = reader.read(2000)
     print(tags)
     if len(tags):
         autorama.setLastTag(tags[0])
@@ -24,7 +24,7 @@ def read():
     return "Nenhuma tag foi lida"
 
 def readAll():
-    tags = reader.read()
+    tags = reader.read(2000)
     print(tags)
     if len(tags):
         autorama.setLastTag(tags[-1])
