@@ -12,7 +12,7 @@ print(reader.get_model())
 print(reader.get_supported_regions())
 
 reader.set_region("EU3")
-reader.set_read_plan([1], "GEN2", read_power=1500)
+reader.set_read_plan([1], "GEN2", read_power=1100)
 
 def read():
     tags = reader.read(2000)
