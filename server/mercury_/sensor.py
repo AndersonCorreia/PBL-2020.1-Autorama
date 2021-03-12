@@ -15,7 +15,7 @@ def read():
     print(reader.get_supported_regions())
     reader.set_region("EU3")
     reader.set_read_plan([1], "GEN2", read_power=1100)
-    tags = reader.read(2000)
+    tags = reader.read()
     print(tags)
     if len(tags):
         autorama.setLastTag(tags[0])
@@ -26,7 +26,7 @@ def read():
 def readAll():
     reader.set_region("EU3")
     reader.set_read_plan([1], "GEN2", read_power=1100)
-    tags = reader.read(2000)
+    tags = reader.read()
     print(tags)
     if len(tags):
         autorama.setLastTag(tags[-1])
