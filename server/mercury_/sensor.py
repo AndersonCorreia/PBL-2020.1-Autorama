@@ -7,14 +7,14 @@ from models.Autorama import Autorama
 
 autorama = Autorama()
 
+reader = mercury.Reader("tmr:///dev/ttyUSB0", baudrate=115200)
+reader.set_region("NA2")
+reader.set_read_plan([1], "GEN2", read_power=1100)
 
 
 def read():
-    reader = mercury.Reader("tmr:///dev/ttyUSB0", baudrate=115200)
     print(reader.get_model())
     print(reader.get_supported_regions())
-    reader.set_region("EU3")
-    reader.set_read_plan([1], "GEN2", read_power=1100)
     tags = reader.read()
     print(tags)
     if len(tags):
@@ -24,8 +24,6 @@ def read():
     return "Nenhuma tag foi lida"
 
 def readAll():
-    reader.set_region("EU3")
-    reader.set_read_plan([1], "GEN2", read_power=1100)
     tags = reader.read()
     print(tags)
     if len(tags):
