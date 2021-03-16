@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block css %} <link rel="stylesheet" href="../css/config.css"> {% endblock %}
+
+{% block content %}
+    <h1>{% block title %} Tela de Configuração {% endblock %}</h1>
+    <div class="menu">
+        <button type="button" class="btn btn-outline-info" cadastraLeitor>Conexão com o leitor RFID</button>
+        <button type="button" class="btn btn-outline-info" cadastraCarro>Cadastrar carros</button>
+        <button type="button" class="btn btn-outline-info" cadastraEquipe>Cadastrar equipes</button>
+        <button type="button" class="btn btn-outline-info" cadastraPiloto>Cadastrar pilotos</button>
+        <button type="button" class="btn btn-outline-info" cadastraPista>Cadastrar pistas</button>
+        <button type="button" class="btn btn-outline-info" configPartida>Configurar partida</button>
+    </div>
+
+
+{% endblock %}
