@@ -1,5 +1,6 @@
 # coding=utf-8
 from models.Autorama import Autorama
+from models.Leitor import Leitor
 from mercury_.sensor import *
 class AutoramaController:
     
@@ -7,6 +8,11 @@ class AutoramaController:
     def getAll():
         autorama = Autorama()
         return autorama.dados
+
+    @staticmethod
+    def setConfigLeitor(dados):
+        leitor = Leitor()
+        leitor.save(dados)
     
     @staticmethod
     def getLastTag():

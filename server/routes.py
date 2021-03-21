@@ -11,9 +11,10 @@ def route(data):
         return json.dumps({'success': False, "response": {"erro": "O path e/ou method não foram informados"} })
 
 def redirecionamento(path, method, headers=[]):
-    if path == "/autorama/all":
-        if method == "GET":
-            return AutoramaController.getAll()
+    if path == "/config/leitor":
+        if method == "POST":
+            AutoramaController.setConfigLeitor(headers)
+            return ['success' = True]
 
     if path == "/autorama/tags/read":
         if method == "GET":
