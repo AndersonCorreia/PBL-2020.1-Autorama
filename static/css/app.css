@@ -1,0 +1,24 @@
+.content{
+    place-self: center center;
+}
+.content > div{
+    background: rgba(255,255,255,0.7);
+}
+.nav-menu {
+    height: min-content;
+}
+.btn-options {
+    display: grid;
+    padding-left: 5em !important;
+    padding-right: 5em !important;
+}
+
+.btn-options > .btn {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+body {
+    background-image: url('/static/img/background.jpg');
+    background-size: cover;
+    height: 90vh;
+}

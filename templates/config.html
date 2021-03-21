@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
-{% block css %} <link rel="stylesheet" href="../css/config.css"> {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="/static/css/config.css"> 
+{% endblock %}
 
 {% block content %}
-    <h1>{% block title %} Tela de Configuração {% endblock %}</h1>
-    <div class="menu">
-        <button type="button" class="btn btn-outline-info" cadastraLeitor>Conexão com o leitor RFID</button>
-        <button type="button" class="btn btn-outline-info" cadastraCarro>Cadastrar carros</button>
-        <button type="button" class="btn btn-outline-info" cadastraEquipe>Cadastrar equipes</button>
-        <button type="button" class="btn btn-outline-info" cadastraPiloto>Cadastrar pilotos</button>
-        <button type="button" class="btn btn-outline-info" cadastraPista>Cadastrar pistas</button>
-        <button type="button" class="btn btn-outline-info" configPartida>Configurar partida</button>
+    <h1 class="text-center mt-4">{% block title %}Configurações{% endblock %}</h1>
+    <div class="menu text-center text-white row my-4">
+        <div class="col-12 col-md-6 btn-options">
+            <a href="/" class="btn btn-primary" cadastraLeitor>Conexão com o leitor RFID</a>
+            <a class="btn btn-primary" cadastraPista>Cadastrar pistas</a>
+            <a class="btn btn-primary" configPartida>Configurar corrida</a>
+        </div>
+        <div class="col-12 col-md-6 btn-options">
+            <a class="btn btn-primary" cadastraCarro>Cadastrar carros</a>
+            <a class="btn btn-primary" cadastraEquipe>Cadastrar equipes</a>
+            <a class="btn btn-primary" cadastraPiloto>Cadastrar pilotos</a>
+        </div>
     </div>
-
-
 {% endblock %}

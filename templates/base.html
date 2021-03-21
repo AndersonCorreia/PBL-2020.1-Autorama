@@ -7,30 +7,33 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/app.css"> 
     {% block css %} {% endblock %}
 
     <title>{% block title %} {% endblock %}</title>
 
   </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
+  <body class="body m-0 row">
+    <nav class="navbar col-12 nav-menu font-weight-bold navbar-expand-md navbar-light bg-light">
         <a class="navbar-brand" href="{{ url_for('index')}}">Autorama</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item active">
+                <li class="nav-item active mx-3">
                     <a class="nav-link" href="{{ url_for('about')}}">Sobre</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item active mx-3">
                     <a class="nav-link" href="{{ url_for('config')}}">Configuração</a>
                 </li>
             </ul>
         </div>
     </nav>
-    <div class="container">
-        {% block content %} {% endblock %}
+    <div class="container content">
+        <div class="border my-4 col-md-10 col-lg-9 mx-auto border-secondary rounded">
+            {% block content %} {% endblock %}
+        </div>
     </div>
 
     <!-- Optional JavaScript -->
