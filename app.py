@@ -8,7 +8,11 @@ def index():
 
 @app.route('/configuração')
 def config():
-    return render_template('config.html')
+    return render_template('config/config.html')
+
+@app.route('/configuração/leitor')
+def configLeitor():
+    return render_template('config/leitor.html')
 
 @app.route('/sobre')
 def about():

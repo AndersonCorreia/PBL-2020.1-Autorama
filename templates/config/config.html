@@ -7,7 +7,7 @@
     <h1 class="text-center mt-4">{% block title %}Configurações{% endblock %}</h1>
     <div class="menu text-center text-white row my-4">
         <div class="col-12 col-md-6 btn-options">
-            <a href="/" class="btn btn-primary" cadastraLeitor>Conexão com o leitor RFID</a>
+            <a href="{{ url_for('configLeitor') }}" class="btn btn-primary" cadastraLeitor>Conexão com o leitor RFID</a>
             <a class="btn btn-primary" cadastraPista>Cadastrar pistas</a>
             <a class="btn btn-primary" configPartida>Configurar corrida</a>
         </div>
