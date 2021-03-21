@@ -14,7 +14,7 @@ def redirecionamento(path, method, headers=[]):
     if path == "/config/leitor":
         if method == "POST":
             AutoramaController.setConfigLeitor(headers)
-            return ['success' = True]
+            return {'success': True}
 
     if path == "/autorama/tags/read":
         if method == "GET":
