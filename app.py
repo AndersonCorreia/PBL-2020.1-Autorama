@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from models.Leitor import Leitor
+from models.Carro import Carro
 
 app = Flask(__name__)
 
@@ -21,9 +22,15 @@ def configLeitor():
         leitor.save(request.form)
         return render_template('config/leitor.html', leitor = leitor.dados, saved=True)
 
-@app.route('/configuração/carro')
+@app.route('/configuração/carro', methods=['GET', 'POST'])
 def configCarro():
-    return render_template('config/carro.html')
+    if (request.method == "GET"):
+        return render_template('config/carro.html')
+    if (request.method == "POST"):
+        carro = Carro()
+        carro.save(request.form)
+        return render_template('config/carro.html', carro = carro.dados, saved=True)
+
 
 @app.route('/sobre')
 def about():
