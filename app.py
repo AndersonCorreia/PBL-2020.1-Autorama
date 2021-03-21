@@ -14,6 +14,10 @@ def config():
 def configLeitor():
     return render_template('config/leitor.html')
 
+@app.route('/configuração/carro')
+def configCarro():
+    return render_template('config/carro.html')
+
 @app.route('/sobre')
 def about():
     return render_template('about.html')
