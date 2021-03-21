@@ -1,9 +1,9 @@
 {
-    "ip": "172.16.1.0",
-    "port": "2001",
+    "ip": "179.54.106.16",
+    "port": "2021",
     "serial": "tmr:///dev/ttyUSB0",
     "baudrate": "115200",
-    "region": "NAasa3",
+    "region": "NASA",
     "protocol": "GN2",
     "read_power": "1100",
     "antena": "1"

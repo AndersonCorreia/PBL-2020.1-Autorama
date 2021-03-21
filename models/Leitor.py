@@ -2,7 +2,7 @@
 # coding=utf-8
 import json
 import os
-from client.socket_ import Client
+from client.src.socket_.Client import Client
 
 class Leitor:
     def __init__(self, file=os.path.dirname(os.path.realpath(__file__))+"/leitor.json"):
@@ -16,4 +16,4 @@ class Leitor:
         connection.request('/config/leitor', "POST", self.dados)
     
     def getConnection(self):
-        return Client(self.dados['ip'], self.dados['port'], 2048)
+        return Client(self.dados['ip'], int(self.dados['port']), 2048)

@@ -2,7 +2,7 @@
 import socket
 import json
 
-class Client():
+class Client:
     
     def __init__(self, host, port, payload):
         self.host = host
