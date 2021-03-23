@@ -31,6 +31,15 @@ def configCarro():
         carro.save(request.form)
         return render_template('config/carro.html', carro = carro.dados, saved=True)
 
+@app.route('/configuração/pistas', methods=['GET', 'POST'])
+def configLeitor():
+    if (request.method == "GET"):
+        leitor = Leitor()
+        return render_template('config/leitor.html', leitor = leitor.dados.pista)
+    if (request.method == "POST"):
+        leitor = Leitor()
+        leitor.save(request.form)
+        return render_template('config/leitor.html', leitor = leitor.dados, saved=True)
 
 @app.route('/sobre')
 def about():

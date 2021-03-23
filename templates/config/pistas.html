@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="/static/css/config.css"> 
+{% endblock %}
+
+{% block content %}
+    <h2 class="text-center mt-4">{% block title %}Configurações do leitor{% endblock %}</h2>
+    {% if saved %}
+        <div class="alert my-3 w-75 alert-success mx-auto alert-dismissible fade show text-center" role="alert">
+            Configurações atualizadas com sucesso
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+    {% endif %}
+    <form method="POST" action="{{url_for('configLeitor')}}" url class="font-weight-bold mt-5 row">
+        <div class="form-group col-7 col-md-5 col-lg-4">
+            <label for="ip">IP</label>
+            <input required type="text" class="form-control" name="ip" id="ip" value="{{leitor['ip']}}" aria-describedby="ipHelp">
+            <small id="ipHelp" class="form-text">Ip de conexão com o leitor</small>
+        </div>
+        <div class="form-group col-5 col-md-4 col-lg-2">
+            <label for="port">Port</label>
+            <input required type="text" class="form-control" name="port" id="port" value="{{leitor['port']}}">
+            <small id="ipHelp" class="form-text">Porta para conexão</small>
+        </div>
+        <div class="form-group col-7 col-md-5 col-lg-4">
+            <label for="serial">Serial Port</label>
+            <input required type="text" class="form-control" name="serial" id="serial" value="{{leitor['serial']}}">
+            <small id="ipHelp" class="form-text">Porta serial da conexão</small>
+        </div>
+        <div class="form-group col-5 col-md-3 col-lg-2">
+            <label for="baudrate">Baud Rate</label>
+            <input required type="int" min="1" class="form-control" name="baudrate" id="baudrate" value="{{leitor['baudrate']}}">
+            <small id="ipHelp" class="form-text">Taxa de Baud</small>
+        </div>
+        <div class="form-group col-7 col-md-3 col-lg-2">
+            <label for="region">Região</label>
+            <input required type="text" class="form-control" name="region" id="region" value="{{leitor['region']}}">
+            <small id="ipHelp" class="form-text">Região da leitura</small>
+        </div>
+        <div class="form-group col-5 col-md-3 col-lg-2">
+            <label for="protocol">Protocolo</label>
+            <input required type="int" min="1" class="form-control" name="protocol" id="protocol" value="{{leitor['protocol']}}">
+            <small id="ipHelp" class="form-text">Protocolo de leitura</small>
+        </div>
+        <div class="form-group col-7 col-md-3 col-lg-2">
+            <label for="read_power">Potência</label>
+            <input required type="int" min="1" class="form-control" name="read_power" id="read_power" value="{{leitor['read_power']}}">
+            <small id="ipHelp" class="form-text">Potência da leitura</small>
+        </div>
+        <div class="form-group col-5 col-md-3 col-lg-3">
+            <label for="antena">Antena</label>
+            <input required type="text" class="form-control" name="antena" id="antena" value="{{leitor['antena']}}">
+            <small id="ipHelp" class="form-text">Antena usada para leitura</small>
+        </div>
+        <div class="form-group col d-flex">
+            <button type="submit" class="btn btn-primary align-self-center ml-auto mr-3">Salvar</button>
+        </div>
+    </form>
+{% endblock %}
