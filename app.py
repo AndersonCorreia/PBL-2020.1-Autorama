@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from models.Leitor import Leitor
 from models.Carro import Carro
+from models.Autorama import Autorama
 
 app = Flask(__name__)
 
@@ -31,15 +32,15 @@ def configCarro():
         carro.save(request.form)
         return render_template('config/carro.html', carro = carro.dados, saved=True)
 
-@app.route('/configuração/pistas', methods=['GET', 'POST'])
-def configLeitor():
+@app.route('/configuração/pistas/create', methods=['GET', 'POST'])
+def createCircuito():
     if (request.method == "GET"):
-        leitor = Leitor()
-        return render_template('config/leitor.html', leitor = leitor.dados.pista)
+        autorama = Autorama()
+        return render_template('config/pistas.html', autorama = autorama.dados)
     if (request.method == "POST"):
-        leitor = Leitor()
-        leitor.save(request.form)
-        return render_template('config/leitor.html', leitor = leitor.dados, saved=True)
+        autorama = Autorama()
+        autorama.addCircuito(request.form)
+        return redirect(url_for('configLeitor'))
 
 @app.route('/sobre')
 def about():
