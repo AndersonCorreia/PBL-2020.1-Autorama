@@ -19,7 +19,7 @@ def read():
     print(tags)
     if len(tags):
 #       autorama.setLastTag(tags[0])
-        return tags
+        return tags[0]['epc']
     
     return "Nenhuma tag foi lida"
 
