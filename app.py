@@ -26,7 +26,9 @@ def configLeitor():
 @app.route('/configuração/carro', methods=['GET', 'POST'])
 def configCarro():
     if (request.method == "GET"):
-        return render_template('config/carro.html')
+        carro = Carro()
+        tag = carro.getTag()
+        return render_template('config/carro.html', epc = tag)
     if (request.method == "POST"):
         carro = Carro()
         carro.save(request.form)

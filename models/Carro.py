@@ -12,8 +12,10 @@ class Carro:
     def save(self, dados):
         self.dados.append(dados)
         open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False,))
+        
+    def getTag(self):
         connection = self.getConnection()
-        dados = connection.request('/config/carro', 'POST', 'READ')
+        return connection.request('/configuração/carro', 'GET', '')
     
     def getConnection(self):
         file=os.path.dirname(os.path.realpath(__file__))+"/leitor.json"
