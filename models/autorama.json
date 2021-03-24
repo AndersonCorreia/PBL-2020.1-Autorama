@@ -36,24 +36,10 @@
             "recorde": "1:20:3280"
         },
         {
-            "nome": "teste",
+            "circuito_id": 2,
+            "nome": "TESTE",
             "pais": "brasil",
             "recorde": "0:00:000"
-        },
-        {
-            "nome": "as",
-            "pais": "asa",
-            "recorde": "sa"
-        },
-        {
-            "nome": "sdf",
-            "pais": "dsf",
-            "recorde": "0:00:00"
-        },
-        {
-            "nome": "sdf",
-            "pais": "dsf",
-            "recorde": "aasd"
         }
     ],
     "corrida": [
@@ -81,7 +67,7 @@
             ],
             "pilotos": [
                 {
-                    "piloto_id":2
+                    "piloto_id": 2
                 }
             ]
         }

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from models.Leitor import Leitor
 from models.Carro import Carro
 from models.Autorama import Autorama
@@ -20,7 +20,7 @@ def configLeitor():
         return render_template('config/leitor.html', leitor = leitor.dados)
     if (request.method == "POST"):
         leitor = Leitor()
-        leitor.save(request.form)
+        leitor.save(request.form.to_dict())
         return render_template('config/leitor.html', leitor = leitor.dados, saved=True)
 
 @app.route('/configuração/carro', methods=['GET', 'POST'])
@@ -31,7 +31,7 @@ def configCarro():
         return render_template('config/carro.html', epc = tag)
     if (request.method == "POST"):
         carro = Carro()
-        carro.save(request.form)
+        carro.save(request.form.to_dict())
         return render_template('config/carro.html', carro = carro.dados, saved=True)
 
 @app.route('/configuração/pistas/create', methods=['GET', 'POST'])
@@ -41,8 +41,8 @@ def createCircuito():
         return render_template('config/pistas.html', autorama = autorama.dados)
     if (request.method == "POST"):
         autorama = Autorama()
-        autorama.addCircuito(request.form)
-        return redirect(url_for('configLeitor'))
+        autorama.addCircuito(request.form.to_dict())
+        return redirect(url_for('config'))
 
 @app.route('/sobre')
 def about():
