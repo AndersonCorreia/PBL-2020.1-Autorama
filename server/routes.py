@@ -16,6 +16,10 @@ def redirecionamento(path, method, headers=[]):
             AutoramaController.setConfigLeitor(headers)
             return {'success': True}
 
+    if path == "/config/carro":
+        if method == "GET":
+            return AutoramaController.readTag()
+
     if path == "/autorama/tags/read":
         if method == "GET":
             return AutoramaController.readTag()

@@ -18,8 +18,8 @@ def read():
     tags = reader.read()
     print(tags)
     if len(tags):
-        autorama.setLastTag(tags[0])
-        return tags[0]
+#       autorama.setLastTag(tags[0])
+        return tags
     
     return "Nenhuma tag foi lida"
 
