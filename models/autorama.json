@@ -12,13 +12,14 @@
     "pilotos": [
         {
             "piloto_id": 1,
-            "Nome": "kiryu kazuma",
+            "nome": "kiryu kazuma",
             "carro_tag": "tag",
             "equipe": 1
         },
         {
             "piloto_id": 2,
-            "Nome": "pocket circuit fighter",
+            "nome": "pocket circuit fighter",
+            "carro_tag": "tag",
             "equipe": 1
         }
     ],
@@ -42,12 +43,12 @@
             "recorde": "0:00:000"
         }
     ],
-    "corrida": [
+    "corridas": [
         {
             "corrida_id": 1,
             "circuito_id": 1,
             "quantidadeDeVoltas": 12,
-            "qualificatoriaTempoLimite": "60:00:00",
+            "qualificatoriaDuracao": "60:00:00",
             "qualificatoria": [
                 {
                     "carro_id": 1,

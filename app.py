@@ -51,7 +51,7 @@ def createCorrida():
         return render_template('config/corridas.html', autorama = autorama.dados)
     if (request.method == "POST"):
         autorama = Autorama()
-        autorama.addCorrida(request.form.to_dict())
+        autorama.addCorrida(request.form.to_dict(), request.form.getlist('piloto_id[]'))
         return redirect(url_for('config'))
 
 @app.route('/sobre')
