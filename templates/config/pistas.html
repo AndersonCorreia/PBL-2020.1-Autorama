@@ -13,6 +13,7 @@
       </div>
     {% endif %}
     <form method="POST" action="{{url_for('createCircuito')}}" class="font-weight-bold mt-5 row">
+        <input type="hidden" name="circuito_id" value="{{circuito['circuito_id'] if circuito else 0}}">
         <div class="form-group col-12 col-md-7 col-lg-5">
             <label for="nome">Nome do Circuito</label>
             <input required type="text" class="form-control" name="nome" id="nome" value="{{ circuito['nome'] if circuito else ''}}">

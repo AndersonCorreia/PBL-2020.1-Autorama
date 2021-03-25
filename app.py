@@ -44,6 +44,16 @@ def createCircuito():
         autorama.addCircuito(request.form.to_dict())
         return redirect(url_for('config'))
 
+@app.route('/configuração/corrida/create', methods=['GET', 'POST'])
+def createCorrida():
+    if (request.method == "GET"):
+        autorama = Autorama()
+        return render_template('config/corridas.html', autorama = autorama.dados)
+    if (request.method == "POST"):
+        autorama = Autorama()
+        autorama.addCorrida(request.form.to_dict())
+        return redirect(url_for('config'))
+
 @app.route('/sobre')
 def about():
     return render_template('about.html')
