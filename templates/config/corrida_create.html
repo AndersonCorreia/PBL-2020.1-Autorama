@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="/static/css/config.css"> 
+{% endblock %}
+{% block content %}
+    <h2 class="text-center mt-4">{% block title %}Criar uma corrida{% endblock %}</h2>
+    {% if saved %}
+        <div class="alert my-3 w-75 alert-success mx-auto alert-dismissible fade show text-center" role="alert">
+            Configurações atualizadas com sucesso
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+    {% endif %}
+    <form method="POST" action="{{url_for('createCorrida')}}" class="font-weight-bold text-left m-3 row">
+        <input type="hidden" name="corrida_id" value="{{corrida['corrida_id'] if corrida else 0}}">
+        <div class="form-group col-5 col-md-4">
+            <label for="quantidadeDeVoltas">Qtd. de Voltas</label>
+            <input required type="number" required min="1" max="99" class="form-control" name="quantidadeDeVoltas" id="quantidadeDeVoltas" value="{{corrida['quantidadeDeVoltas'] if corrida else 1}}">
+            <small class="form-text">Total de voltas</small>
+        </div>
+        <div class="form-group col-7 col-md-5">
+            <label for="qualificatoriaDuracao">Duração da qualificatoria</label><input required type="text" class="form-control" name="qualificatoriaDuracao" id="qualificatoriaDuracao"
+            pattern="[0-9]{1,2}:[0-9]{2}:[0-9]{3}" title="tempo no formato: X:XX:XXX" value="{{corrida['qualificatoriaDuracao'] if corrida else '0:00:000'}}">
+            <small class="form-text">Tempo da sessão qualificatória</small>
+        </div>
+        <div class="form-group text-left col-12 bg-light border border-dark rounded p-0 row m-0 mb-3">
+            <span class="text-center col-12 border-bottom border-dark p-2 bg-white"><b>Escolha o circuito</b></span>
+            {% for circuito in autorama['circuitos'] %}
+            <div class="form-check col-12 col-md-6 pl-5 my-2">
+                <input class="form-check-input" type="radio" name="circuito_id" id="circuito_id-{{circuito['circuito_id']}}" value="{{circuito['circuito_id']}}">
+                <label class="form-check-label" for="circuito_id-{{circuito['circuito_id']}}">
+                    {{circuito['nome']}}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="form-group text-left col-12 bg-light border border-dark rounded p-0 row m-0 mb-3">
+            <span class="text-center col-12 border-bottom border-dark p-2 bg-white"><b>Escolha os pilotos</b></span>
+            {% for piloto in autorama['pilotos'] %}
+            <div class="form-check col-12 col-md-6 pl-5 my-2">
+                <input class="form-check-input" type="checkbox" name="piloto_id[]" id="piloto_id-{{piloto['piloto_id']}}" value="{{piloto['piloto_id']}}">
+                <label class="form-check-label" for="piloto_id-{{piloto['piloto_id']}}">
+                    {{piloto['nome']}}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="form-group col d-flex">
+            <button type="submit" class="btn btn-primary align-self-center ml-auto mr-3">Salvar</button>
+        </div>
+    </form>
+{% endblock %}
+    

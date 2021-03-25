@@ -71,6 +71,22 @@
                     "piloto_id": 2
                 }
             ]
+        },
+        {
+            "corrida_id": 2,
+            "quantidadeDeVoltas": 4,
+            "qualificatoriaDuracao": "5:00:000",
+            "circuito_id": 1,
+            "pilotos": [
+                {
+                    "piloto_id": 1
+                },
+                {
+                    "piloto_id": 2
+                }
+            ],
+            "qualificatoria": [],
+            "classificacao": []
         }
     ],
     "tags": {

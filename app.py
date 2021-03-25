@@ -34,25 +34,37 @@ def configCarro():
         carro.save(request.form.to_dict())
         return render_template('config/carro.html', carro = carro.dados, saved=True)
 
-@app.route('/configuração/pistas/create', methods=['GET', 'POST'])
+@app.route('/configuração/pista/create', methods=['GET', 'POST'])
 def createCircuito():
     if (request.method == "GET"):
         autorama = Autorama()
-        return render_template('config/pistas.html', autorama = autorama.dados)
+        return render_template('config/pista_create.html', autorama = autorama.dados)
     if (request.method == "POST"):
         autorama = Autorama()
         autorama.addCircuito(request.form.to_dict())
-        return redirect(url_for('config'))
+        return redirect(url_for('listCircuito'))
+
+@app.route('/configuração/pistas', methods=['GET'])
+def listCircuito():
+    if (request.method == "GET"):
+        autorama = Autorama()
+        return render_template('config/pistas.html', autorama = autorama.dados)
 
 @app.route('/configuração/corrida/create', methods=['GET', 'POST'])
 def createCorrida():
     if (request.method == "GET"):
         autorama = Autorama()
-        return render_template('config/corridas.html', autorama = autorama.dados)
+        return render_template('config/corrida_create.html', autorama = autorama.dados)
     if (request.method == "POST"):
         autorama = Autorama()
         autorama.addCorrida(request.form.to_dict(), request.form.getlist('piloto_id[]'))
-        return redirect(url_for('config'))
+        return redirect(url_for('listCorrida'))
+
+@app.route('/configuração/corridas', methods=['GET'])
+def listCorrida():
+    if (request.method == "GET"):
+        autorama = Autorama()
+        return render_template('config/corridas.html', autorama = autorama.dados)
 
 @app.route('/sobre')
 def about():
