@@ -17,11 +17,11 @@ def read():
     print(reader.get_supported_regions())
     tags = reader.read(1000)
     if len(tags):
-        tag = {"EPC": {"tag": tags[0].epc.decode("utf-8") , "timestamp": tags[0].epc.decode("utf-8")} , 'success': True }
+        tag = {"dados": {"tag": tags[0].epc.decode("utf-8") , "timestamp": tags[0].epc.decode("utf-8")} , 'success': True }
         autorama.setLastTag(tag)
         return tag
     
-    return {"EPC": {"tag": '', "timestamp": ''}, 'success': False }
+    return {"dados": {"tag": '', "timestamp": ''}, 'success': False }
 
 def readAll():
     tags = reader.read()
