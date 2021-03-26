@@ -8,8 +8,8 @@ class Autorama:
         self.carros = self.dados['carros']
     
     def save(self):
-        json = json.dumps(self.dados, indent=4, ensure_ascii=False, skipkeys=False)
-        open(self.fileName, 'w').write(json)
+        dados = json.dumps(self.dados, indent=4, ensure_ascii=False, skipkeys=False)
+        open(self.fileName, 'w').write(dados)
 
     def setLastTag(self, tag):
         self.dados["tags"]["last"] = tag
