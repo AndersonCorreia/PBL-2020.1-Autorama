@@ -20,7 +20,8 @@ class Client:
         try:
             sock.connect(server_address) 
         except ConnectionRefusedError as error:
-            raise RuntimeError('Conexão recusada') from error
+            return {"success": False}
+            # raise RuntimeError('Conexão recusada') from error
 
         try: 
             # Send data 
@@ -28,13 +29,15 @@ class Client:
             print ("Sending %s" % message) 
             sock.sendall(message.encode('utf-8')) 
             # Look for the response  
-            data = sock.recv(self.payload)
+            data = json.loads( sock.recv(self.payload) )
             print (data)
             return data
         except socket.error as e: 
             print ("Socket error: %s" %str(e)) 
+            return {"success": False}
         except Exception as e: 
             print ("Other exception: %s" %str(e)) 
+            return {"success": False}
         finally: 
             print ("Closing connection to the server") 
             sock.close()

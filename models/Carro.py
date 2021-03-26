@@ -11,12 +11,12 @@ class Carro:
     
     def save(self, dados):
         self.dados["carros"].append(dados)
-        open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False,))
+        open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False))
         
     def getTag(self):
         connection = self.getConnection()
         try:
-            return connection.request('/configuração/carro', 'GET', '')
+            return connection.request('/configuração/carro', 'GET', '')['response']
         except RuntimeError as error:
             return 0
     

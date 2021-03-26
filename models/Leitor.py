@@ -14,6 +14,11 @@ class Leitor:
         open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False,))
         connection = self.getConnection()
         connection.request('/config/leitor', "POST", self.dados)
+
+    def testConnection(self):
+        open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False,))
+        connection = self.getConnection()
+        return connection.request('/test', "GET")
     
     def getConnection(self):
         return Client(self.dados['ip'], int(self.dados['port']), 2048)

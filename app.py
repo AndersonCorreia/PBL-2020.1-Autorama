@@ -9,6 +9,13 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/teste')
+def test():
+    leitor = Leitor()
+    success = leitor.testConnection()['success']
+    error = not success
+    return render_template('index.html', success=success, error=error)
+
 @app.route('/configuração')
 def config():
     return render_template('config/config.html')
