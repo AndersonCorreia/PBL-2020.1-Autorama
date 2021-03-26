@@ -16,12 +16,12 @@ def read():
     print(reader.get_model())
     print(reader.get_supported_regions())
     tags = reader.read()
-    epcs = reader.read(lambda t: print(tag.epc, tag.antenna, tag.read_count, tag.rssi, datetime.fromtimestamp(tag.timestamp)))
+    epcs = list(map(lambda tag: tag, reader.read()))
     print(tags)
-    print(epcs)
+    print(type(epcs))
     if len(tags):
 #       autorama.setLastTag(tags[0])
-        return tags
+        return epcs[0]
     
     return "Nenhuma tag foi lida"
 
