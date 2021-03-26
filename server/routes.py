@@ -6,7 +6,7 @@ def route(data):
     data = json.loads(data)
     if data['path'] and data['method']:
         dados = redirecionamento(data['path'], data['method'], data['headers'])
-        return json.dumps({'success': dados['success'], "response": dados})
+        return json.dumps({'success': dados['success'], "response": dados['EPC']})
     else:
         return json.dumps({'success': False, "response": {"erro": "O path e/ou method não foram informados"} })
 
