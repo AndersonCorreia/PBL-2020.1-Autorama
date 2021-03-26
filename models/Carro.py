@@ -5,17 +5,20 @@ import os
 from client.src.socket_.Client import Client
 
 class Carro:
-    def __init__(self, file=os.path.dirname(os.path.realpath(__file__))+"/carro.json"):
+    def __init__(self, file=os.path.dirname(os.path.realpath(__file__))+"/autorama.json"):
         self.fileName = file
         self.dados = json.loads(open(file, 'r').read() )
     
     def save(self, dados):
-        self.dados.append(dados)
+        self.dados["carros"].append(dados)
         open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False,))
         
     def getTag(self):
         connection = self.getConnection()
-        return connection.request('/configuração/carro', 'GET', '')
+        try:
+            return connection.request('/configuração/carro', 'GET', '')
+        except RuntimeError as error:
+            return 0
     
     def getConnection(self):
         file=os.path.dirname(os.path.realpath(__file__))+"/leitor.json"

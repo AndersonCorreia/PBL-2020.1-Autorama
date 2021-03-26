@@ -17,7 +17,11 @@ class Client:
         print ("Connecting to %s port %s" % server_address) 
         # Send data 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-        sock.connect(server_address) 
+        try:
+            sock.connect(server_address) 
+        except ConnectionRefusedError as error:
+            raise RuntimeError('Conexão recusada') from error
+
         try: 
             # Send data 
             message = json.dumps({"path": path, "method": method, "headers": headers })

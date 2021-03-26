@@ -32,7 +32,7 @@ def configCarro():
     if (request.method == "POST"):
         carro = Carro()
         carro.save(request.form.to_dict())
-        return render_template('config/carro.html', carro = carro.dados, saved=True)
+        return render_template('config/carro.html', saved=True)
 
 @app.route('/configuração/pista/create', methods=['GET', 'POST'])
 def createCircuito():
