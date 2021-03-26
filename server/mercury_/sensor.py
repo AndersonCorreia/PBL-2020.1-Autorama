@@ -17,7 +17,7 @@ def read():
     print(reader.get_supported_regions())
     tags = reader.read(1000)
     if len(tags):
-        tag = {"tag": tags[0].epc, "timestamp": tags[0].epc, 'success': True }
+        tag = {"tag": tags[0].epc.decode("utf-8") , "timestamp": tags[0].epc.decode("utf-8") , 'success': True }
         autorama.setLastTag(tag)
         return tag
     
