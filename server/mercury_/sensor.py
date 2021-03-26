@@ -21,7 +21,7 @@ def read():
         autorama.setLastTag(tag)
         return tag
     
-    return {"EPC": {"tag": '', "timestamp": ''}, 'success': False } }
+    return {"EPC": {"tag": '', "timestamp": ''}, 'success': False }
 
 def readAll():
     tags = reader.read()
