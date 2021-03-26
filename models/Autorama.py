@@ -29,3 +29,13 @@ class Autorama:
             corrida.pop('piloto_id[]', '')
             self.dados['corridas'].append(corrida)
             self.save()
+
+    def addPiloto(self, piloto):
+        piloto['piloto_id'] = int(piloto['piloto_id'])
+        if piloto['piloto_id'] == 0:
+            piloto['carro_id'] = int(piloto['carro_id'])
+            piloto['equipe_id'] = int(piloto['equipe_id'])
+            piloto['piloto_id'] = self.dados['pilotos'][-1]['piloto_id'] + 1 if len(self.dados['pilotos']) > 0 else 1
+            piloto['ativo']=True
+            self.dados['pilotos'].append(piloto)
+            self.save()

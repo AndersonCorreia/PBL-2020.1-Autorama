@@ -5,22 +5,34 @@
     },
     "carros": [
         {
-            "tag": "tag lida pelo sensor rfid",
-            "modelo": "um nome para o carro"
+            "epc": "123",
+            "modelo": "a",
+            "cor": "azul",
+            "marca": "b",
+            "num": "1",
+            "piloto": "",
+            "equipe": ""
+        },
+        {
+            "epc": "456",
+            "modelo": "c",
+            "cor": "vermelho",
+            "marca": "d",
+            "num": "2",
+            "piloto": "",
+            "equipe": ""
         }
     ],
     "pilotos": [
         {
             "piloto_id": 1,
-            "nome": "kiryu kazuma",
-            "carro_tag": "tag",
-            "equipe": 1
-        },
-        {
-            "piloto_id": 2,
-            "nome": "pocket circuit fighter",
-            "carro_tag": "tag",
-            "equipe": 1
+            "nome": "João",
+            "apelido": "da neve",
+            "nacionalidade": "Winterfell",
+            "nascimento": "00/00/0000",
+            "carro_id": 0,
+            "equipe_id": 1,
+            "ativo": true
         }
     ],
     "equipes": [
@@ -76,6 +88,22 @@
             "corrida_id": 2,
             "quantidadeDeVoltas": 4,
             "qualificatoriaDuracao": "5:00:000",
+            "circuito_id": 1,
+            "pilotos": [
+                {
+                    "piloto_id": 1
+                },
+                {
+                    "piloto_id": 2
+                }
+            ],
+            "qualificatoria": [],
+            "classificacao": []
+        },
+        {
+            "corrida_id": 3,
+            "quantidadeDeVoltas": 1,
+            "qualificatoriaDuracao": "0:00:000",
             "circuito_id": 1,
             "pilotos": [
                 {

@@ -66,6 +66,22 @@ def listCorrida():
         autorama = Autorama()
         return render_template('config/corridas.html', autorama = autorama.dados)
 
+@app.route('/configuração/piloto/cadastrar', methods=['GET', 'POST'])
+def createPiloto():
+    if (request.method == "GET"):
+        autorama = Autorama()
+        return render_template('config/piloto_create.html', autorama = autorama.dados)
+    if (request.method == "POST"):
+        autorama = Autorama()
+        autorama.addPiloto(request.form.to_dict())
+        return redirect(url_for('listPilotos'))
+
+@app.route('/configuração/piloto', methods=['GET'])
+def listPilotos():
+    if (request.method == "GET"):
+        autorama = Autorama()
+        return render_template('config/piloto.html', autorama = autorama.dados)
+
 @app.route('/sobre')
 def about():
     return render_template('about.html')
