@@ -16,7 +16,9 @@ def read():
     print(reader.get_model())
     print(reader.get_supported_regions())
     tags = reader.read()
+    epcs = list(map(lambda t: t.epc, reader.read()))
     print(tags)
+    print(epcs)
     if len(tags):
 #       autorama.setLastTag(tags[0])
         return tags[0]['epc']
