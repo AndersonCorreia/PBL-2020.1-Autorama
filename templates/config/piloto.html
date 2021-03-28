@@ -9,24 +9,26 @@
           <tr>
             <th scope="col-2">#</th>
             <th scope="col-4">Nome</th>
+            <th scope="col-4">Apelido</th>
             <th scope="col-2">Nacionalidade</th>
             <th scope="col-4">Carro</th>
             <th scope="col-4">Equipe</th>
             <th scope="col-4">Em atividade</th>
           </tr>
         </thead>
-        <tbody>
         {% for piloto in autorama['pilotos'] %}
+        <tbody>
             <tr>
                 <th scope="row">{{piloto['piloto_id']}}</th>
                 <td>{{piloto['nome']}}</td>
+                <td>{{piloto['apelido']}}</td>
                 <td>{{piloto['nacionalidade']}}</td>
                 <td>{{piloto['carro_id']}}</td>
                 <td>{{piloto['equipe_id']}}</td>
                 <td>{{"Sim" if piloto['ativo'] else "Não"}}</td>
             </tr>
-        {% endfor %}
         </tbody>
+        {% endfor %}
         </table>
         <div class="form-group col d-flex">
             <a href="{{url_for('createPiloto')}}" type="submit" class="btn btn-primary align-self-center ml-auto mr-3">Adicionar Piloto</a>

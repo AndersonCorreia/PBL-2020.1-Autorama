@@ -35,7 +35,7 @@ def configCarro():
     if (request.method == "GET"):
         carro = Carro()
         tag = carro.getTag()
-        return render_template('config/carro.html', epc = tag)
+        return render_template('config/carro.html', EPC = tag['tag'])
     if (request.method == "POST"):
         carro = Carro()
         carro.save(request.form.to_dict())

@@ -5,19 +5,19 @@
     },
     "carros": [
         {
-            "epc": "123",
-            "modelo": "a",
+            "epc": "E20000172211012518905484",
+            "modelo": "A",
             "cor": "azul",
-            "marca": "b",
+            "marca": "B",
             "num": "1",
             "piloto": "",
             "equipe": ""
         },
         {
-            "epc": "456",
-            "modelo": "c",
+            "epc": "E20000172211012518905484",
+            "modelo": "C",
             "cor": "vermelho",
-            "marca": "d",
+            "marca": "D",
             "num": "2",
             "piloto": "",
             "equipe": ""
@@ -26,11 +26,21 @@
     "pilotos": [
         {
             "piloto_id": 1,
-            "nome": "João",
-            "apelido": "da neve",
-            "nacionalidade": "Winterfell",
+            "nome": "Mariana",
+            "apelido": "msls",
+            "nacionalidade": "Brasil",
             "nascimento": "00/00/0000",
-            "carro_id": 0,
+            "carro_id": 1,
+            "equipe_id": 1,
+            "ativo": true
+        },
+        {
+            "piloto_id": 2,
+            "nome": "Anderson",
+            "apelido": "kurosaki",
+            "nacionalidade": "Brasil",
+            "nascimento": "00/00/0000",
+            "carro_id": 2,
             "equipe_id": 1,
             "ativo": true
         }
