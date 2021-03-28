@@ -41,6 +41,16 @@ def configCarro():
         carro.save(request.form.to_dict())
         return render_template('config/carro.html', saved=True)
 
+@app.route('/configuração/equipe', methods=['GET', 'POST'])
+def configEquipe():
+    if (request.method == "GET"):
+        autorama = Autorama()
+        return render_template('config/equipe.html')
+    if (request.method == "POST"):
+        autorama = Autorama()
+        autorama.addEquipe(request.form.to_dict())
+        return render_template('config/equipe.html', saved=True)
+
 @app.route('/configuração/pista/create', methods=['GET', 'POST'])
 def createCircuito():
     if (request.method == "GET"):

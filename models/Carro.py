@@ -10,6 +10,8 @@ class Carro:
         self.dados = json.loads(open(file, 'r').read() )
     
     def save(self, dados):
+        dados['carro_id'] = int(dados['carro_id'])
+        dados['carro_id'] = self.dados['carros'][-1]['carro_id'] + 1 if len(self.dados['carros']) > 0 else 1
         self.dados["carros"].append(dados)
         open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False))
         

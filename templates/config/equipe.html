@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="/static/css/config.css"> 
+{% endblock %}
+
+{% block content %}
+    <h2 class="text-center mt-4">{% block title %}Cadastrar Equipe{% endblock %}</h2>
+    {% if saved %}
+        <div class="alert my-3 w-75 alert-success mx-auto alert-dismissible fade show text-center" role="alert">
+            Configurações atualizadas com sucesso
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+    {% endif %}
+    <form method="POST" action="{{url_for('configEquipe')}}" class="font-weight-bold mt-3 row">
+        <input type="hidden" name="equipe_id" value="{{equipe['equipe_id'] if equipe else 0}}">
+        <div class="form-group col-7 col-md-5">
+            <label for="nome">Nome</label>
+            <input required type="text" class="form-control" name="nome" id="nome" value="{{equipe['nome'] if equipe else ''}}">
+            <small class="form-text">Nome da equipe</small>
+        </div>
+        <div class="form-group col-5 col-md-4">
+            <label for="apelido">Apelido</label>
+            <input required type="text" class="form-control" name="apelido" id="apelido" value="{{equipe['apelido'] if equipe else ''}}">
+            <small class="form-text">Apelido da equipe</small>
+        </div>
+        <div class="form-group col-7 col-md-5">
+            <label for="nacionalidade">Nacionalidade</label>
+            <input required type="text" class="form-control" name="nacionalidade" id="nacionalidade" value="{{equipe['nacionalidade'] if equipe else ''}}">
+            <small class="form-text">Nacionalidade (bandeira) da equipe</small>
+        </div>
+        <div class="form-group col-5 col-md-4">
+            <label for="nacionalidade">Ano</label>
+            <input required type="text" class="form-control" name="ano" id="ano" value="{{equipe['ano'] if equipe else '00/00/0000'}}">
+            <small class="form-text">Ano que a equipe foi criada</small>
+        </div>
+        <div class="form-group col d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary align-self-end mr-5">Salvar</button>
+        </div>
+    </form>
+{% endblock %}

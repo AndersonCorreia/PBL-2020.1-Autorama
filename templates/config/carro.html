@@ -14,9 +14,10 @@
       </div>
     {% endif %}
     <form method="POST" action="{{url_for('configCarro')}}" class="font-weight-bold mt-3 row">
+        <input type="hidden" name="carro_id" value="{{carro['carro_id'] if carro else 0}}">
         <div class="form-group col-5 col-md-3 col-lg-3">
             <label for="epc">EPC</label>
-            <input type="text" class="form-control" name="epc" id="epc" value="{{EPC}}">
+            <input required type="text" class="form-control" name="epc" id="epc" value="{{EPC}}">
             <small class="form-text">EPC da TAG lida no sensor RFID</small>
         </div>
         <div class="form-group col-7 col-md-3 col-lg-3">
@@ -38,16 +39,6 @@
             <label for="num">Número</label>
             <input required type="text" class="form-control" name="num" id="num">
             <small class="form-text">Número do carro</small>
-        </div>
-        <div class="form-group col-7 col-md-4 col-lg-4">
-            <label for="piloto">Piloto</label>
-            <input type="text" class="form-control" name="piloto" id="piloto">
-            <small class="form-text">Piloto do carro (caso já possua)</small>
-        </div>
-        <div class="form-group col-5 col-md-4 col-lg-4">
-            <label for="equipe">Equipe</label>
-            <input type="text" class="form-control" name="equipe" id="equipe">
-            <small class="form-text">Equipe do carro (caso já possua)</small>
         </div>
         <div class="form-group col d-flex justify-content-end">
             <button type="submit" class="btn btn-primary align-self-center">Salvar</button>

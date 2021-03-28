@@ -39,3 +39,11 @@ class Autorama:
             piloto['ativo']=True
             self.dados['pilotos'].append(piloto)
             self.save()
+
+    def addEquipe(self, equipe):
+        equipe['equipe_id'] = int(equipe['equipe_id'])
+        if equipe['equipe_id'] == 0:
+            equipe['equipe_id'] = self.dados['equipes'][-1]['equipe_id'] + 1 if len(self.dados['equipes']) > 0 else 1
+            equipe['pontos'] = 0
+            self.dados['equipes'].append(equipe)
+            self.save()
