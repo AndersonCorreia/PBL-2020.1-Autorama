@@ -13,17 +13,17 @@
             <th scope="col-4">Duração da qualificatória</th>
           </tr>
         </thead>
-        <tbody>
         {% for corrida in autorama['corridas'] %}
+        <tbody>
             <tr>
                 <th scope="row">{{corrida['corrida_id']}}</th>
                 <td>{{corrida['circuito_id']}}</td>
                 <td>{{corrida['quantidadeDeVoltas']}}</td>
                 <td>{{corrida['qualificatoriaDuracao']}}</td>
             </tr>
-        {% endfor %}
         </tbody>
-        </table>
+        {% endfor %}
+    </table>
         <div class="form-group col d-flex">
             <a href="{{url_for('createCorrida')}}" type="submit" class="btn btn-primary align-self-center ml-auto mr-3">Criar corrida</a>
         </div>
