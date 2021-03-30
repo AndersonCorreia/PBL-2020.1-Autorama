@@ -13,6 +13,21 @@
             </button>
       </div>
     {% endif %}
+    {% if success %}
+        <div class="alert my-3 w-75 alert-success mx-auto alert-dismissible fade show text-center" role="alert">
+            Tag do carro lida com sucesso.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% else %}
+        <div class="alert my-3 w-75 alert-danger mx-auto alert-dismissible fade show text-center" role="alert">
+            Não foi possível ler a tag do carro.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
     <form method="POST" action="{{url_for('configCarro')}}" class="font-weight-bold mt-3 row">
         <input type="hidden" name="carro_id" value="{{carro['carro_id'] if carro else 0}}">
         <div class="form-group col-5 col-md-3 col-lg-3">

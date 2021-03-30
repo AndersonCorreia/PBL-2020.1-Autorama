@@ -17,10 +17,7 @@ class Carro:
         
     def getTag(self):
         connection = self.getConnection()
-        try:
-            return connection.request('/configuração/carro', 'GET', '')['response']
-        except RuntimeError as error:
-            return 0
+        return connection.request('/configuração/carro', 'GET', '')
     
     def getConnection(self):
         file=os.path.dirname(os.path.realpath(__file__))+"/leitor.json"

@@ -34,8 +34,12 @@ def configLeitor():
 def configCarro():
     if (request.method == "GET"):
         carro = Carro()
-        tag = carro.getTag()
-        return render_template('config/carro.html', EPC = tag['tag'])
+        dado = carro.getTag()
+        if dado['success']:
+            tag = dado['response']['tag'] 
+        else:
+            tag = 0
+        return render_template('config/carro.html', success = dado['success'], EPC = tag)
     if (request.method == "POST"):
         carro = Carro()
         carro.save(request.form.to_dict())
