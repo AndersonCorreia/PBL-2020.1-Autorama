@@ -50,7 +50,7 @@
             "equipe_id": 1,
             "nome": "Yakuza Fighters",
             "apelido": "",
-            "nacionalidade": "",
+            "nacionalidade": "Japão",
             "ano": "00/00/0000",
             "pontos": 0
         },
@@ -90,6 +90,8 @@
                     "voltas": 25
                 }
             ],
+            "qualificatoriaCompleta": false,
+            "corridaCompleta": false,
             "classificacao": [
                 {
                     "carro_id": 1,
@@ -125,5 +127,6 @@
     ],
     "tags": {
         "last": {}
-    }
+    },
+    "corrida_ativa": 1
 }

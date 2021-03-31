@@ -81,6 +81,13 @@ def createCorrida():
         autorama.addCorrida(request.form.to_dict(), request.form.getlist('piloto_id[]'))
         return redirect(url_for('listCorrida'))
 
+@app.route('/configuração/corrida/ativa', methods=['POST'])
+def setCorridaAtiva():
+    if (request.method == "POST"):
+        autorama = Autorama()
+        autorama.setCorridaAtiva(request.form.to_dict())
+        return redirect(url_for('listCorrida'))
+
 @app.route('/configuração/corridas', methods=['GET'])
 def listCorrida():
     if (request.method == "GET"):

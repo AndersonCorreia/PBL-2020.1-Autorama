@@ -7,10 +7,12 @@
     <table class="table table-striped table-responsive-md table-light col-12 p-0 m-0 my-3">
         <thead  class="thead-dark">
           <tr>
-            <th scope="col-2">#</th>
-            <th scope="col-4">Circuito</th>
+            <th scope="col-1">#</th>
+            <th scope="col-3">Circuito</th>
             <th scope="col-2">Qtd. Voltas</th>
-            <th scope="col-4">Duração da qualificatória</th>
+            <th scope="col-2">Duração da Qualificatória</th>
+            <th scope="col-2">Qualificatória</th>
+            <th scope="col-2">Corrida</th>
           </tr>
         </thead>
         {% for corrida in autorama['corridas'] %}
@@ -20,13 +22,37 @@
                 <td>{{corrida['circuito_id']}}</td>
                 <td>{{corrida['quantidadeDeVoltas']}}</td>
                 <td>{{corrida['qualificatoriaDuracao']}}</td>
+                <td>
+                    {%if not corrida['qualificatoriaCompleta'] %}
+                        Não ocorreu
+                    {% else %}
+                        <a class="btn-sm btn-info text-white m-2">Resultado</a>
+                    {% endif %}
+                </td>
+                <td>
+                    {%if not corrida['corridaCompleta'] %}
+                        Não ocorreu
+                    {% else %}
+                        <a class="btn-sm btn-success text-white m-2">Resultado</a>
+                    {% endif %}
+                </td>
             </tr>
         </tbody>
         {% endfor %}
     </table>
-        <div class="form-group col d-flex">
-            <a href="{{url_for('createCorrida')}}" type="submit" class="btn btn-primary align-self-center ml-auto mr-3">Criar corrida</a>
-        </div>
+    <div class="form-group col-12 d-flex">
+        <form action="{{url_for('setCorridaAtiva')}}" method="POST" class="row mr-auto">
+            <h4 class="align-self-center"> Corrida Ativa: </h4>
+            <select class="m-3 pb-1 align-self-center"  name="corrida_ativa">
+                {% for corrida in autorama['corridas'] %}
+                    <option value="{{corrida['corrida_id']}}" {% if (corrida['corrida_id'] == autorama['corrida_ativa']) %} selected {% endif %}>
+                        {{corrida['corrida_id']}} - {{corrida['circuito_id']}} - {{corrida['quantidadeDeVoltas']}} Voltas
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-sm btn-success align-self-center m-0">Selecionar</button>
+        </form>
+        <a href="{{url_for('createCorrida')}}" type="submit" class="btn btn-sm btn-primary align-self-center ml-auto mr-3">Criar corrida</a>
     </div>
 {% endblock %}
     

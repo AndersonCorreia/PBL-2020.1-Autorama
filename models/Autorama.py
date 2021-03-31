@@ -29,6 +29,10 @@ class Autorama:
             corrida.pop('piloto_id[]', '')
             self.dados['corridas'].append(corrida)
             self.save()
+    
+    def setCorridaAtiva(self, dados):
+        self.dados['corrida_ativa'] = int(dados['corrida_ativa'])
+        self.save()
 
     def addPiloto(self, piloto):
         piloto['piloto_id'] = int(piloto['piloto_id'])
