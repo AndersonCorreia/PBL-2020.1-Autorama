@@ -2,6 +2,13 @@
 
 {% block content %}
     <h2 class="text-center m-4">{% block title %}Autorama{% endblock %}</h2>
+    {% if ativo %}
+        <ul class="list-group">
+            <li class="list-group-item">Circuito: {{circuito['nome']}}</li>
+            <li class="list-group-item">Recorde: {{circuito['recorde']}}</li>
+        </ul>
+    {% endif %}
+
     {% if success %}
         <div class="alert my-3 w-75 alert-success mx-auto alert-dismissible fade show text-center" role="alert">
             Conexão com leitor efetuada com sucesso

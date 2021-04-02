@@ -34,6 +34,16 @@ class Autorama:
         self.dados['corrida_ativa'] = int(dados['corrida_ativa'])
         self.save()
 
+    def getCorridaAtual(self):
+        for corrida in self.dados['corridas']:
+            if corrida['corrida_id'] == self.dados['corrida_ativa']:
+                return corrida
+
+    def getPistaAtual(self, pista_id):
+        for pista in self.dados['circuitos']:
+            if pista['circuito_id'] == pista_id:
+                return pista
+
     def addPiloto(self, piloto):
         piloto['piloto_id'] = int(piloto['piloto_id'])
         if piloto['piloto_id'] == 0:

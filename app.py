@@ -7,7 +7,12 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    autorama = Autorama()
+    if autorama.dados['corrida_ativa'] > 0:
+        corrida = autorama.getCorridaAtual()
+        return render_template('index.html', ativo=True, corrida = corrida, circuito = autorama.getPistaAtual(corrida['circuito_id']))
+    
+    return render_template('index.html', ativo=False)
 
 @app.route('/teste')
 def test():
