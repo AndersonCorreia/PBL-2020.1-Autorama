@@ -1,6 +1,7 @@
 # coding=utf-8
 from controllers.AutoramaController import AutoramaController
 import json
+from models import Botão
 
 def route(data):
     data = json.loads(data)
@@ -31,3 +32,7 @@ def redirecionamento(path, method, headers=[]):
     if path == "/autorama/tags/last":
         if method == "GET":
             return AutoramaController.getLastTag()
+    
+    if path == "/":
+        if method == "GET":
+            return Botão.button()
