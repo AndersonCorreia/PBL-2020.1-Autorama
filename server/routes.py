@@ -35,4 +35,5 @@ def redirecionamento(path, method, headers=[]):
     
     if path == "/":
         if method == "GET":
-            return Botão.button()
+            Botão.button()
+            return {'success': True, 'dados': ''}
