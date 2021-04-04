@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from models.Leitor import Leitor
 from models.Carro import Carro
+from models.Corrida import Corrida
 from models.Autorama import Autorama
 
 app = Flask(__name__)
@@ -122,6 +123,12 @@ def listPilotos():
     if (request.method == "GET"):
         autorama = Autorama()
         return render_template('config/piloto.html', autorama = autorama.dados)
+
+@app.route('/qualificatoria', methods=['GET'])
+def qualificatoria():
+    if (request.method == "GET"):
+        corrida = Corrida(request.get('corrida_id'))
+        corrida.qualificatoria()
 
 @app.route('/sobre')
 def about():
