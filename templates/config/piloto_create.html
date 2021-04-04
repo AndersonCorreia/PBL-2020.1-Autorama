@@ -51,14 +51,28 @@
                 <tbody>
                     <tr>
                         <th scope="row">
-                            <input class="form-input" type="radio" name="carro_id" id="{{carro['num']}}" value="{{carro['num'] if carro else 0}}">
+                            <input class="form-input" type="radio" name="carro_id" id="carro-{{carro['carro_id']}}" value="{{carro['num'] if carro else 0}}">
                         </th>
                         <td>
-                            {{carro['num']}}
+                            <label for="carro-{{carro['carro_id']}}">
+                                {{carro['num']}}
+                            </label>
                         </td>
-                        <td>{{carro['modelo']}}</td>
-                        <td>{{carro['marca']}}</td>
-                        <td>{{carro['cor']}}</td>
+                        <td>
+                            <label for="carro-{{carro['carro_id']}}">
+                                {{carro['modelo']}}
+                            </label>
+                        </td>
+                        <td>
+                            <label for="carro-{{carro['carro_id']}}">
+                                {{carro['marca']}}
+                            </label>
+                        </td>
+                        <td>
+                            <label for="carro-{{carro['carro_id']}}">
+                                <div style="background-color: {{carro['cor']}}; width: 6em; height: 1.5em; margin: 0; padding: 0;"></div>
+                            </label>
+                        </td>
                     </tr>
                 </tbody>
                 {% endfor %}
@@ -68,8 +82,8 @@
             <span class="text-center col-12 border-bottom border-dark p-2 bg-white"><b>Escolha a Equipe</b></span>
             {% for equipe in autorama['equipes'] %}
             <div class="form-check col-12 col-md-6 pl-5 my-2">
-                <input class="form-check-input" type="radio" name="equipe_id" id="{{equipe['equipe_id']}}" value="{{equipe['equipe_id'] if equipe else 0}}">
-                <label class="form-check-label" for="{{equipe['equipe_id']}}">{{equipe['nome']}}</label>
+                <input class="form-check-input" type="radio" name="equipe_id" id="equipe-{{equipe['equipe_id']}}" value="{{equipe['equipe_id'] if equipe else 0}}">
+                <label class="form-check-label" for="equipe-{{equipe['equipe_id']}}">{{equipe['nome']}}</label>
             </div>
             {% endfor %}
         </div>
