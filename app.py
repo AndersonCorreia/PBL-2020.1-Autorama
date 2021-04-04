@@ -10,7 +10,7 @@ def index():
     autorama = Autorama()
     if autorama.dados['corrida_ativa'] > 0:
         corrida = autorama.getCorridaAtual()
-        return render_template('index.html', ativo=True, corrida = corrida, circuito = autorama.getPistaAtual(corrida['circuito_id']))
+        return render_template('index.html', ativo=True, corrida = corrida, circuito = autorama.getPista(corrida['circuito_id']))
     
     return render_template('index.html', ativo=False)
 
