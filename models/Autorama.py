@@ -60,9 +60,22 @@ class Autorama:
             
         return corridas
     def getCorridaAtual(self):
+        return self.getCorrida(self.dados['corrida_ativa'])
+            
+    def getCorrida(self, corrida_id):
         for corrida in self.dados['corridas']:
-            if corrida['corrida_id'] == self.dados['corrida_ativa']:
+            if corrida['corrida_id'] == corrida_id:
                 return corrida
+            
+    def saveCorrida(self, corridaUpdate):
+        Corridas = []
+        for corrida in self.dados['corridas']:
+            if corrida['corrida_id'] == corridaUpdate['corrida_id']:
+                corridas.append(corridaUpdate)
+            else :
+                corridas.append(corrida)
+        self.dados['corridas'] = Corridas
+        self.save()
 
     def getPista(self, pista_id):
         for pista in self.dados['circuitos']:
