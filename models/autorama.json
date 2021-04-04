@@ -5,22 +5,28 @@
     },
     "carros": [
         {
+            "carro_id": 1,
             "epc": "E20000172211012518905484",
             "modelo": "A",
-            "cor": "azul",
+            "cor": "rgb(0,205,55)",
             "marca": "B",
-            "num": "1",
-            "piloto": "",
-            "equipe": ""
+            "num": "1"
         },
         {
+            "carro_id": 2,
             "epc": "E20000172211012518905484",
             "modelo": "C",
-            "cor": "vermelho",
+            "cor": "rgb(100,100,155)",
             "marca": "D",
-            "num": "2",
-            "piloto": "",
-            "equipe": ""
+            "num": "2"
+        },
+        {
+            "carro_id": 3,
+            "epc": "0",
+            "modelo": "Supra",
+            "cor": "#fa0000",
+            "marca": "Toyota",
+            "num": "09"
         }
     ],
     "pilotos": [
@@ -80,49 +86,53 @@
     "corridas": [
         {
             "corrida_id": 1,
+            "quantidadeDeVoltas": 10,
+            "qualificatoriaDuracao": "1:00:000",
             "circuito_id": 1,
-            "quantidadeDeVoltas": 12,
-            "qualificatoriaDuracao": "60:00:00",
-            "qualificatoria": [
+            "pilotos": [
                 {
-                    "carro_id": 1,
-                    "tempo_menor": "1:30:780",
-                    "voltas": 25
+                    "piloto_id": 1,
+                    "carro_epc": "E20000172211012518905484"
+                },
+                {
+                    "piloto_id": 2,
+                    "carro_epc": "E20000172211012518905484"
                 }
             ],
-            "qualificatoriaCompleta": false,
-            "corridaCompleta": false,
+            "qualificatoria": [
+                {
+                    "piloto_id": 1,
+                    "carro_epc": "E20000172211012518905484",
+                    "tempo_menor": "9:99:999",
+                    "voltas": 0
+                },
+                {
+                    "piloto_id": 2,
+                    "carro_epc": "E20000172211012518905484",
+                    "tempo_menor": "9:99:999",
+                    "voltas": 0
+                }
+            ],
             "classificacao": [
                 {
-                    "carro_id": 1,
-                    "tempo_total": "6:30:780",
-                    "tempo_menor": "1:29:780",
-                    "tempo_atual": "1:30:780",
+                    "piloto_id": 1,
+                    "carro_epc": "E20000172211012518905484",
+                    "tempo_total": "9:99:999",
+                    "tempo_menor": "9:99:999",
+                    "tempo_atual": "9:99:999",
+                    "voltas": 21,
+                    "pits": 5
+                },
+                {
+                    "piloto_id": 2,
+                    "carro_epc": "E20000172211012518905484",
+                    "tempo_total": "9:99:999",
+                    "tempo_menor": "9:99:999",
+                    "tempo_atual": "9:99:999",
                     "voltas": 21,
                     "pits": 5
                 }
-            ],
-            "pilotos": [
-                {
-                    "piloto_id": 2
-                }
             ]
-        },
-        {
-            "corrida_id": 2,
-            "quantidadeDeVoltas": 4,
-            "qualificatoriaDuracao": "5:00:000",
-            "circuito_id": 2,
-            "pilotos": [
-                {
-                    "piloto_id": 1
-                },
-                {
-                    "piloto_id": 2
-                }
-            ],
-            "qualificatoria": [],
-            "classificacao": []
         }
     ],
     "tags": {

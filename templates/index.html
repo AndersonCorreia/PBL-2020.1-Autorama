@@ -4,8 +4,22 @@
     <h2 class="text-center m-4">{% block title %}Autorama{% endblock %}</h2>
     {% if ativo %}
         <ul class="list-group">
-            <li class="list-group-item">Circuito: {{circuito['nome']}}</li>
-            <li class="list-group-item">Recorde: {{circuito['recorde']}}</li>
+            <li class="list-group-item">
+                <b>Corrida #{{corrida['corrida_id']}}</b>
+                 - Circuito: {{circuito['nome']}}, Recorde do circuito: {{circuito['recorde']}}
+            </li>
+            <li class="list-group-item">
+                {% if corrida['qualificatoriaCompleta'] %}
+                    <a href="{{url_for('test')}}" class="btn btn-info mr-auto">Ver resultado da Qualificatória</a>
+                    {% if corrida['corridaCompleta'] %}
+                        <a href="{{url_for('test')}}" class="btn btn-primary float-right">Ver resultado da Corrida</a>
+                    {% else %}
+                        <a href="{{url_for('test')}}" class="btn btn-primary float-right">Corrida</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{url_for('test')}}" class="btn btn-info mr-auto"> Qualificatória</a>
+                {% endif %}
+            </li>
         </ul>
     {% endif %}
 

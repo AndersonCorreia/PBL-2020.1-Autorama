@@ -19,6 +19,11 @@ def test():
     leitor = Leitor()
     success = leitor.testConnection()['success']
     error = not success
+    autorama = Autorama()
+    if autorama.dados['corrida_ativa'] > 0 and success:
+        corrida = autorama.getCorridaAtual()
+        return render_template('index.html', success=success, error=error)
+    
     return render_template('index.html', success=success, error=error)
 
 @app.route('/configuração')

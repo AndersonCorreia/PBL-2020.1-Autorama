@@ -17,15 +17,34 @@ class Autorama:
             # depois fazer função de update
     def addCorrida(self, corrida, pilotos):
         pilotosDict = []
+        qualificatoria = []
+        classificacao = []
         for piloto in pilotos:
-            pilotosDict.append({"piloto_id": int(piloto)})
+            piloto_id = int(piloto)
+            carroEpc = self.getCarroByPiloto(piloto_id)["epc"]
+            pilotosDict.append({"piloto_id": piloto_id, "carro_epc": carroEpc})
+            qualificatoria.append({
+                "piloto_id": piloto_id,
+                "carro_epc": carroEpc,
+                "tempo_menor": "9:99:999",
+                "voltas": 0
+            })
+            classificacao.append({
+                "piloto_id": piloto_id,
+                "carro_epc": carroEpc,
+                "tempo_total": "9:99:999",
+                "tempo_menor": "9:99:999",
+                "tempo_atual": "9:99:999",
+                "voltas": 0,
+                "pits": 0
+            })
         corrida['pilotos'] = pilotosDict
+        corrida['qualificatoria'] = qualificatoria
+        corrida['classificacao'] = classificacao
         if int(corrida['corrida_id']) == 0:
             corrida['circuito_id'] = int(corrida['circuito_id'])
             corrida['quantidadeDeVoltas'] = int(corrida['quantidadeDeVoltas'])
-            corrida['qualificatoria'] = []
-            corrida['classificacao'] = []
-            corrida['corrida_id'] = self.dados['corridas'][-1]['corrida_id'] + 1
+            corrida['corrida_id'] = self.dados['corridas'][-1]['corrida_id'] + 1 #autoincremento
             corrida.pop('piloto_id[]', '')
             self.dados['corridas'].append(corrida)
             self.save()
@@ -67,3 +86,17 @@ class Autorama:
             equipe['pontos'] = 0
             self.dados['equipes'].append(equipe)
             self.save()
+
+    def getCarroByPiloto(self, piloto_id):
+        piloto = self.getPiloto(piloto_id)
+        return self.getCarro(piloto['carro_id'])
+            
+    def getCarro(self, carro_id):
+        for carro in self.dados['carros']:
+            if carro['carro_id'] == carro_id:
+                return carro
+            
+    def getPiloto(self, piloto_id):
+        for piloto in self.dados['pilotos']:
+            if piloto['piloto_id'] == piloto_id:
+                return piloto
