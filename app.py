@@ -33,7 +33,7 @@ def configLeitor():
     if (request.method == "POST"):
         leitor = Leitor()
         result = leitor.save(request.form.to_dict())
-        return render_template('config/leitor.html', leitor = leitor.dados, saved=result['success'])
+        return render_template('config/leitor.html', leitor = leitor.dados, saved=result['success'], error= not result['success'])
 
 @app.route('/configuração/carro', methods=['GET', 'POST'])
 def configCarro():
