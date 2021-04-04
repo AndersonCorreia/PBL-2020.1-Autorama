@@ -32,8 +32,8 @@ def configLeitor():
         return render_template('config/leitor.html', leitor = leitor.dados)
     if (request.method == "POST"):
         leitor = Leitor()
-        leitor.save(request.form.to_dict())
-        return render_template('config/leitor.html', leitor = leitor.dados, saved=True)
+        result = leitor.save(request.form.to_dict())
+        return render_template('config/leitor.html', leitor = leitor.dados, saved=result['success'])
 
 @app.route('/configuração/carro', methods=['GET', 'POST'])
 def configCarro():
@@ -97,7 +97,7 @@ def setCorridaAtiva():
 def listCorrida():
     if (request.method == "GET"):
         autorama = Autorama()
-        return render_template('config/corridas.html', autorama = autorama.dados)
+        return render_template('config/corridas.html',corridas = autorama.getCorridas(), corridaAtiva = autorama.dados['corrida_ativa'] )
 
 @app.route('/configuração/piloto/cadastrar', methods=['GET', 'POST'])
 def createPiloto():

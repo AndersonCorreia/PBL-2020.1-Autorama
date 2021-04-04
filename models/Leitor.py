@@ -13,7 +13,7 @@ class Leitor:
         self.dados = dados
         open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False,))
         connection = self.getConnection()
-        connection.request('/config/leitor', "POST", self.dados)
+        return connection.request('/config/leitor', "POST", self.dados)
 
     def testConnection(self):
         open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False,))

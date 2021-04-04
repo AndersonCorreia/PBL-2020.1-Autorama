@@ -19,7 +19,7 @@ class Client:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
         try:
             sock.connect(server_address) 
-        except ConnectionRefusedError as error:
+        except Exception as error:
             return {"success": False}
             # raise RuntimeError('Conexão recusada') from error
 

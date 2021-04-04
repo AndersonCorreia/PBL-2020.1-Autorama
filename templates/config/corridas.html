@@ -15,11 +15,11 @@
             <th scope="col-2">Corrida</th>
           </tr>
         </thead>
-        {% for corrida in autorama['corridas'] %}
+        {% for corrida in corridas %}
         <tbody>
             <tr>
                 <th scope="row">{{corrida['corrida_id']}}</th>
-                <td>{{corrida['circuito_id']}}</td>
+                <td>{{corrida['circuito']['nome']}}</td>
                 <td>{{corrida['quantidadeDeVoltas']}}</td>
                 <td>{{corrida['qualificatoriaDuracao']}}</td>
                 <td>
@@ -44,9 +44,9 @@
         <form action="{{url_for('setCorridaAtiva')}}" method="POST" class="row mr-auto">
             <h4 class="align-self-center"> Corrida Ativa: </h4>
             <select class="m-3 pb-1 align-self-center"  name="corrida_ativa">
-                {% for corrida in autorama['corridas'] %}
-                    <option value="{{corrida['corrida_id']}}" {% if (corrida['corrida_id'] == autorama['corrida_ativa']) %} selected {% endif %}>
-                        {{corrida['corrida_id']}} - {{corrida['circuito_id']}} - {{corrida['quantidadeDeVoltas']}} Voltas
+                {% for corrida in corridas %}
+                    <option value="{{corrida['corrida_id']}}" {% if corrida['corrida_id'] == corridaAtiva %} selected {% endif %}>
+                        {{corrida['corrida_id']}} - {{corrida['circuito']['nome']}} - {{corrida['quantidadeDeVoltas']}} Voltas
                     </option>
                 {% endfor %}
             </select>
