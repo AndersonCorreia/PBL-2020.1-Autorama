@@ -28,8 +28,8 @@ def readAndSend(client):
     log = json.loads(open(os.path.dirname(os.path.realpath(__file__))+"/leitor.json", 'r').read() )
     reader.start_reading(lambda tag: 
         print(tag)
-        timestamp = int(tags[0].epc.decode("utf-8") )
-        epc = tags[0].epc.decode("utf-8")
+        timestamp = int(tag.epc.decode("utf-8") )
+        epc = tag.epc.decode("utf-8")
         if(log['tags'].count(epc) > 0 and (timestamp - int( log['ultimaLeitura'][epc] ) > 10 ):# se passaram ao menos 10s registra a leitura
             # TagsNoSend é uma fila FIFO
             log['tagsNoSend'].append({"tag": epc , "timestamp": timestamp, "time": timestamp - int(log['timestamp_inicial']) )} )
