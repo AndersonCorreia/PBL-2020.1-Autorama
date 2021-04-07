@@ -9,14 +9,13 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def index():
     if (request.method == "GET"):
-        leitor = Leitor()
-        status = leitor.getButton()['success']
         autorama = Autorama()
-        if autorama.dados['corrida_ativa'] > 0:
-            corrida = autorama.getCorridaAtual()
-            return render_template('index.html', ativo=True, status=status, corrida = corrida, circuito = autorama.getPista(corrida['circuito_id']))
         
-        return render_template('index.html', ativo=False, status=False)
+        if autorama.dados['corrida_ativa'] > 0: 
+            corrida = autorama.getCorridaAtual()
+            return render_template('index.html', ativo=True, corrida = corrida, circuito = autorama.getPista(corrida['circuito_id']))
+
+        return render_template('index.html', ativo=False)
 
 @app.route('/teste')
 def test():
@@ -29,6 +28,15 @@ def test():
         return render_template('index.html', success=success, error=error)
     
     return render_template('index.html', success=success, error=error)
+
+@app.route('/qualificatoria', methods=['GET'])
+def qualificatoria():
+    if (request.method == "GET"):
+        leitor = Leitor()
+        buttonStatus = leitor.getButton()['success']
+        corrida = Corrida(request.get('corrida_id'))
+        corrida.qualificatoria()
+        return render_template('index.html', ativo=True)
 
 @app.route('/configuração')
 def config():
@@ -123,12 +131,6 @@ def listPilotos():
     if (request.method == "GET"):
         autorama = Autorama()
         return render_template('config/piloto.html', autorama = autorama.dados)
-
-@app.route('/qualificatoria', methods=['GET'])
-def qualificatoria():
-    if (request.method == "GET"):
-        corrida = Corrida(request.get('corrida_id'))
-        corrida.qualificatoria()
 
 @app.route('/sobre')
 def about():
