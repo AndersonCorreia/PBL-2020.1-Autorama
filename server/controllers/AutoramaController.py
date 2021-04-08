@@ -25,3 +25,11 @@ class AutoramaController:
     def readTag():
         return read()
     
+    @staticmethod
+    def initQualificatoria(headers):
+        tags = []
+        while( len(headers['pilotos']) > 0 ):
+                piloto = headers['pilotos'].pop(0)
+                tags.insert(piloto['carro_epc'])
+        setTagsForRead(tags)
+    
