@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from models.Leitor import Leitor
 from models.Carro import Carro
 from models.Corrida import Corrida
 from models.Autorama import Autorama
 
 app = Flask(__name__)
+app.secret_key = "pbl"
 
 @app.route('/', methods=['GET'])
 def index():
@@ -33,10 +34,21 @@ def test():
 def qualificatoria():
     if (request.method == "GET"):
         leitor = Leitor()
-        buttonStatus = leitor.getButton()['success']
-        corrida = Corrida(request.get('corrida_id'))
-        corrida.qualificatoria()
+        buttonStatus=True
+        #buttonStatus = leitor.getButton()['success']
+        #corrida = Corrida(request.get('corrida_id'))
+        #corrida.qualificatoria()
+        if(buttonStatus):
+            session["rest"] = 10
+            session["set_counter"] = 0
+            return redirect(url_for("rest"))
+
         return render_template('index.html', ativo=True)
+
+
+@app.route("/rest")
+def rest():
+    return render_template("qualificatoria/timer.html", rest=session["rest"])
 
 @app.route('/configuração')
 def config():

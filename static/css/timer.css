@@ -1,0 +1,36 @@
+.heading {
+    display: block;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+}
+
+.timer {
+    display: block;
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: .75rem;
+}
+
+.progress {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #cdc7c2;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+.progress,
+.progress::-webkit-progress-bar {
+    background-color: #fff;
+}
+
+.progress--rest::-webkit-progress-value {
+    background-color: #65F596;
+}
+
+.progress--rest::-moz-progress-bar {
+    background-color: #65F596;
+}
