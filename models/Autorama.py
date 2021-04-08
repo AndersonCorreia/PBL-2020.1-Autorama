@@ -23,18 +23,20 @@ class Autorama:
             piloto_id = int(piloto)
             carroEpc = self.getCarroByPiloto(piloto_id)["epc"]
             pilotosDict.append({"piloto_id": piloto_id, "carro_epc": carroEpc})
-            qualificatoria.append({
+            qualificatoria.[carroEpc] = {
                 "piloto_id": piloto_id,
                 "carro_epc": carroEpc,
                 "tempo_menor": "9:99:999",
+                "timestamp": 0
                 "voltas": 0
             })
-            classificacao.append({
+            classificacao.[carroEpc] = {
                 "piloto_id": piloto_id,
                 "carro_epc": carroEpc,
                 "tempo_total": "9:99:999",
                 "tempo_menor": "9:99:999",
                 "tempo_atual": "9:99:999",
+                "timestamp": 0
                 "voltas": 0,
                 "pits": 0
             })
@@ -113,3 +115,6 @@ class Autorama:
         for piloto in self.dados['pilotos']:
             if piloto['piloto_id'] == piloto_id:
                 return piloto
+            
+    def timestampFormat(time):
+        return "" + str( int(time/60) ) + ":" + str(time%60) + ":000"

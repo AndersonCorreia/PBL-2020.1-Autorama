@@ -69,6 +69,21 @@ class Client:
             self.sock.close()
             return {"success": False}
         
+    def requestSend(self,headers={}):
+        try: 
+            # Send data 
+            message = json.dumps(headers)
+            print ("Sending %s" % message) 
+            self.sock.sendall(message.encode('utf-8'))
+        except socket.error as e: 
+            print ("Socket error: %s" %str(e))
+            self.sock.close()
+            return {"success": False}
+        except Exception as e: 
+            print ("Other exception: %s" %str(e))
+            self.sock.close()
+            return {"success": False}
+        
     def requestRecv(self):
         try: 
             # Look for the response  

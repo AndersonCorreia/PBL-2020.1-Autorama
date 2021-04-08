@@ -1,6 +1,6 @@
 {
     "ip": "augusto.ddns.net",
-    "port": "2021",
+    "port": "5022",
     "serial": "tmr:///dev/ttyUSB0",
     "baudrate": "115200",
     "region": "NASA",
