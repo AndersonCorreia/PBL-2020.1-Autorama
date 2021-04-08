@@ -47,6 +47,9 @@ def reading(tag):
                 data = client.recv(data_payload)
                 if( data['success'] == True):#cliente deve retornar que recebeu a informação com successo
                     log['tagsSend'].append(tag)
+                    if( data['encerrarCorrida'] == True):
+                        client.close()
+                        #encerrar a thread nesse caso
                 else:
                     log['tagsNoSend'].insert(0,tag)
         except Exception as e: 

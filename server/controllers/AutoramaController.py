@@ -15,18 +15,11 @@ class AutoramaController:
         leitor.save(dados)
     
     @staticmethod
-    def getLastTag():
-        autorama = Autorama()
-        print("ultima tag")
-        print(autorama.dados['tags']['last'])
-        return autorama.dados['tags']['last']
-    
-    @staticmethod
     def readTag():
         return read()
     
     @staticmethod
-    def initQualificatoria(headers):
+    def definirTagsParaLeitura(headers):
         tags = []
         while( len(headers['pilotos']) > 0 ):
                 piloto = headers['pilotos'].pop(0)

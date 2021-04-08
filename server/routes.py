@@ -29,9 +29,9 @@ def redirecionamento(path, method, headers=[]):
         if method == "GET":
             return AutoramaController.readTag()
         
-    if path == "/autorama/qualificatoria/carros":
+    if path == "/corrida/qualificatoria/carros":
         if method == "POST":
-            return AutoramaController.initQualificatoria(headers)
+            return AutoramaController.definirTagsParaLeitura(headers)
     
     if path == "/":
         if method == "GET":
