@@ -9,7 +9,6 @@ class SensorThread(Thread):
 	def __init__ (self, client, buffer, function='misto'):
 		Thread.__init__(self)
 		self.client = client
-		self.sensor = sensor
 		self.buffer = buffer
 		self.funcao = 'misto'
 
