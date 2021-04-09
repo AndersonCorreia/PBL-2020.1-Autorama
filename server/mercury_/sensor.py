@@ -4,6 +4,8 @@ import time
 from datetime import datetime
 import mercury
 from models.Autorama import Autorama
+import json
+import os
 
 autorama = Autorama()
 Client = None
