@@ -5,17 +5,20 @@ from models.Autorama import Autorama
 from models.Leitor import Leitor
 import time
 class Corrida:
-    def __init__(self, corrida_id):
+    def __init__(self, corrida_id = None):
         self.autorama = Autorama()
         self.leitor = Leitor()
-        self.corrida = self.autoram.getCorrida(corrida_id)
+        if(corrida_id == None):
+            self.corrida = self.autorama.getCorridaAtual()
+        else:
+            self.corrida = self.autorama.getCorrida(corrida_id)
     
     def save(self, dados):
         self.autoram.saveCorrida(self.corrida)
         
     def qualificatoria(self):
         connection = self.leitor.getConnection()
-        connection.request('/corrida/qualificatoria/carros', 'POST', self.corrida['pilotos'])#informa ao leitor quais as tags que devem ser lidas
+        connection.request('/corrida/qualificatoria/carros', 'POST', { 'pilotos': self.corrida['pilotos'] })#informa ao leitor quais as tags que devem ser lidas
         
     #o codigo abaixo deve ser executado em uma thread separada
     def qualificatoriaAcompanhar(self):
@@ -24,7 +27,7 @@ class Corrida:
         corridaEnd = False
         corrida = self.autorama.getCorridaAtual()
         qualificatoria = corrida['qualificatoria']
-        while not CorridaEnd:
+        while not corridaEnd:
             # result = {"tag": epc , "timestamp": timestamp, "time": timestamp desde o inicio da qualificatoria ) }
             result = connection.requestRecv()#aguarda o leitor responder com uma tag
             qualificacao = qualificatoria[result['tag']]
@@ -39,8 +42,10 @@ class Corrida:
             qualificatoria[result['tag']] = qualificacao
             corrida['qualificatoria'] = qualificatoria
             self.autorama.saveCorrida(corrida)
-            timeForEnd = self.autorama.timestampFormat(result['time'] - 60)# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
-            if(qualificatoria['qualificatoriaDuracao'] < timeForEnd ):
+            print(qualificatoria)
+            timeForEnd = self.autorama.timestampFormat((result['time'] - 60))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
+            print(timeForEnd)
+            if(corrida['qualificatoriaDuracao'] < timeForEnd ):
                 corridaEnd == True #falta ver como interromper a corrida com o apertar do botão
                 
             connection.requestSend({"success": True, "encerrarCorrida": corridaEnd})

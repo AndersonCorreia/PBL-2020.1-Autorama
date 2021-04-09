@@ -87,7 +87,7 @@
         {
             "corrida_id": 1,
             "quantidadeDeVoltas": 10,
-            "qualificatoriaDuracao": "1:00:000",
+            "qualificatoriaDuracao": "999999:00:000",
             "circuito_id": 1,
             "pilotos": [
                 {
@@ -103,9 +103,9 @@
                 "E20000172211012518905484": {
                     "piloto_id": 1,
                     "carro_epc": "E20000172211012518905484",
-                    "tempo_menor": "9:99:999",
-                    "timestamp": 0,
-                    "voltas": 0
+                    "tempo_menor": 2.000999927520752,
+                    "timestamp": 1618010076.83,
+                    "voltas": 15
                 }
             },
             "classificacao": {

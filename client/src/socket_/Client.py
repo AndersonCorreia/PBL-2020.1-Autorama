@@ -25,7 +25,7 @@ class Client:
 
         try: 
             # Send data 
-            message = json.dumps({"path": path, "method": method, "headers": headers })
+            message = json.dumps({"path": path, "method": method, "headers": headers , 'remainsOpen': False})
             print ("Sending %s" % message) 
             sock.sendall(message.encode('utf-8')) 
             # Look for the response  
@@ -57,9 +57,12 @@ class Client:
 
         try: 
             # Send data 
-            message = json.dumps({"path": path, "method": method, "headers": headers })
+            message = json.dumps({"path": path, "method": method, "headers": headers, 'remainsOpen': True })
             print ("Sending %s" % message) 
             self.sock.sendall(message.encode('utf-8'))
+            data = json.loads( self.sock.recv(self.payload) )
+            print (data)
+            return data
         except socket.error as e: 
             print ("Socket error: %s" %str(e))
             self.sock.close()
@@ -87,7 +90,7 @@ class Client:
     def requestRecv(self):
         try: 
             # Look for the response  
-            data = json.loads( sock.recv(self.payload) )
+            data = json.loads( self.sock.recv(self.payload) )
             print (data)
             return data
         except socket.error as e: 

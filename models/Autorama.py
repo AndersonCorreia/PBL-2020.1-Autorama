@@ -70,13 +70,13 @@ class Autorama:
                 return corrida
             
     def saveCorrida(self, corridaUpdate):
-        Corridas = []
+        corridas = []
         for corrida in self.dados['corridas']:
             if corrida['corrida_id'] == corridaUpdate['corrida_id']:
                 corridas.append(corridaUpdate)
             else :
                 corridas.append(corrida)
-        self.dados['corridas'] = Corridas
+        self.dados['corridas'] = corridas
         self.save()
 
     def getPista(self, pista_id):
@@ -116,5 +116,5 @@ class Autorama:
             if piloto['piloto_id'] == piloto_id:
                 return piloto
             
-    def timestampFormat(time):
+    def timestampFormat(self, time):
         return "" + str( int(time/60) ) + ":" + str(time%60) + ":000"

@@ -121,6 +121,14 @@ def setCorridaAtiva():
         autorama = Autorama()
         autorama.setCorridaAtiva(request.form.to_dict())
         return redirect(url_for('listCorrida'))
+    
+@app.route('/configuração/corrida/qualificatoria', methods=['GET'])
+def qualificatoriaTeste():
+    if (request.method == "GET"):
+        corrida = Corrida()
+        corrida.qualificatoria()
+        corrida.qualificatoriaAcompanhar()
+        return redirect(url_for('listCorrida'))
 
 @app.route('/configuração/corridas', methods=['GET'])
 def listCorrida():
