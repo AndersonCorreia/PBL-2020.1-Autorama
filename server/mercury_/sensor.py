@@ -26,12 +26,12 @@ def read():
     return {"dados": {"tag": '', "timestamp": ''}, 'success': False }
 
 def loadLog():
-    log = json.loads(open(os.path.dirname(os.path.realpath(__file__))+"/leitor.json", 'r').read() )
+    log = json.loads(open(os.path.dirname(os.path.realpath(__file__))+"/logleitura.json", 'r').read() )
     return log
   
 def saveLog():
     dados = json.dumps(log, indent=4, ensure_ascii=False, skipkeys=False)
-    open(os.path.dirname(os.path.realpath(__file__))+"/leitor.json", 'w').write(dados)
+    open(os.path.dirname(os.path.realpath(__file__))+"/logleitura.json", 'w').write(dados)
   
 def setTagsForRead(tags):
     loadLog()

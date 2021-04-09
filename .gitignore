@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+server/mercury_/logleitura.json
 # C extensions
 *.so
 
