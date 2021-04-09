@@ -24,7 +24,7 @@ class AutoramaController:
         tags = []
         while( len(headers['pilotos']) > 0 ):
                 piloto = headers['pilotos'].pop(0)
-                tags.insert(piloto['carro_epc'])
+                tags.append(piloto['carro_epc'])
         setTagsForRead(tags)
         
     def qualificatoria(headers, client):
