@@ -17,20 +17,20 @@ class Autorama:
             # depois fazer função de update
     def addCorrida(self, corrida, pilotos):
         pilotosDict = []
-        qualificatoria = []
-        classificacao = []
+        qualificatoria = {}
+        classificacao = {}
         for piloto in pilotos:
             piloto_id = int(piloto)
             carroEpc = self.getCarroByPiloto(piloto_id)["epc"]
             pilotosDict.append({"piloto_id": piloto_id, "carro_epc": carroEpc})
-            qualificatoria.[carroEpc] = {
+            qualificatoria[carroEpc] = {
                 "piloto_id": piloto_id,
                 "carro_epc": carroEpc,
                 "tempo_menor": "9:99:999",
                 "timestamp": 0,
                 "voltas": 0
-            })
-            classificacao.[carroEpc] = {
+            }
+            classificacao[carroEpc] = {
                 "piloto_id": piloto_id,
                 "carro_epc": carroEpc,
                 "tempo_total": "9:99:999",
@@ -39,7 +39,7 @@ class Autorama:
                 "timestamp": 0,
                 "voltas": 0,
                 "pits": 0
-            })
+            }
         corrida['pilotos'] = pilotosDict
         corrida['qualificatoria'] = qualificatoria
         corrida['classificacao'] = classificacao
