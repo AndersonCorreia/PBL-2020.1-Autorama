@@ -28,12 +28,12 @@ class Corrida:
             # result = {"tag": epc , "timestamp": timestamp, "time": timestamp desde o inicio da qualificatoria ) }
             result = connection.requestRecv()#aguarda o leitor responder com uma tag
             qualificacao = qualificatoria[result['tag']]
-            if(qualificacao['timestamp'] == 0){
+            if(qualificacao['timestamp'] == 0):
                 qualificacao['tempo_menor'] = result['time']
-            }
-            else {
+        
+            else:
                 qualificacao['tempo_menor'] = result['timestamp'] - qualificacao['timestamp']
-            }
+            
             qualificacao['timestamp'] = result['timestamp']
             qualificacao['voltas'] += 1
             qualificatoria[result['tag']] = qualificacao

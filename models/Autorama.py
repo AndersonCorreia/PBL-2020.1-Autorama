@@ -27,7 +27,7 @@ class Autorama:
                 "piloto_id": piloto_id,
                 "carro_epc": carroEpc,
                 "tempo_menor": "9:99:999",
-                "timestamp": 0
+                "timestamp": 0,
                 "voltas": 0
             })
             classificacao.[carroEpc] = {
@@ -36,7 +36,7 @@ class Autorama:
                 "tempo_total": "9:99:999",
                 "tempo_menor": "9:99:999",
                 "tempo_atual": "9:99:999",
-                "timestamp": 0
+                "timestamp": 0,
                 "voltas": 0,
                 "pits": 0
             })
