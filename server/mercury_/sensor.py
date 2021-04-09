@@ -36,5 +36,7 @@ def saveLog(log):
 def setTagsForRead(tags):
     log = loadLog()
     log['tags'] = tags
+    print('salvou estas tags, para leitura')
+    print(log)
     saveLog(log)
     
