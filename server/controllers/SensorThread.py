@@ -26,16 +26,18 @@ class SensorThread(Thread):
 		print(tag)
 		timestamp = float( tag.timestamp )
 		epc = tag.epc.decode("utf-8")
+		print(timestamp - float( self.buffer['ultimaLeitura'][epc] ) )
 		if(self.buffer['tags'].count(epc) > 0 and (timestamp - float( self.buffer['ultimaLeitura'][epc] ) ) > 10 ):# se passaram ao menos 10s registra a leitura
 			# TagsNoSend é uma fila FIFO
 			self.buffer['tagsNoSend'].append({"tag": epc , "timestamp": timestamp, "time": timestamp - float(self.buffer['timestamp_inicial']) } )
+   			self.buffer['ultimaLeitura'][epc] = timestamp
 			try: 
 				while( len(self.buffer['tagsNoSend']) > 0 ):
 					tag = self.buffer['tagsNoSend'].pop(0)#sempre pega a primeira na fila para enviar
 					print(tag)
 					print('\n')
 					self.client.send(json.dumps(tag).encode('utf-8') )
-					data = self.client.recv(data_payload)
+					data = self.client.recv(2048)#se necessario lembra de pegar esse valor dos argumentos
 					if( data['success'] == True):#cliente deve retornar que recebeu a informação com successo
 						self.buffer['tagsSend'].append(tag)
 						if( data['encerrarCorrida'] == True):
