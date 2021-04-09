@@ -30,7 +30,7 @@ class SensorThread(Thread):
 		if(self.buffer['tags'].count(epc) > 0 and (timestamp - float( self.buffer['ultimaLeitura'][epc] ) ) > 10 ):# se passaram ao menos 10s registra a leitura
 			# TagsNoSend é uma fila FIFO
 			self.buffer['tagsNoSend'].append({"tag": epc , "timestamp": timestamp, "time": timestamp - float(self.buffer['timestamp_inicial']) } )
-   			self.buffer['ultimaLeitura'][epc] = timestamp
+			self.buffer['ultimaLeitura'][epc] = timestamp
 			try: 
 				while( len(self.buffer['tagsNoSend']) > 0 ):
 					tag = self.buffer['tagsNoSend'].pop(0)#sempre pega a primeira na fila para enviar
