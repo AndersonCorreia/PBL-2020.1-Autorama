@@ -33,7 +33,7 @@ class SensorThread(Thread):
 				while( len(self.buffer['tagsNoSend']) > 0 ):
 					tag = self.buffer['tagsNoSend'].pop(0)#sempre pega a primeira na fila para enviar
 					print(tag)
-     				print('\n')
+					print('\n')
 					self.client.send(json.dumps(tag).encode('utf-8') )
 					data = self.client.recv(data_payload)
 					if( data['success'] == True):#cliente deve retornar que recebeu a informação com successo
