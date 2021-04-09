@@ -5,11 +5,11 @@ from models import Botão
 
 def route(data, client):
     data = json.loads(data)
-    print("data\n\n")
+    print("data\n")
     print(data)
     if data['path'] and data['method']:
         dados = redirecionamento(client, data['path'], data['method'], data['headers'])
-        print("dados\n\n")
+        print("dados\n")
         print(dados)
         return json.dumps({'success': dados['success'], "response": dados['dados']})
     else:
@@ -37,7 +37,7 @@ def redirecionamento(client, path, method, headers=[]):
         if method == "POST":
             return AutoramaController.definirTagsParaLeitura(headers)
         
-    if path == "/corrida/qualificatoria/Acompanhar":
+    if path == "/corrida/qualificatoria/acompanhar":
         if method == "GET":
             return AutoramaController.qualificatoria(headers, client)
     
@@ -45,3 +45,4 @@ def redirecionamento(client, path, method, headers=[]):
         if method == "GET":
             Botão.button()
             return {'success': True, 'dados': ''}
+    return {'success': False, 'dados': 'Rota não encontrada'}
