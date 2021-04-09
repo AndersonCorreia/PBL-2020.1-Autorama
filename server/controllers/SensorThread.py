@@ -23,11 +23,11 @@ class SensorThread(Thread):
 		reader.stop_reading()
 		
 	def readingMisto(self, tag):
-		print(tag)
 		timestamp = float( tag.timestamp )
 		epc = tag.epc.decode("utf-8")
-		print(timestamp - float( self.buffer['ultimaLeitura'][epc] ) )
 		if(self.buffer['tags'].count(epc) > 0 and (timestamp - float( self.buffer['ultimaLeitura'][epc] ) ) > 2 ):# se passaram ao menos 10s registra a leitura
+			print(tag)
+			print(timestamp - float( self.buffer['ultimaLeitura'][epc] ) )
 			# TagsNoSend é uma fila FIFO
 			self.buffer['tagsNoSend'].append({"tag": epc , "timestamp": timestamp, "time": timestamp - float(self.buffer['timestamp_inicial']) } )
 			self.buffer['ultimaLeitura'][epc] = timestamp
@@ -40,11 +40,13 @@ class SensorThread(Thread):
 					data = json.loads( self.client.recv(2048) )#se necessario lembra de pegar esse valor dos argumentos
 					print(data)
 					if( data['success'] == True):#cliente deve retornar que recebeu a informação com successo
+						print('tag enviada com sucesso')
 						self.buffer['tagsSend'].append(tag)
 						if( data['encerrarCorrida'] == True):
 							self.client.close()
 							#encerrar a thread nesse caso
 					else:
+						print ("Tag não foi enviada com sucesso")
 						self.buffer['tagsNoSend'].insert(0,tag)
 			except Exception as e: 
 				print ("Other exception: %s" %str(e))
