@@ -4,7 +4,6 @@ import json
 from models import Botão
 
 def route(data, client):
-    data = json.loads(data)
     print("data\n")
     print(data)
     if data['path'] and data['method']:

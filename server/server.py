@@ -28,10 +28,12 @@ def server(host = args.host, port = args.port, listen = args.listen_qtd):
     i = 0
     while True: 
         client, address = sock.accept() 
-        data = client.recv(data_payload) 
+        data = client.recv(data_payload)
+        data = json.loads(data)
         if data:
             response = route(data, client)
             client.send(response.encode('utf-8'))
         # end connection
-        client.close()       
+        if not data['remainsOpen']:
+            client.close()       
 server()

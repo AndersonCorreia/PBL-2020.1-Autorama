@@ -24,7 +24,7 @@ class SensorThread(Thread):
 		
 	def readingMisto(self, tag):
 		print(tag)
-		timestamp = float( tag.timestamp.decode("utf-8") )
+		timestamp = float( tag.timestamp )
 		epc = tag.epc.decode("utf-8")
 		if(self.buffer['tags'].count(epc) > 0 and (timestamp - float( self.buffer['ultimaLeitura'][epc] ) ) > 10 ):# se passaram ao menos 10s registra a leitura
 			# TagsNoSend é uma fila FIFO
@@ -32,6 +32,8 @@ class SensorThread(Thread):
 			try: 
 				while( len(self.buffer['tagsNoSend']) > 0 ):
 					tag = self.buffer['tagsNoSend'].pop(0)#sempre pega a primeira na fila para enviar
+					print(tag)
+     				print('\n')
 					self.client.send(json.dumps(tag).encode('utf-8') )
 					data = self.client.recv(data_payload)
 					if( data['success'] == True):#cliente deve retornar que recebeu a informação com successo
