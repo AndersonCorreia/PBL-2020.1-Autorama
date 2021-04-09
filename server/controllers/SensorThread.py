@@ -17,7 +17,7 @@ class SensorThread(Thread):
 			self.misto()
    
 	def misto(self):
-		reader.start_reading(readingMisto)
+		reader.start_reading(self.readingMisto)
 		#depois fazer condição de parada que tambem fecha a conexão
 		time.sleep(10)
 		reader.stop_reading()
