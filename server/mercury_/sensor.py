@@ -8,8 +8,6 @@ import json
 import os
 
 autorama = Autorama()
-Client = None
-log = None
 reader = mercury.Reader("tmr:///dev/ttyUSB0", baudrate=115200)
 reader.set_region("NA2")
 reader.set_read_plan([1], "GEN2", read_power=1100)
@@ -31,12 +29,12 @@ def loadLog():
     log = json.loads(open(os.path.dirname(os.path.realpath(__file__))+"/logleitura.json", 'r').read() )
     return log
   
-def saveLog():
+def saveLog(log):
     dados = json.dumps(log, indent=4, ensure_ascii=False, skipkeys=False)
     open(os.path.dirname(os.path.realpath(__file__))+"/logleitura.json", 'w').write(dados)
   
 def setTagsForRead(tags):
-    loadLog()
+    log = loadLog()
     log['tags'] = tags
-    saveLog()
+    saveLog(log)
     
