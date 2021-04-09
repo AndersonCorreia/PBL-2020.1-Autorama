@@ -26,6 +26,7 @@ class AutoramaController:
                 piloto = headers['pilotos'].pop(0)
                 tags.append(piloto['carro_epc'])
         setTagsForRead(tags)
+        return {'success': True, 'dados': []}
         
     def qualificatoria(headers, client):
         log = loadLog()
