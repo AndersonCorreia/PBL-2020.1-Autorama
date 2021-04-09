@@ -5,8 +5,12 @@ from models import Botão
 
 def route(data, client):
     data = json.loads(data)
+    print("data\n\n")
+    print(data)
     if data['path'] and data['method']:
         dados = redirecionamento(client, data['path'], data['method'], data['headers'])
+        print("dados\n\n")
+        print(dados)
         return json.dumps({'success': dados['success'], "response": dados['dados']})
     else:
         return json.dumps({'success': False, "response": {"erro": "O path e/ou method não foram informados"} })
