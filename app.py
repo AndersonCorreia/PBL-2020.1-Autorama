@@ -39,7 +39,7 @@ def qualificatoria():
         #corrida = Corrida(request.get('corrida_id'))
         #corrida.qualificatoria()
         if(buttonStatus):
-            session["rest"] = 10
+            session["rest"] = 5
             session["set_counter"] = 0
             return redirect(url_for("rest"))
 
