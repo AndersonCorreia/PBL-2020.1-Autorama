@@ -37,7 +37,7 @@ class SensorThread(Thread):
 					print(tag)
 					print('\n')
 					self.client.send(json.dumps(tag).encode('utf-8') )
-					data = self.client.recv(2048)#se necessario lembra de pegar esse valor dos argumentos
+					data = json.loads( self.client.recv(2048) )#se necessario lembra de pegar esse valor dos argumentos
 					if( data['success'] == True):#cliente deve retornar que recebeu a informação com successo
 						self.buffer['tagsSend'].append(tag)
 						if( data['encerrarCorrida'] == True):
