@@ -4,14 +4,14 @@ import json
 from models import Botão
 
 def route(data):
-    data = json.loads(data)
+    data = json.loads(data, client)
     if data['path'] and data['method']:
-        dados = redirecionamento(data['path'], data['method'], data['headers'])
+        dados = redirecionamento(data['path'], data['method'], data['headers'], client)
         return json.dumps({'success': dados['success'], "response": dados['dados']})
     else:
         return json.dumps({'success': False, "response": {"erro": "O path e/ou method não foram informados"} })
 
-def redirecionamento(path, method, headers=[]):
+def redirecionamento(path, method, headers=[], client):
     if path == "/test":
         if method == "GET":# posteriormente testa uma conexão real com o leitor
             return {"success": True, 'dados': ''}
@@ -32,6 +32,10 @@ def redirecionamento(path, method, headers=[]):
     if path == "/corrida/qualificatoria/carros":
         if method == "POST":
             return AutoramaController.definirTagsParaLeitura(headers)
+        
+    if path == "/corrida/qualificatoria/Acompanhar":
+        if method == "GET":
+            return AutoramaController.qualificatoria(headers, client)
     
     if path == "/":
         if method == "GET":

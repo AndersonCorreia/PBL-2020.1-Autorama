@@ -2,6 +2,7 @@
 from models.Autorama import Autorama
 from models.Leitor import Leitor
 from mercury_.sensor import *
+from controllers.SensorThread import SensorThread
 class AutoramaController:
     
     @staticmethod
@@ -25,4 +26,10 @@ class AutoramaController:
                 piloto = headers['pilotos'].pop(0)
                 tags.insert(piloto['carro_epc'])
         setTagsForRead(tags)
+        
+    def qualificatoria(headers, client):
+        log = loadLog()
+        sensorT = SensorThread(client, log)
+        sensorT.start()
+        return {'success': True, 'dados': []}
     

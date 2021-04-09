@@ -30,7 +30,7 @@ def server(host = args.host, port = args.port, listen = args.listen_qtd):
         client, address = sock.accept() 
         data = client.recv(data_payload) 
         if data:
-            response = route(data)
+            response = route(data, client)
             client.send(response.encode('utf-8'))
         # end connection
         client.close()       

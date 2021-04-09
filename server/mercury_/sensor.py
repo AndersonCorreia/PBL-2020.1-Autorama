@@ -25,39 +25,6 @@ def read():
     
     return {"dados": {"tag": '', "timestamp": ''}, 'success': False }
 
-def readAndSend(client):
-    Client = client
-    loadLog()
-    reader.start_reading(reading)
-    #depois fazer condição de parada que tambem fecha a conexão
-    time.sleep(60)
-    reader.stop_reading()
-    
-def reading(tag):
-    print(tag)
-    timestamp = int(tag.epc.decode("utf-8") )
-    epc = tag.epc.decode("utf-8")
-    if(log['tags'].count(epc) > 0 and (timestamp - int( log['ultimaLeitura'][epc] ) ) > 10 ):# se passaram ao menos 10s registra a leitura
-        # TagsNoSend é uma fila FIFO
-        log['tagsNoSend'].append({"tag": epc , "timestamp": timestamp, "time": timestamp - int(log['timestamp_inicial']) } )
-        try: 
-            while( len(log['tagsNoSend']) > 0 ):
-                tag = log['tagsNoSend'].pop(0)#sempre pega a primeira na fila para enviar
-                client.send(json.dumps(tag).encode('utf-8') )
-                data = client.recv(data_payload)
-                if( data['success'] == True):#cliente deve retornar que recebeu a informação com successo
-                    log['tagsSend'].append(tag)
-                    if( data['encerrarCorrida'] == True):
-                        client.close()
-                        #encerrar a thread nesse caso
-                else:
-                    log['tagsNoSend'].insert(0,tag)
-        except Exception as e: 
-            print ("Other exception: %s" %str(e))
-            print ("Tag não foi enviada com sucesso")
-            log['tagsNoSend'].insert(0,tag)
-    saveLog()
-
 def loadLog():
     log = json.loads(open(os.path.dirname(os.path.realpath(__file__))+"/leitor.json", 'r').read() )
     return log
