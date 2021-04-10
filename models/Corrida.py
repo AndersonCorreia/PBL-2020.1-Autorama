@@ -18,7 +18,8 @@ class Corrida:
         
     def qualificatoria(self):
         connection = self.leitor.getConnection()
-        connection.request('/corrida/qualificatoria/carros', 'POST', { 'pilotos': self.corrida['pilotos'] })#informa ao leitor quais as tags que devem ser lidas
+        headers = { 'pilotos': self.corrida['pilotos'], 'tempoMinimoVolta': self.autorama.getPista(self.corrida['circuito_id'])['tempoMinimoVolta'] }
+        connection.request('/corrida/qualificatoria/carros', 'POST', headers)#informa ao leitor quais as tags que devem ser lidas
         
     #o codigo abaixo deve ser executado em uma thread separada
     def qualificatoriaAcompanhar(self):
@@ -43,10 +44,10 @@ class Corrida:
             corrida['qualificatoria'] = qualificatoria
             self.autorama.saveCorrida(corrida)
             print(qualificatoria)
-            timeForEnd = self.autorama.timestampFormat((result['time'] - 60))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
-            print(timeForEnd)
-            if(corrida['qualificatoriaDuracao'] < timeForEnd ):
+            tempoPercorrido = self.autorama.timestampFormat((result['time'] - 60))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
+            print(tempoPercorrido)
+            if(corrida['qualificatoriaDuracao'] < tempoPercorrido ):
                 corridaEnd == True #falta ver como interromper a corrida com o apertar do botão
                 
             connection.requestSend({"success": True, "encerrarCorrida": corridaEnd})
-        connection.requestClose
+        connection.requestClose()

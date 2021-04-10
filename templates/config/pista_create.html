@@ -14,21 +14,27 @@
     {% endif %}
     <form method="POST" action="{{url_for('createCircuito')}}" class="font-weight-bold mt-5 row">
         <input type="hidden" name="circuito_id" value="{{circuito['circuito_id'] if circuito else 0}}">
-        <div class="form-group col-12 col-md-7 col-lg-5">
+        <div class="form-group col-12 col-md-7 col-lg-4">
             <label for="nome">Nome do Circuito</label>
             <input required type="text" class="form-control" name="nome" id="nome" value="{{ circuito['nome'] if circuito else ''}}">
             <small class="form-text">Nome do circuito</small>
         </div>
-        <div class="form-group col-6 col-md-5 col-lg-4">
+        <div class="form-group col-6 col-md-5 col-lg-2">
             <label for="pais">País</label>
             <input required type="text" class="form-control" name="pais" id="pais" value="{{circuito['pais'] if circuito else ''}}">
             <small class="form-text">País onde o circuito está localizado</small>
         </div>
-        <div class="form-group col-6 col-md-6 col-lg-3">
+        <div class="form-group col-6 col-md-5 col-lg">
             <label for="recorde">Recorde</label>
             <input required type="text" class="form-control" name="recorde" id="recorde"
                 pattern="[0-9]{1,2}:[0-9]{2}:[0-9]{3}" title="tempo no formato: X:XX:XXX" value="{{circuito['recorde'] if circuito else '0:00:000'}}">
             <small class="form-text">Volta mais rapida registrada</small>
+        </div>
+        <div class="form-group col-6 col-md-5 col-lg">
+            <label for="tempoMinimoVolta">Tempo de volta</label>
+            <input required type="text" class="form-control" name="tempoMinimoVolta" id="tempoMinimoVolta"
+                min="5" pattern="[0-9]{1,3}" title="tempo em segundos: XX" value="{{circuito['tempoMinimoVolta'] if circuito else '5'}}">
+            <small class="form-text">Tempo em seg minimo para uma volta</small>
         </div>
         <div class="form-group col d-flex">
             <button type="submit" class="btn btn-primary align-self-center ml-auto mr-3">Salvar</button>
