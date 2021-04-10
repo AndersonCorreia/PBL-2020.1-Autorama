@@ -33,9 +33,11 @@ def saveLog(log):
     dados = json.dumps(log, indent=4, ensure_ascii=False, skipkeys=False)
     open(os.path.dirname(os.path.realpath(__file__))+"/logleitura.json", 'w').write(dados)
   
-def setTagsForRead(tags):
+def setTagsForRead(tags, tempoMinimoVolta):
     log = loadLog()
     log['tags'] = tags
+    log['tempoMinimoVolta'] = tempoMinimoVolta
+    log['close'] = False
     print('salvou estas tags, para leitura')
     print(log)
     saveLog(log)

@@ -19,13 +19,14 @@ class SensorThread(Thread):
 	def misto(self):
 		reader.start_reading(self.readingMisto)
 		#depois fazer condição de parada que tambem fecha a conexão
-		time.sleep(10)
+		while(not self.buffer['close']):
+			time.sleep(5)
 		reader.stop_reading()
 		
 	def readingMisto(self, tag):
 		timestamp = float( tag.timestamp )
 		epc = tag.epc.decode("utf-8")
-		if(self.buffer['tags'].count(epc) > 0 and (timestamp - float( self.buffer['ultimaLeitura'][epc] ) ) > 2 ):# se passaram ao menos 10s registra a leitura
+		if(not self.buffer['close'] and self.buffer['tags'].count(epc) > 0 and (timestamp - float( self.buffer['ultimaLeitura'][epc] ) ) > self.buffer['tempoMinimoVolta'] ):# se passaram ao menos 10s registra a leitura
 			print(tag)
 			print(timestamp - float( self.buffer['ultimaLeitura'][epc] ) )
 			# TagsNoSend é uma fila FIFO
@@ -44,6 +45,7 @@ class SensorThread(Thread):
 						self.buffer['tagsSend'].append(tag)
 						if( data['encerrarCorrida'] == True):
 							self.client.close()
+							self.buffer['close'] = True
 							#encerrar a thread nesse caso
 					else:
 						print ("Tag não foi enviada com sucesso")
