@@ -123,12 +123,11 @@ def setCorridaAtiva():
         return redirect(url_for('listCorrida'))
     
 @app.route('/configuração/corrida/qualificatoria', methods=['GET'])
-def qualificatoriaTeste():
+def qualificatoriaThread():
     if (request.method == "GET"):
-        corrida = Corrida()
-        corrida.qualificatoria()
-        corrida.qualificatoriaAcompanhar()
-        return redirect(url_for('listCorrida'))
+        qualificatoriaT = QualificatoriaThread()
+        qualificatoriaT.start()
+        return
 
 @app.route('/configuração/corridas', methods=['GET'])
 def listCorrida():
