@@ -22,7 +22,7 @@ class SensorThread(Thread):
 			while(not self.buffer['close']):
 				time.sleep(self.buffer['tempoMinimoVolta'] + 1)
 			reader.stop_reading()
-		else if(self.funcao == 'send'):
+		elif(self.funcao == 'send'):
 			while(not self.buffer['close']):
 				self.send()
     			time.sleep(0.5)
