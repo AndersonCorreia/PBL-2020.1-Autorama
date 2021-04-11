@@ -27,7 +27,8 @@ class AutoramaController:
                 tags.append(piloto['carro_epc'])
         setTagsForRead(tags, headers['tempoMinimoVolta'])
         return {'success': True, 'dados': []}
-        
+    
+    @staticmethod  
     def qualificatoria(headers, client):
         log = loadLog()
         sensorTRead = SensorThread(client, log, 'read')
@@ -35,4 +36,8 @@ class AutoramaController:
         sensorTSend = SensorThrend(client, log, 'send')
         sensorTSend.start()
         return {'success': True, 'dados': []}
+    
+    @staticmethod
+    def setLogTimestamp():
+        setLogTimestampInicial()
     

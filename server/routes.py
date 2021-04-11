@@ -40,8 +40,10 @@ def redirecionamento(client, path, method, headers=[]):
         if method == "GET":
             return AutoramaController.qualificatoria(headers, client)
     
-    if path == "/":
+    if path == "/button":
         if method == "GET":
             Botão.button()
+            AutoramaController.setLogTimestamp()
             return {'success': True, 'dados': ''}
+
     return {'success': False, 'dados': 'Rota não encontrada'}
