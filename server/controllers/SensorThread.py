@@ -25,7 +25,7 @@ class SensorThread(Thread):
 		elif(self.funcao == 'send'):
 			while(not self.buffer['close']):
 				self.send()
-    			time.sleep(0.5)
+				time.sleep(0.5)
 		else:
 			print("função deschonhecida para iniciar a thread do sensor: ")
 			print(self.funcao)

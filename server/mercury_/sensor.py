@@ -19,9 +19,11 @@ def read():
     tags = reader.read(1000)
     print(tags)
     if len(tags):
-        tag = {"dados": {"tag": tags[0].epc.decode("utf-8") , "timestamp": tags[0].epc.decode("utf-8")} , 'success': True }
-        autorama.setLastTag(tag)
-        return tag
+        tagsData = []
+        for tag in tags:
+            tagsData.append({"tag": tag.epc.decode("utf-8") , "timestamp": tag.timestamp})
+        data = {"dados": tagsData , 'success': True }
+        return data
     
     return {"dados": {"tag": '', "timestamp": ''}, 'success': False }
 
