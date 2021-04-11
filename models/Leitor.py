@@ -24,4 +24,4 @@ class Leitor:
         return Client(self.dados['ip'], int(self.dados['port']), 2048)
 
     def getButton(self):
-        return self.getConnection().request('/', "GET")
+        return self.getConnection().request('/button', "GET")

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="/static/css/timer.css"> 
+{% endblock %}
+
+{% block content %}
+    <h2 class="heading">Qualificatoria</h2>
+
+{% endblock %}
+
+{% block js %}
+<script type="application/javascript">
+    
+    function iniciarThread(){
+        $.getJSON("{{url_for('qualificatoriaThread')}}", function (data) {
+            if(data.success){
+                console.log( "thread iniciada com sucesso" );
+            }
+            else {
+                console.log( "Possivelmente algum erro no inicio da thread" );
+                console.log(data)
+            }
+        })
+        .fail(function() {
+            console.log( "error na solicitação ajax" );
+        })
+    }
+    iniciarThread()
+</script>
+{% endblock %}

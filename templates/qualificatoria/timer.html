@@ -4,33 +4,56 @@
 {% endblock %}
 
 {% block content %}
-    <h2 class="heading">Contagem Regressiva</h2>
+    <h2 class="heading m-2">Contagem Regressiva</h2>
 
     <span class="timer" id="timer">{{ rest }}s</span>
     <progress max="{{ rest }}" value="{{ rest }}" class="progress progress--rest" id="progressBar"></progress>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <audio id="countdown" autoplay>
+    <audio id="countdown">
         <source src="/static/sound/race-countdown-beeps-05.mp3" type="audio/mpeg">
     </audio>
+    <button class="float-right btn btn-info mt-5" onclick="playCountdown()">Simular pressionamento do botão</button>
+{% endblock %}
 
-    <script type="application/javascript">
+{% block js %}
+<script type="application/javascript">
+    
+    function playCountdown(){
+        
         const timerElement = document.getElementById("timer");
         const progressBar = document.getElementById("progressBar")
         var timerCounter = progressBar.max;
-    
+        document.querySelector('#countdown').play()
+        
         const interval = setInterval(() => {
-
-            if (timerCounter <= 1) {
-                window.location.href = "{{ url_for('test') }}";
+            
+            if (timerCounter <= 0) {
+                window.location.href = "{{ url_for('qualificatoria') }}";
                 clearInterval(interval);
             }
-
+            
             timerCounter = timerCounter - 1;
             
             timerElement.innerText = timerCounter + "s";
             progressBar.value = timerCounter;
         }, 1000);
-    </script>
+    }
     
+    function awaitButton(){
+        $.getJSON("{{url_for('buttonPres')}}", function (data) {
+            if(data.success){
+                playCountdown()
+            }
+            else {
+                console.log( "error na conexão com o servidor" );
+                setTimeout( () => {
+                    awaitButton()
+                },1000)
+            }
+        })
+        .fail(function() {
+            console.log( "error na solicitação ajax" );
+        })
+    }
+    awaitButton()
+</script>
 {% endblock %}
-</main>

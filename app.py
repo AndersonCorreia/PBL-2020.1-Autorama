@@ -34,22 +34,20 @@ def test():
 @app.route('/qualificatoria', methods=['GET'])
 def qualificatoria():
     if (request.method == "GET"):
-        leitor = Leitor()
-        buttonStatus=True
-        #buttonStatus = leitor.getButton()['success']
-        #corrida = Corrida(request.get('corrida_id'))
-        #corrida.qualificatoria()
-        if(buttonStatus):
-            session["rest"] = 5
-            session["set_counter"] = 0
-            return redirect(url_for("rest"))
-
-        return render_template('index.html', ativo=True)
+        return render_template('qualificatoria/qualificatoria.html', ativo=True)
 
 
 @app.route("/rest")
 def rest():
+    session["rest"] = 5
+    session["set_counter"] = 0
     return render_template("qualificatoria/timer.html", rest=session["rest"])
+
+@app.route("/button/pres")
+def buttonPres():
+    if (request.method == "GET"):
+        leitor = Leitor()
+        return leitor.getButton()
 
 @app.route('/configuração')
 def config():
@@ -128,7 +126,7 @@ def qualificatoriaThread():
     if (request.method == "GET"):
         qualificatoriaT = QualificatoriaThread()
         qualificatoriaT.start()
-        return ''
+        return {'success': True}
 
 @app.route('/configuração/corridas', methods=['GET'])
 def listCorrida():
