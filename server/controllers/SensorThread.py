@@ -26,8 +26,8 @@ class SensorThread(Thread):
 	def readingMisto(self, tag):
 		timestamp = float( tag.timestamp )
 		epc = tag.epc.decode("utf-8")
+		print(tag)
 		if(not self.buffer['close'] and self.buffer['tags'].count(epc) > 0 and (timestamp - float( self.buffer['ultimaLeitura'][epc] ) ) > self.buffer['tempoMinimoVolta'] ):# se passaram ao menos 10s registra a leitura
-			print(tag)
 			print(timestamp - float( self.buffer['ultimaLeitura'][epc] ) )
 			# TagsNoSend é uma fila FIFO
 			self.buffer['tagsNoSend'].append({"tag": epc , "timestamp": timestamp, "time": timestamp - float(self.buffer['timestamp_inicial']) } )

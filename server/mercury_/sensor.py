@@ -38,7 +38,18 @@ def setTagsForRead(tags, tempoMinimoVolta):
     log['tags'] = tags
     log['tempoMinimoVolta'] = tempoMinimoVolta
     log['close'] = False
+    log['timestamp_inicial'] = time.time()#idealmente isso deve ocorrer quando apertar o botão do raspberry
+    
+    ultimaLeitura = {}
+    for tag in tags:
+        ultimaLeitura[tag] = 0
+    log['ultimaLeitura'] = ultimaLeitura
+    
     print('salvou estas tags, para leitura')
     print(log)
     saveLog(log)
     
+def setLogTimestampInicial():
+    log = loadLog()
+    log['timestamp_inicial'] = time.time()
+    saveLog(log)
