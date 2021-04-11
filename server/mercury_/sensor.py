@@ -40,6 +40,7 @@ def setTagsForRead(tags, tempoMinimoVolta):
     log['tags'] = tags
     log['tempoMinimoVolta'] = tempoMinimoVolta
     log['close'] = False
+    log['timestamp_inicial'] = time.time()
     
     ultimaLeitura = {}
     for tag in tags:
@@ -52,5 +53,5 @@ def setTagsForRead(tags, tempoMinimoVolta):
     
 def setLogTimestampInicial():
     log = loadLog()
-    log['timestamp_inicial'] = time.time()
+    log['timestamp_inicial'] = time.time() + 5.5 #5.5 segundos para compensar a contagem regressiva
     saveLog(log)
