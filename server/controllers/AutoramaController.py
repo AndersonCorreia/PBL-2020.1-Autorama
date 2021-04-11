@@ -30,7 +30,9 @@ class AutoramaController:
         
     def qualificatoria(headers, client):
         log = loadLog()
-        sensorT = SensorThread(client, log)
-        sensorT.start()
+        sensorTRead = SensorThread(client, log, 'read')
+        sensorTRead.start()
+        sensorTSend = SensorThrend(client, log, 'send')
+        sensorTSend.start()
         return {'success': True, 'dados': []}
     
