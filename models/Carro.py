@@ -15,7 +15,7 @@ class Carro:
         self.dados["carros"].append(dados)
         open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False))
         
-    def getTag(self):
+    def getTags(self):
         connection = self.getConnection()
         return connection.request('/configuração/carro', 'GET', '')
     

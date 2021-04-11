@@ -3,6 +3,7 @@ from models.Leitor import Leitor
 from models.Carro import Carro
 from models.Corrida import Corrida
 from models.Autorama import Autorama
+from threads.QualificatoriaThread import QualificatoriaThread
 
 app = Flask(__name__)
 app.secret_key = "pbl"
@@ -68,12 +69,12 @@ def configLeitor():
 def configCarro():
     if (request.method == "GET"):
         carro = Carro()
-        dado = carro.getTag()
+        dado = carro.getTags()
         if dado['success']:
-            tag = dado['response']['tag'] 
+            tags = dado['response'] 
         else:
-            tag = 0
-        return render_template('config/carro.html', success = dado['success'], EPC = tag)
+            tags = None
+        return render_template('config/carro.html', success = dado['success'], EPCs = tags)
     if (request.method == "POST"):
         carro = Carro()
         carro.save(request.form.to_dict())
@@ -127,7 +128,7 @@ def qualificatoriaThread():
     if (request.method == "GET"):
         qualificatoriaT = QualificatoriaThread()
         qualificatoriaT.start()
-        return
+        return ''
 
 @app.route('/configuração/corridas', methods=['GET'])
 def listCorrida():

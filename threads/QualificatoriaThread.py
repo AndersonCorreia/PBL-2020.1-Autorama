@@ -9,5 +9,5 @@ class QualificatoriaThread(Thread):
 		self.corrida = Corrida(corrida_id)
   
 	def run(self):
-        self.corrida.qualificatoria()
-        self.corrida.qualificatoriaAcompanhar()
+		self.corrida.qualificatoria()
+		self.corrida.qualificatoriaAcompanhar()
