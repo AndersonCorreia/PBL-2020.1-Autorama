@@ -67,13 +67,6 @@
             "nome": "Autódromo de Interlagos",
             "pais": "Brasil",
             "recorde": "1:20:3280",
-            "tempoMinimoVolta": 8
-        },
-        {
-            "circuito_id": 2,
-            "nome": "TESTE",
-            "pais": "brasil",
-            "recorde": "0:00:000",
             "tempoMinimoVolta": 10
         }
     ],
