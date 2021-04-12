@@ -7,26 +7,18 @@
         {
             "carro_id": 1,
             "epc": "E20000172211012518905484",
-            "modelo": "A",
-            "cor": "rgb(0,205,55)",
-            "marca": "B",
-            "num": "1"
+            "modelo": "SF1000",
+            "cor": "#fa0000",
+            "marca": "Ferrari",
+            "num": "16"
         },
         {
             "carro_id": 2,
-            "epc": "E20000172211012518905484",
-            "modelo": "C",
-            "cor": "rgb(100,100,155)",
-            "marca": "D",
-            "num": "2"
-        },
-        {
-            "carro_id": 3,
-            "epc": "0",
-            "modelo": "Supra",
-            "cor": "#fa0000",
-            "marca": "Toyota",
-            "num": "09"
+            "epc": "E20000172211013118905493",
+            "modelo": "MCL35M ",
+            "cor": "#ecbe18",
+            "marca": "McLaren",
+            "num": "04"
         }
     ],
     "pilotos": [
