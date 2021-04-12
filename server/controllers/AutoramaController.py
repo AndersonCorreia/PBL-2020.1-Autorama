@@ -23,8 +23,8 @@ class AutoramaController:
     def definirTagsParaLeitura(headers):
         tags = []
         while( len(headers['pilotos']) > 0 ):
-                piloto = headers['pilotos'].pop(0)
-                tags.append(piloto['carro_epc'])
+            piloto = headers['pilotos'].pop(0)
+            tags.append(piloto['carro_epc'])
         setTagsForRead(tags, headers['tempoMinimoVolta'])
         return {'success': True, 'dados': []}
     
@@ -33,7 +33,7 @@ class AutoramaController:
         log = loadLog()
         sensorTRead = SensorThread(client, log, 'read')
         sensorTRead.start()
-        sensorTSend = SensorThrend(client, log, 'send')
+        sensorTSend = SensorThread(client, log, 'send')
         sensorTSend.start()
         return {'success': True, 'dados': []}
     
