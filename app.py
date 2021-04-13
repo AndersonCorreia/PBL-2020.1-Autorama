@@ -34,7 +34,9 @@ def test():
 @app.route('/qualificatoria', methods=['GET'])
 def qualificatoria():
     if (request.method == "GET"):
-        return render_template('qualificatoria/qualificatoria.html', ativo=True)
+        corrida = Corrida()
+        qualificatoria = corrida.getDadosQualificatoria()
+        return render_template('qualificatoria/qualificatoria.html', ativo=True, qualificatoria=qualificatoria)
 
 
 @app.route("/rest")

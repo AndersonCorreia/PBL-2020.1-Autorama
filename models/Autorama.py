@@ -115,6 +115,11 @@ class Autorama:
         for piloto in self.dados['pilotos']:
             if piloto['piloto_id'] == piloto_id:
                 return piloto
+    
+    def getEquipe(self, equipe_id):
+        for equipe in self.dados['equipes']:
+            if equipe['equipe_id'] == equipe_id:
+                return equipe
             
     def timestampFormat(self, time):
         return "" + str( int(time/60) ) + ":" + str(time%60) + ":000"

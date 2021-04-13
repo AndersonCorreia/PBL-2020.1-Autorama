@@ -14,7 +14,7 @@ class Corrida:
             self.corrida = self.autorama.getCorrida(corrida_id)
     
     def save(self, dados):
-        self.autoram.saveCorrida(self.corrida)
+        self.autorama.saveCorrida(self.corrida)
         
     def qualificatoria(self):
         connection = self.leitor.getConnection()
@@ -51,3 +51,20 @@ class Corrida:
                 
             connection.requestSend({"success": True, "encerrarCorrida": corridaEnd})
         connection.requestClose()
+
+    def getDadosQualificatoria(self):
+        corrida = self.autorama.getCorridaAtual()
+        qualificatoria = []
+        pos = {}
+        for piloto in corrida['pilotos']:
+            pilotoAtual = self.autorama.getPiloto(piloto['piloto_id'])
+            pos['nome_piloto'] = pilotoAtual['nome']
+            pos['nome_equipe'] = self.autorama.getEquipe(pilotoAtual['equipe_id'])['nome']
+            pos['cor_carro'] = self.autorama.getCarro(pilotoAtual['carro_id'])['cor']
+            pos['pos']=0
+            pos['tempo_volta']=0
+            pos['voltas']=0
+            qualificatoria.append(pos)
+
+        return qualificatoria 
+        
