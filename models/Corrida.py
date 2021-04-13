@@ -10,8 +10,10 @@ class Corrida:
         self.leitor = Leitor()
         if(corrida_id == None):
             self.corrida = self.autorama.getCorridaAtual()
+            self.dadosQualificatoria = []
         else:
             self.corrida = self.autorama.getCorrida(corrida_id)
+            self.dadosQualificatoria = self.getDadosQualificatoria()
     
     def save(self, dados):
         self.autorama.saveCorrida(self.corrida)
@@ -43,6 +45,7 @@ class Corrida:
             qualificatoria[result['tag']] = qualificacao
             corrida['qualificatoria'] = qualificatoria
             self.autorama.saveCorrida(corrida)
+            self.dadosQualificatoria = self.updateDadosQualificatoria()
             print(qualificatoria)
             tempoPercorrido = self.autorama.timestampFormat((result['time'] - 60))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
             print(tempoPercorrido)
@@ -55,8 +58,8 @@ class Corrida:
     def getDadosQualificatoria(self):
         corrida = self.autorama.getCorridaAtual()
         qualificatoria = corrida['qualificatoria']
-        dadosQualificatoria = []
         i=0
+        dadosQualificatoria = []
         for piloto in corrida['pilotos']:
             pilotoAtual = self.autorama.getPiloto(piloto['piloto_id'])
             qualificacao = qualificatoria[piloto['carro_epc']]
@@ -73,12 +76,11 @@ class Corrida:
 
         return dadosQualificatoria 
 
-    #ver uma forma de chamar essa função depois que a função qualificatoriaAcompanhar for chamada na Thread
-    def updateDadosQualificatoria(self, dadosQualificatoria):
+    def updateDadosQualificatoria(self):
         corrida = self.autorama.getCorridaAtual()
         qualificatoria = corrida['qualificatoria']
 
-        for pos in dadosQualificatoria:
+        for pos in self.dadosQualificatoria:
             qualificacao = qualificatoria[pos['carro_epc']]
             pos['tempo_volta'] = qualificacao['tempo_menor']
             pos['voltas'] = qualificacao['voltas']

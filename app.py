@@ -34,10 +34,10 @@ def test():
 @app.route('/qualificatoria', methods=['GET'])
 def qualificatoria():
     if (request.method == "GET"):
-        corrida = Corrida()
         autorama = Autorama()
-        qualificatoria = corrida.getDadosQualificatoria()
         corrida = autorama.getCorridaAtual()
+        corrida_ = Corrida(corrida['corrida_id'])
+        qualificatoria = corrida_.dadosQualificatoria
         return render_template('qualificatoria/qualificatoria.html', ativo=True, qualificatoria=qualificatoria, circuito = autorama.getPista(corrida['circuito_id']))
 
 
@@ -130,7 +130,8 @@ def qualificatoriaThread():
     if (request.method == "GET"):
         qualificatoriaT = QualificatoriaThread()
         qualificatoriaT.start()
-        return {'success': True}
+        return redirect(url_for('qualificatoria'))
+        #return {'success': True}
 
 @app.route('/configuração/corridas', methods=['GET'])
 def listCorrida():
