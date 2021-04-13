@@ -54,17 +54,34 @@ class Corrida:
 
     def getDadosQualificatoria(self):
         corrida = self.autorama.getCorridaAtual()
-        qualificatoria = []
-        pos = {}
+        qualificatoria = corrida['qualificatoria']
+        dadosQualificatoria = []
+        i=0
         for piloto in corrida['pilotos']:
             pilotoAtual = self.autorama.getPiloto(piloto['piloto_id'])
+            qualificacao = qualificatoria[piloto['carro_epc']]
+            pos = {}
+            i=i+1
+            pos['pos'] = i
+            pos['carro_epc'] = piloto['carro_epc']
             pos['nome_piloto'] = pilotoAtual['nome']
             pos['nome_equipe'] = self.autorama.getEquipe(pilotoAtual['equipe_id'])['nome']
             pos['cor_carro'] = self.autorama.getCarro(pilotoAtual['carro_id'])['cor']
-            pos['pos']=0
-            pos['tempo_volta']=0
-            pos['voltas']=0
-            qualificatoria.append(pos)
+            pos['tempo_volta'] = qualificacao['tempo_menor']
+            pos['voltas'] = qualificacao['voltas']
+            dadosQualificatoria.append(pos)
 
-        return qualificatoria 
-        
+        return dadosQualificatoria 
+
+    #ver uma forma de chamar essa função depois que a função qualificatoriaAcompanhar for chamada na Thread
+    def updateDadosQualificatoria(self, dadosQualificatoria):
+        corrida = self.autorama.getCorridaAtual()
+        qualificatoria = corrida['qualificatoria']
+
+        for pos in dadosQualificatoria:
+            qualificacao = qualificatoria[pos['carro_epc']]
+            pos['tempo_volta'] = qualificacao['tempo_menor']
+            pos['voltas'] = qualificacao['voltas']
+
+        sorted(dadosQualificatoria, key=lambda pos: pos['tempo_volta'])
+        return dadosQualificatoria 
