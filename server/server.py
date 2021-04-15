@@ -2,7 +2,7 @@
 import socket 
 import sys
 import argparse
-from routes import *
+from ServerThread import ServerThread
 
 parser = argparse.ArgumentParser(description='arg')
 parser.add_argument('--host', '-ip',help= "host/ip para conexão", default='172.16.1.0')
@@ -31,9 +31,6 @@ def server(host = args.host, port = args.port, listen = args.listen_qtd):
         data = client.recv(data_payload)
         data = json.loads(data)
         if data:
-            response = route(data, client)
-            client.send(response.encode('utf-8'))
-        # end connection
-        if not data['remainsOpen']:
-            client.close()       
+            serverT = ServerThread(client, data)
+            serverT.start()  
 server()
