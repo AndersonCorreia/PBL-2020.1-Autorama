@@ -10,7 +10,7 @@ def button():
     while True:
         input_state = GPIO.input(18)
         if input_state == False:
+            time.sleep(0.5)
             return True
-            time.sleep(0.2)
         else:
-            time.sleep(0.2)
+            time.sleep(0.5)
