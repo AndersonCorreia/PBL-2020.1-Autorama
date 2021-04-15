@@ -90,9 +90,10 @@ class Client:
     def requestRecv(self):
         try: 
             # Look for the response  
-            data = json.loads( self.sock.recv(self.payload) )
+            data = self.sock.recv(self.payload)
+            print ('request recv:\n')
             print (data)
-            return data
+            return json.loads( data )
         except socket.error as e: 
             print ("Socket error: %s" %str(e))
             self.sock.close()

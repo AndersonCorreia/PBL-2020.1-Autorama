@@ -174,8 +174,8 @@
                     "piloto_id": 2,
                     "carro_epc": "E20000172211013118905493",
                     "tempo_menor": "9:99:999",
-                    "timestamp": 0,
-                    "voltas": 0
+                    "timestamp": 1618526490.335,
+                    "voltas": 2
                 },
                 "E2000017221101241890547C": {
                     "piloto_id": 3,
