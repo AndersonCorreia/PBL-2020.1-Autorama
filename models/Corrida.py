@@ -62,14 +62,11 @@ class Corrida:
     def addDadosQualificatoria(self):
         corrida = self.corrida
         qualificatoria = corrida['qualificatoria']
-        i=0
         dadosQualificatoria = []
         for piloto in corrida['pilotos']:
             pilotoAtual = self.autorama.getPiloto(piloto['piloto_id'])
             qualificacao = qualificatoria[piloto['carro_epc']]
             pos = {}
-            i=i+1
-            pos['pos'] = i
             pos['carro_epc'] = piloto['carro_epc']
             pos['nome_piloto'] = pilotoAtual['nome']
             pos['nome_equipe'] = self.autorama.getEquipe(pilotoAtual['equipe_id'])['nome']
