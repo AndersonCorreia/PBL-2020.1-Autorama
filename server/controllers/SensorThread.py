@@ -14,16 +14,19 @@ class SensorThread(Thread):
 
 	def run(self):
 		if( self.funcao == 'read_send' or self.funcao == 'read'):
-			if( self.funcao == 'read_send'):
-				reader.start_reading(self.readAndSend)
-			else:
-				reader.start_reading(self.read)
-    
-			while(not self.buffer['close']):
-				print("Buffer na funcao read:")
-				print(self.buffer)
-				time.sleep(self.buffer['tempoMinimoVolta'] + 1)
-			reader.stop_reading()
+      		try:
+				if( self.funcao == 'read_send'):
+					reader.start_reading(self.readAndSend)
+				else:
+					reader.start_reading(self.read)
+		
+				while(not self.buffer['close']):
+					print("Buffer na funcao read:")
+					print(self.buffer)
+					time.sleep(self.buffer['tempoMinimoVolta'] + 1)
+			except Exception as e:
+			finally:
+				reader.stop_reading()
 		elif(self.funcao == 'send'):
 			while(not self.buffer['close']):
 				print("Buffer na funcao send:")
