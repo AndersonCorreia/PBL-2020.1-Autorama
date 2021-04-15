@@ -16,7 +16,7 @@ reader.set_read_plan([1], "GEN2", read_power=1100)
 def read():
     print(reader.get_model())
     print(reader.get_supported_regions())
-    tags = reader.read(1000)
+    tags = reader.read(2000)
     print(tags)
     if len(tags):
         tagsData = []
