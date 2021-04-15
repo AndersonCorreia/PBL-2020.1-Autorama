@@ -45,7 +45,7 @@ class Corrida:
             qualificatoria[result['tag']] = qualificacao
             corrida['qualificatoria'] = qualificatoria
             self.autorama.saveCorrida(corrida)
-            self.dadosQualificatoria = self.updateDadosQualificatoria()
+            self.updateDadosQualificatoria(result['tag'])
             print(qualificatoria)
             tempoPercorrido = self.autorama.timestampFormat((result['time'] - 60))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
             print(tempoPercorrido)
@@ -56,7 +56,7 @@ class Corrida:
         connection.requestClose()
 
     def getDadosQualificatoria(self):
-        corrida = self.autorama.getCorridaAtual()
+        corrida = self.corrida
         qualificatoria = corrida['qualificatoria']
         i=0
         dadosQualificatoria = []
@@ -73,17 +73,15 @@ class Corrida:
             pos['tempo_volta'] = qualificacao['tempo_menor']
             pos['voltas'] = qualificacao['voltas']
             dadosQualificatoria.append(pos)
-
         return dadosQualificatoria 
 
-    def updateDadosQualificatoria(self):
-        corrida = self.autorama.getCorridaAtual()
+    def updateDadosQualificatoria(self, tag):
+        corrida = self.corrida
         qualificatoria = corrida['qualificatoria']
 
         for pos in self.dadosQualificatoria:
-            qualificacao = qualificatoria[pos['carro_epc']]
-            pos['tempo_volta'] = qualificacao['tempo_menor']
-            pos['voltas'] = qualificacao['voltas']
-
+            if pos['carro_epc'] == tag:
+                qualificacao = qualificatoria[pos['carro_epc']]
+                pos['tempo_volta'] = qualificacao['tempo_menor']
+                pos['voltas'] = qualificacao['voltas']
         sorted(dadosQualificatoria, key=lambda pos: pos['tempo_volta'])
-        return dadosQualificatoria 
