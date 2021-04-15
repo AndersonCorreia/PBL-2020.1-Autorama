@@ -13,7 +13,7 @@ class ServerThread(Thread):
 
     def run(self):
         if self.data:
-            response = route(self.data, self.client)
+            response = self.route(self.data, self.client)
             self.client.send(response.encode('utf-8'))
             # end connection
             if not self.data['remainsOpen']:
@@ -25,7 +25,7 @@ class ServerThread(Thread):
         print("data\n")
         print(data)
         if data['path'] and data['method']:
-            dados = redirecionamento(client, data['path'], data['method'], data['headers'])
+            dados = self.redirecionamento(client, data['path'], data['method'], data['headers'])
             print("dados\n")
             print(dados)
             return json.dumps({'success': dados['success'], "response": dados['dados']})
