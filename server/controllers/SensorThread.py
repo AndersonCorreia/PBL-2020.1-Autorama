@@ -79,7 +79,7 @@ class SensorThread(Thread):
 			self.buffer['tagsNoSend'].append({"tag": epc , "timestamp": timestamp, "time": timestamp - float(self.buffer['timestamp_inicial']) } )
 			self.buffer['ultimaLeitura'][epc] = timestamp
     
-	def send(self, tag):
+	def send(self):
 		try: 
 			while( len(self.buffer['tagsNoSend']) > 0 ):
 				tag = self.buffer['tagsNoSend'].pop(0)#sempre pega a primeira na fila para enviar
