@@ -7,9 +7,9 @@ from threading import Thread
 class ServerThread(Thread):
     
     def __init__ (self, client, data):
-		Thread.__init__(self)
-		self.client = client
-		self.data = data
+        Thread.__init__(self)
+        self.client = client
+        self.data = data
     
     def run(self):
         if self.data:
