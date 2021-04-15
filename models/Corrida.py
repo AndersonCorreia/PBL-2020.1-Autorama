@@ -10,7 +10,6 @@ class Corrida:
         self.leitor = Leitor()
         if(corrida_id == None):
             self.corrida = self.autorama.getCorridaAtual()
-            self.dadosQualificatoria = []
         else:
             self.corrida = self.autorama.getCorrida(corrida_id)
             self.dadosQualificatoria = self.addDadosQualificatoria()
@@ -35,17 +34,19 @@ class Corrida:
             result = connection.requestRecv()#aguarda o leitor responder com uma tag
             qualificacao = qualificatoria[result['tag']]
             if(qualificacao['timestamp'] == 0):
-                qualificacao['tempo_menor'] = result['time']
-        
+                lap_time = result['time']
             else:
-                qualificacao['tempo_menor'] = result['timestamp'] - qualificacao['timestamp']
+                lap_time = result['timestamp'] - qualificacao['timestamp']
+            lap_time_s = self.autorama.timestampFormat(lap_time)
+            if(qualificacao['tempo_menor'] > lap_time_s ):
+                qualificacao['tempo_menor'] = lap_time_s
+                qualificacao['tempo_menor_timestamp'] = lap_time
             
             qualificacao['timestamp'] = result['timestamp']
             qualificacao['voltas'] += 1
             qualificatoria[result['tag']] = qualificacao
             corrida['qualificatoria'] = qualificatoria
             self.autorama.saveCorrida(corrida)
-            self.updateDadosQualificatoria(result['tag'])
             print(qualificatoria)
             tempoPercorrido = self.autorama.timestampFormat((result['time'] - 60))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
             print(tempoPercorrido)
@@ -76,7 +77,7 @@ class Corrida:
             pos['tempo_volta'] = qualificacao['tempo_menor']
             pos['voltas'] = qualificacao['voltas']
             dadosQualificatoria.append(pos)
-        return dadosQualificatoria 
+        return sorted(dadosQualificatoria, key=lambda pos: pos['tempo_volta'] )
 
     def updateDadosQualificatoria(self, tag):
         corrida = self.corrida
@@ -87,4 +88,4 @@ class Corrida:
                 qualificacao = qualificatoria[pos['carro_epc']]
                 pos['tempo_volta'] = qualificacao['tempo_menor']
                 pos['voltas'] = qualificacao['voltas']
-        sorted(dadosQualificatoria, key=lambda pos: pos['tempo_volta'])
+        sorted(self.dadosQualificatoria, key=lambda pos: pos['tempo_volta'])
