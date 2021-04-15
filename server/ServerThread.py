@@ -6,11 +6,11 @@ from threading import Thread
 
 class ServerThread(Thread):
     
-    def __init__ (self, client, data):
+    def __init__(self, client, data):
         Thread.__init__(self)
         self.client = client
         self.data = data
-    
+
     def run(self):
         if self.data:
             response = route(self.data, self.client)
@@ -21,7 +21,7 @@ class ServerThread(Thread):
         else:
             self.client.close()
             
-    def route(data, client):
+    def route(self, data, client):
         print("data\n")
         print(data)
         if data['path'] and data['method']:
@@ -32,7 +32,7 @@ class ServerThread(Thread):
         else:
             return json.dumps({'success': False, "response": {"erro": "O path e/ou method não foram informados"} })
 
-    def redirecionamento(client, path, method, headers=[]):
+    def redirecionamento(self, client, path, method, headers=[]):
         if path == "/test":
             if method == "GET":# posteriormente testa uma conexão real com o leitor
                 return {"success": True, 'dados': ''}
