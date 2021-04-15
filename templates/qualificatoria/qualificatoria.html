@@ -33,7 +33,7 @@
         {% for pos in qualificatoria %}
         <tbody>
             <tr>
-                <th scope="row">{{pos['pos']}}</th>
+                <th scope="row">{{loop.index}}</th>
                 <td><div style="background-color: {{pos['cor_carro']}}; width: 6em; height: 1.5em; margin: 0; padding: 0;"></div></td>
                 <td>{{pos['nome_piloto']}}</td>
                 <td>{{pos['nome_equipe']}}</td>
