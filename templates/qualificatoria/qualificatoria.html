@@ -66,5 +66,17 @@
         })
     }
     iniciarThread()
+        
+    const interval = setInterval(() => {
+        
+        $.getJSON("{{url_for('qualificatoria')}}", function (data) {
+            if(!data.success){
+                console.log("erro no retorno da tela");
+            }
+        })
+        .fail(function() {
+            console.log( "error na solicitação ajax" );
+        })
+    }, 1000);
 </script>
 {% endblock %}

@@ -13,7 +13,7 @@ class Corrida:
             self.dadosQualificatoria = []
         else:
             self.corrida = self.autorama.getCorrida(corrida_id)
-            self.dadosQualificatoria = self.getDadosQualificatoria()
+            self.dadosQualificatoria = self.addDadosQualificatoria()
     
     def save(self, dados):
         self.autorama.saveCorrida(self.corrida)
@@ -54,8 +54,11 @@ class Corrida:
                 
             connection.requestSend({"success": True, "encerrarCorrida": corridaEnd})
         connection.requestClose()
-
+    
     def getDadosQualificatoria(self):
+        return self.dadosQualificatoria
+
+    def addDadosQualificatoria(self):
         corrida = self.corrida
         qualificatoria = corrida['qualificatoria']
         i=0

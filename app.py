@@ -37,9 +37,8 @@ def qualificatoria():
         autorama = Autorama()
         corrida = autorama.getCorridaAtual()
         corrida_ = Corrida(corrida['corrida_id'])
-        qualificatoria = corrida_.dadosQualificatoria
+        qualificatoria = corrida_.getDadosQualificatoria()
         return render_template('qualificatoria/qualificatoria.html', ativo=True, qualificatoria=qualificatoria, circuito = autorama.getPista(corrida['circuito_id']))
-
 
 @app.route("/rest")
 def rest():
