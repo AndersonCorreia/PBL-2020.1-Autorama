@@ -19,6 +19,14 @@
             "cor": "#ecbe18",
             "marca": "McLaren",
             "num": "04"
+        },
+        {
+            "carro_id": 3,
+            "epc": "E2000017221101241890547C",
+            "modelo": "TF110",
+            "cor": "#000000",
+            "marca": "Toyota",
+            "num": "10"
         }
     ],
     "pilotos": [
@@ -40,6 +48,16 @@
             "nascimento": "00/00/0000",
             "carro_id": 2,
             "equipe_id": 1,
+            "ativo": true
+        },
+        {
+            "piloto_id": 3,
+            "nome": "Jessie",
+            "apelido": "James",
+            "nacionalidade": "Japão",
+            "nascimento": "00/00/0000",
+            "carro_id": 3,
+            "equipe_id": 2,
             "ativo": true
         }
     ],
@@ -124,10 +142,85 @@
                     "pits": 0
                 }
             }
+        },
+        {
+            "corrida_id": 2,
+            "quantidadeDeVoltas": 10,
+            "qualificatoriaDuracao": "00:15:000",
+            "circuito_id": 1,
+            "pilotos": [
+                {
+                    "piloto_id": 1,
+                    "carro_epc": "E20000172211012518905484"
+                },
+                {
+                    "piloto_id": 2,
+                    "carro_epc": "E20000172211013118905493"
+                },
+                {
+                    "piloto_id": 3,
+                    "carro_epc": "E2000017221101241890547C"
+                }
+            ],
+            "qualificatoria": {
+                "E20000172211012518905484": {
+                    "piloto_id": 1,
+                    "carro_epc": "E20000172211012518905484",
+                    "tempo_menor": "9:99:999",
+                    "timestamp": 0,
+                    "voltas": 0
+                },
+                "E20000172211013118905493": {
+                    "piloto_id": 2,
+                    "carro_epc": "E20000172211013118905493",
+                    "tempo_menor": "9:99:999",
+                    "timestamp": 0,
+                    "voltas": 0
+                },
+                "E2000017221101241890547C": {
+                    "piloto_id": 3,
+                    "carro_epc": "E2000017221101241890547C",
+                    "tempo_menor": "9:99:999",
+                    "timestamp": 0,
+                    "voltas": 0
+                }
+            },
+            "classificacao": {
+                "E20000172211012518905484": {
+                    "piloto_id": 1,
+                    "carro_epc": "E20000172211012518905484",
+                    "tempo_total": "9:99:999",
+                    "tempo_menor": "9:99:999",
+                    "tempo_atual": "9:99:999",
+                    "timestamp": 0,
+                    "voltas": 0,
+                    "pits": 0
+                },
+                "E20000172211013118905493": {
+                    "piloto_id": 2,
+                    "carro_epc": "E20000172211013118905493",
+                    "tempo_total": "9:99:999",
+                    "tempo_menor": "9:99:999",
+                    "tempo_atual": "9:99:999",
+                    "timestamp": 0,
+                    "voltas": 0,
+                    "pits": 0
+                },
+                "E2000017221101241890547C": {
+                    "piloto_id": 3,
+                    "carro_epc": "E2000017221101241890547C",
+                    "tempo_total": "9:99:999",
+                    "tempo_menor": "9:99:999",
+                    "tempo_atual": "9:99:999",
+                    "timestamp": 0,
+                    "voltas": 0,
+                    "pits": 0
+                }
+            }
         }
     ],
     "tags": {
         "last": {}
     },
-    "corrida_ativa": 1
+    "corrida_ativa": 2
 }
