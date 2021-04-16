@@ -14,7 +14,7 @@ class SensorThread(Thread):
 
 	def run(self):
 		if( self.funcao == 'read_send' or self.funcao == 'read'):
-      		try:
+			try:
 				if( self.funcao == 'read_send'):
 					reader.start_reading(self.readAndSend)
 				else:
