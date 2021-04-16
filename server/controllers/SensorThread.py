@@ -23,9 +23,9 @@ class SensorThread(Thread):
 				while(not self.buffer['close']):
 					print("Buffer:")
 					print(self.buffer)
-					saveLog(self.buffer)
 					time.sleep(self.buffer['tempoMinimoVolta']/2)
 			finally:
+				saveLog(self.buffer)
 				reader.stop_reading()
 		elif(self.funcao == 'send'):
 			while(not self.buffer['close']):
@@ -34,7 +34,7 @@ class SensorThread(Thread):
 		else:
 			print("função deschonhecida para iniciar a thread do sensor: ")
 			print(self.funcao)
-			return
+		return
 		
 	def readAndSend(self, tag):
 		timestamp = float( tag.timestamp )
