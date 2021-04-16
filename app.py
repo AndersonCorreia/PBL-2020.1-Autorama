@@ -40,6 +40,15 @@ def qualificatoria():
         qualificatoria = corrida_.getDadosQualificatoria()
         return render_template('qualificatoria/qualificatoria.html', ativo=True, qualificatoria=qualificatoria, circuito = autorama.getPista(corrida['circuito_id']))
 
+@app.route('/qualificatoria/atualizar', methods=['GET'])
+def updateQualificatoria():
+    if (request.method == "GET"):
+        autorama = Autorama()
+        corrida = autorama.getCorridaAtual()
+        corrida_ = Corrida(corrida['corrida_id'])
+        qualificatoria = corrida_.getDadosQualificatoria()
+        return {'data': qualificatoria }
+
 @app.route("/rest")
 def rest():
     session["rest"] = 5

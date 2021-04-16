@@ -30,18 +30,9 @@
             <th scope="col-4">VOLTAS</th>
           </tr>
         </thead>
-        {% for pos in qualificatoria %}
-        <tbody>
-            <tr>
-                <th scope="row">{{loop.index}}</th>
-                <td><div style="background-color: {{pos['cor_carro']}}; width: 6em; height: 1.5em; margin: 0; padding: 0;"></div></td>
-                <td>{{pos['nome_piloto']}}</td>
-                <td>{{pos['nome_equipe']}}</td>
-                <td>{{pos['tempo_volta']}}</td>
-                <td>{{pos['voltas']}}</td>
-            </tr>
+        <tbody id="dados">
+
         </tbody>
-        {% endfor %}
         
     </table>
 
@@ -69,14 +60,31 @@
         
     const interval = setInterval(() => {
         
-        $.getJSON("{{url_for('qualificatoria')}}", function (data) {
-            if(!data.success){
-                console.log("erro no retorno da tela");
+        var qualificatoria = [];
+        let divItens =  document.getElementById("dados")
+        $.ajax({
+            url: "{{url_for('updateQualificatoria')}}",
+            type: 'GET',
+            success: function(){},
+            error: function(err){
+                console.log(err);
             }
-        })
-        .fail(function() {
-            console.log( "error na solicitação ajax" );
-        })
+        }).done(function(result){
+            qualificatoria = result.data;
+            dados.innerHTML = ""
+            qualificatoria.forEach(function (item, pos) {
+                pos=pos+1;
+                dados.innerHTML = dados.innerHTML + 
+                "<tr>"+
+                    "<th scope='row'>"+pos+"</th>"+
+                    "<td><div style='background-color:"+ item['cor_carro'] +"; width: 6em; height: 1.5em; margin: 0; padding: 0;'></div></td>"+
+                    "<td>"+ item['nome_piloto']+"</td>"+
+                    "<td>"+ item['nome_equipe']+"</td>"+
+                    "<td>"+ item['tempo_volta']+"</td>"+
+                    "<td>"+ item['voltas']+"</td>"+
+                "</tr>";
+            });
+        });
     }, 1000);
 </script>
 {% endblock %}
