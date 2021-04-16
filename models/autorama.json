@@ -166,25 +166,26 @@
                 "E20000172211012518905484": {
                     "piloto_id": 1,
                     "carro_epc": "E20000172211012518905484",
-                    "tempo_menor": "9:99:999",
+                    "tempo_menor": "0:0:0",
                     "timestamp": 0,
-                    "voltas": 0,
-                    "tempo_menor_timestamp": 0
+                    "voltas": 7,
+                    "tempo_menor_timestamp": 0.3049743175506592
                 },
                 "E20000172211013118905493": {
                     "piloto_id": 2,
                     "carro_epc": "E20000172211013118905493",
-                    "tempo_menor": "9:99:999",
+                    "tempo_menor": "0:0:0",
                     "timestamp": 0,
-                    "voltas": 0
+                    "voltas": 7,
+                    "tempo_menor_timestamp": 0.32097434997558594
                 },
                 "E2000017221101241890547C": {
                     "piloto_id": 3,
                     "carro_epc": "E2000017221101241890547C",
-                    "tempo_menor": "9:99:999",
+                    "tempo_menor": "0:0:0",
                     "timestamp": 0,
-                    "voltas": 0,
-                    "tempo_menor_timestamp": 0
+                    "voltas": 8,
+                    "tempo_menor_timestamp": 0.32897424697875977
                 }
             },
             "classificacao": {

@@ -122,4 +122,4 @@ class Autorama:
                 return equipe
             
     def timestampFormat(self, time):
-        return "" + str( int(time/60) ) + ":" + str(time%60) + ":000"
+        return "" + str( int(time/60) ) + ":" + str( int(time%60)) + ":" + str( int(time%1))

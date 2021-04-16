@@ -37,6 +37,7 @@ class Corrida:
                 lap_time = result['time']
             else:
                 lap_time = result['timestamp'] - qualificacao['timestamp']
+            lap_time_s = self.autorama.timestampFormat(lap_time)
             if(qualificacao['tempo_menor'] > lap_time_s ):
                 qualificacao['tempo_menor'] = lap_time_s
                 qualificacao['tempo_menor_timestamp'] = lap_time
