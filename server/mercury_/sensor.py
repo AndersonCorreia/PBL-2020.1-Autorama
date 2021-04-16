@@ -44,7 +44,7 @@ def setTagsForRead(tags, tempoMinimoVolta):
     
     ultimaLeitura = {}
     for tag in tags:
-        ultimaLeitura[tag] = 0
+        ultimaLeitura[tag] = time.time()
     log['ultimaLeitura'] = ultimaLeitura
     
     print('salvou estas tags, para leitura')
