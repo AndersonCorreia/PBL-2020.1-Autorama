@@ -21,15 +21,14 @@ class SensorThread(Thread):
 					reader.start_reading(self.read)
 		
 				while(not self.buffer['close']):
-					print("Buffer na funcao read:")
+					print("Buffer:")
 					print(self.buffer)
-					time.sleep(self.buffer['tempoMinimoVolta'] + 1)
+					saveLog(self.buffer)
+					time.sleep(self.buffer['tempoMinimoVolta']/2)
 			finally:
 				reader.stop_reading()
 		elif(self.funcao == 'send'):
 			while(not self.buffer['close']):
-				print("Buffer na funcao send:")
-				print(self.buffer)
 				self.send()
 				time.sleep(0.5)
 		else:
