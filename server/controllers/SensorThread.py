@@ -24,7 +24,6 @@ class SensorThread(Thread):
 					print("Buffer na funcao read:")
 					print(self.buffer)
 					time.sleep(self.buffer['tempoMinimoVolta'] + 1)
-			except Exception as e:
 			finally:
 				reader.stop_reading()
 		elif(self.funcao == 'send'):
