@@ -7,7 +7,10 @@ class Autorama:
         self.dados = json.loads(open(file, 'r', encoding="UTF-8").read() )
     
     def save(self):
-        open(self.fileName, 'w', encoding="UTF-8").write( json.dumps(self.dados, indent=4, ensure_ascii=False))
+        try:
+            open(self.fileName, 'w', encoding="UTF-8").write( json.dumps(self.dados, indent=4, ensure_ascii=False))
+        except Exception as e:
+            print("Erro no salvamento do json")
 
     def addCircuito(self, circuito):
         if int(circuito['circuito_id']) == 0:
@@ -122,4 +125,14 @@ class Autorama:
                 return equipe
             
     def timestampFormat(self, time):
-        return "" + str( int(time/60) ) + ":" + str( int(time%60)) + ":" + str( int(time%1))
+        minutos = str( int(time/60) )
+        if( len(minutos) == 1):
+            minutos = "0" + minutos
+        
+        segundos = str( int(time%60))
+        if( len(segundos) == 1):
+            segundos = "0" + segundos
+        
+        milisegundos = str( float(time%1))
+        milisegundos = milisegundos[2:5]
+        return "" + minutos + ":" + segundos  + ":" + milisegundos

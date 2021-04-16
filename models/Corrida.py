@@ -46,13 +46,14 @@ class Corrida:
             qualificacao['voltas'] += 1
             qualificatoria[result['tag']] = qualificacao
             corrida['qualificatoria'] = qualificatoria
-            self.autorama.saveCorrida(corrida)
             print(qualificatoria)
-            tempoPercorrido = self.autorama.timestampFormat((result['time'] - 60))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
+            self.autorama.saveCorrida(corrida)
+            tempoPercorrido = self.autorama.timestampFormat((result['time']))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
             print(tempoPercorrido)
+            print(corrida['qualificatoriaDuracao'])
             if(corrida['qualificatoriaDuracao'] <= tempoPercorrido ):
-                corridaEnd == True #falta ver como interromper a corrida com o apertar do botão
-                
+                corridaEnd = True #falta ver como interromper a corrida com o apertar do botão
+        
             connection.requestSend({"success": True, "encerrarCorrida": corridaEnd})
         connection.requestClose()
     
