@@ -37,7 +37,6 @@ class Corrida:
                 lap_time = result['time']
             else:
                 lap_time = result['timestamp'] - qualificacao['timestamp']
-            lap_time_s = self.autorama.timestampFormat(lap_time)
             if(qualificacao['tempo_menor'] > lap_time_s ):
                 qualificacao['tempo_menor'] = lap_time_s
                 qualificacao['tempo_menor_timestamp'] = lap_time
@@ -50,7 +49,7 @@ class Corrida:
             print(qualificatoria)
             tempoPercorrido = self.autorama.timestampFormat((result['time'] - 60))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
             print(tempoPercorrido)
-            if(corrida['qualificatoriaDuracao'] < tempoPercorrido ):
+            if(corrida['qualificatoriaDuracao'] <= tempoPercorrido ):
                 corridaEnd == True #falta ver como interromper a corrida com o apertar do botão
                 
             connection.requestSend({"success": True, "encerrarCorrida": corridaEnd})
