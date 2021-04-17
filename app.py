@@ -48,10 +48,12 @@ def updateQualificatoria():
         qualificatoria = corrida.getDadosQualificatoria()
         return {'data': qualificatoria }
 
-@app.route("/rest")
+@app.route("/rest/qualificatoria")
 def rest():
     session["rest"] = 5
     session["set_counter"] = 0
+    corrida = Corrida()
+    corrida.resetQualificatoria()
     return render_template("qualificatoria/timer.html", rest=session["rest"])
 
 @app.route("/button/pres")

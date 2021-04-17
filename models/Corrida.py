@@ -16,7 +16,7 @@ class Corrida:
             self.corrida = self.autorama.getCorrida(corrida_id)
         
     
-    def save(self, dados):
+    def save(self):
         self.autorama.saveCorrida(self.corrida)
         
     def qualificatoria(self):
@@ -85,3 +85,15 @@ class Corrida:
             self.dadosQualificatoria.append(pos)
         self.dadosQualificatoria = sorted(self.dadosQualificatoria, key=lambda pos: pos['timestamp'])
         return self.dadosQualificatoria
+    
+    def resetQualificatoria(self):
+        corrida = self.corrida
+        qualificatoria = corrida['qualificatoria']
+        for piloto in corrida['pilotos']:
+            pilotoAtual = self.autorama.getPiloto(piloto['piloto_id'])
+            qualificacao = qualificatoria[piloto['carro_epc']]
+            qualificacao['tempo_menor'] = "99:99:999"
+            qualificacao['tempo_menor_timestamp'] = 0
+            qualificacao['timestamp'] = 0
+            qualificacao['voltas'] = 0
+        self.save()
