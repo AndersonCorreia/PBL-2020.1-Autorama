@@ -89,6 +89,16 @@ class Autorama:
             if pista['circuito_id'] == pista_id:
                 return pista
 
+    def savePista(self, circuitoUpdate):
+        circuitos = []
+        for circuito in self.dados['circuitos']:
+            if circuito['circuito_id'] == circuitoUpdate['circuito_id']:
+                circuitos.append(circuitoUpdate)
+            else :
+                circuitos.append(circuito)
+        self.dados['circuitos'] = circuitos
+        self.save()
+    
     def addPiloto(self, piloto):
         piloto['piloto_id'] = int(piloto['piloto_id'])
         if piloto['piloto_id'] == 0:

@@ -8,14 +8,11 @@ class Corrida:
     def __init__(self, corrida_id = None):
         self.autorama = Autorama()
         self.leitor = Leitor()
+        self.dadosQualificatoria = None
         if(corrida_id == None):
             self.corrida = self.autorama.getCorridaAtual()
         else:
             self.corrida = self.autorama.getCorrida(corrida_id)
-        if(self.corrida['qualificatoriaCompleta'] == 0):
-            self.dadosQualificatoria = self.addDadosQualificatoria()
-        else:
-            self.dadosQualificatoria = []
         
     
     def save(self, dados):
@@ -45,6 +42,12 @@ class Corrida:
             if(qualificacao['tempo_menor'] > lap_time_s ):
                 qualificacao['tempo_menor'] = lap_time_s
                 qualificacao['tempo_menor_timestamp'] = lap_time
+                circuito = self.autorama.getPista( corrida['circuito_id'])
+                if( qualificacao['tempo_menor'] < circuito['recorde'] )
+                    piloto = self.autorama.getPiloto(qualificacao['piloto_id'])
+                    circuito['recorde'] = qualificacao['tempo_menor']
+                    circuito['autor'] = piloto['nome']
+                    self.autorama.savePista(circuito)
             
             qualificacao['timestamp'] = result['timestamp']
             qualificacao['voltas'] += 1
@@ -60,17 +63,13 @@ class Corrida:
             else: 
                 self.corrida['qualificatoriaCompleta'] = 2  #sendo realizada
             self.autorama.saveCorrida(corrida)
-            self.updateDadosQualificatoria(result['tag'])
             connection.requestSend({"success": True, "encerrarCorrida": corridaEnd})
         connection.requestClose()
     
     def getDadosQualificatoria(self):
-        return self.dadosQualificatoria
-
-    def addDadosQualificatoria(self):
         corrida = self.corrida
         qualificatoria = corrida['qualificatoria']
-        dadosQualificatoria = []
+        self.dadosQualificatoria = []
         for piloto in corrida['pilotos']:
             pilotoAtual = self.autorama.getPiloto(piloto['piloto_id'])
             qualificacao = qualificatoria[piloto['carro_epc']]
@@ -79,18 +78,9 @@ class Corrida:
             pos['nome_piloto'] = pilotoAtual['nome']
             pos['nome_equipe'] = self.autorama.getEquipe(pilotoAtual['equipe_id'])['nome']
             pos['cor_carro'] = self.autorama.getCarro(pilotoAtual['carro_id'])['cor']
-            pos['tempo_volta'] = "9:99:999"
-            pos['voltas'] = 0
-            dadosQualificatoria.append(pos)
-        return dadosQualificatoria
-
-    def updateDadosQualificatoria(self, tag):
-        corrida = self.corrida
-        qualificatoria = corrida['qualificatoria']
-
-        for pos in self.dadosQualificatoria:
-            if pos['carro_epc'] == tag:
-                qualificacao = qualificatoria[pos['carro_epc']]
-                pos['tempo_volta'] = qualificacao['tempo_menor']
-                pos['voltas'] = qualificacao['voltas']
-        sorted(self.dadosQualificatoria, key=lambda pos: pos['tempo_volta'])
+            pos['tempo_volta'] = qualificacao['tempo_menor']
+            pos['timestamp'] = qualificacao['tempo_menor_timestamp']
+            pos['voltas'] = qualificacao['voltas']
+            self.dadosQualificatoria.append(pos)
+        self.dadosQualificatoria = sorted(self.dadosQualificatoria, key=lambda pos: pos['timestamp'])
+        return self.dadosQualificatoria
