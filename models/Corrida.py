@@ -8,6 +8,7 @@ class Corrida:
     def __init__(self, corrida_id = None):
         self.autorama = Autorama()
         self.leitor = Leitor()
+        self.corridaEnd = False
         self.dadosQualificatoria = None
         if(corrida_id == None):
             self.corrida = self.autorama.getCorridaAtual()
@@ -27,10 +28,10 @@ class Corrida:
     def qualificatoriaAcompanhar(self):
         connection = self.leitor.getConnection()
         connection.requestOpen('/corrida/qualificatoria/acompanhar', 'GET', '')
-        corridaEnd = False
+        self.corridaEnd = False
         corrida = self.autorama.getCorridaAtual()
         qualificatoria = corrida['qualificatoria']
-        while not corridaEnd:
+        while not self.corridaEnd:
             # result = {"tag": epc , "timestamp": timestamp, "time": timestamp desde o inicio da qualificatoria ) }
             result = connection.requestRecv()#aguarda o leitor responder com uma tag
             qualificacao = qualificatoria[result['tag']]
@@ -43,7 +44,7 @@ class Corrida:
                 qualificacao['tempo_menor'] = lap_time_s
                 qualificacao['tempo_menor_timestamp'] = lap_time
                 circuito = self.autorama.getPista( corrida['circuito_id'])
-                if( qualificacao['tempo_menor'] < circuito['recorde'] )
+                if( qualificacao['tempo_menor'] < circuito['recorde'] ):
                     piloto = self.autorama.getPiloto(qualificacao['piloto_id'])
                     circuito['recorde'] = qualificacao['tempo_menor']
                     circuito['autor'] = piloto['nome']
@@ -58,12 +59,12 @@ class Corrida:
             print(tempoPercorrido)
             print(corrida['qualificatoriaDuracao'])
             if(corrida['qualificatoriaDuracao'] <= tempoPercorrido ):
-                corridaEnd = True #falta ver como interromper a corrida com o apertar do botão
+                self.corridaEnd = True #falta ver como interromper a corrida com o apertar do botão
                 self.corrida['qualificatoriaCompleta'] = 1   #encerrada
             else: 
                 self.corrida['qualificatoriaCompleta'] = 2  #sendo realizada
             self.autorama.saveCorrida(corrida)
-            connection.requestSend({"success": True, "encerrarCorrida": corridaEnd})
+            connection.requestSend({"success": True, "encerrarCorrida": self.corridaEnd})
         connection.requestClose()
     
     def getDadosQualificatoria(self):
