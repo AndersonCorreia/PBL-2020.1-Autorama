@@ -65,38 +65,38 @@
             console.log( "error na solicitação ajax" );
         })
     }
-    iniciarThread()
+    if ('{{status}}' != '1') {// se a qualificatoria não estiver completa excecuta o javascript
+        iniciarThread()
         
-    const interval = setInterval(() => {
-        if (status==1) {
-            window.location.href = "{{ url_for('index') }}";
-            clearInterval(interval);
-        }
-        var qualificatoria = [];
-        let dados =  document.getElementById("dados")
-        $.ajax({
-            url: "{{url_for('updateQualificatoria')}}",
-            type: 'GET',
-            success: function(){},
-            error: function(err){
-                console.log(err);
-            }
-        }).done(function(result){
-            qualificatoria = result.data;
-            dados.innerHTML = ""
-            qualificatoria.forEach(function (item, pos) {
-                pos=pos+1;
-                dados.innerHTML = dados.innerHTML + 
-                "<tr>"+
-                    "<th scope='row'>"+pos+"</th>"+
-                    "<td><div style='background-color:"+ item['cor_carro'] +"; width: 6em; height: 1.5em; margin: 0; padding: 0;'></div></td>"+
-                    "<td>"+ item['nome_piloto']+"</td>"+
-                    "<td>"+ item['nome_equipe']+"</td>"+
-                    "<td>"+ item['tempo_volta']+"</td>"+
-                    "<td>"+ item['voltas']+"</td>"+
-                "</tr>";
+        const interval = setInterval(() => {
+                // window.location.href = "{{ url_for('index') }}";
+                // clearInterval(interval);
+            var qualificatoria = [];
+            let dados =  document.getElementById("dados")
+            $.ajax({
+                url: "{{url_for('updateQualificatoria')}}",
+                type: 'GET',
+                success: function(){},
+                error: function(err){
+                    console.log(err);
+                }
+            }).done(function(result){
+                qualificatoria = result.data;
+                dados.innerHTML = ""
+                qualificatoria.forEach(function (item, pos) {
+                    pos=pos+1;
+                    dados.innerHTML = dados.innerHTML + 
+                    "<tr>"+
+                        "<th scope='row'>"+pos+"</th>"+
+                        "<td><div style='background-color:"+ item['cor_carro'] +"; width: 6em; height: 1.5em; margin: 0; padding: 0;'></div></td>"+
+                        "<td>"+ item['nome_piloto']+"</td>"+
+                        "<td>"+ item['nome_equipe']+"</td>"+
+                        "<td>"+ item['tempo_volta']+"</td>"+
+                        "<td>"+ item['voltas']+"</td>"+
+                    "</tr>";
+                });
             });
-        });
-    }, 1000);
+        }, 1000);
+    }
 </script>
 {% endblock %}
