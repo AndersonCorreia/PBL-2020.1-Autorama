@@ -12,7 +12,11 @@ class Corrida:
             self.corrida = self.autorama.getCorridaAtual()
         else:
             self.corrida = self.autorama.getCorrida(corrida_id)
+        if(self.corrida['qualificatoriaCompleta'] == 0):
             self.dadosQualificatoria = self.addDadosQualificatoria()
+        else:
+            self.dadosQualificatoria = []
+        
     
     def save(self, dados):
         self.autorama.saveCorrida(self.corrida)
@@ -47,13 +51,16 @@ class Corrida:
             qualificatoria[result['tag']] = qualificacao
             corrida['qualificatoria'] = qualificatoria
             print(qualificatoria)
-            self.autorama.saveCorrida(corrida)
             tempoPercorrido = self.autorama.timestampFormat((result['time']))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
             print(tempoPercorrido)
             print(corrida['qualificatoriaDuracao'])
             if(corrida['qualificatoriaDuracao'] <= tempoPercorrido ):
                 corridaEnd = True #falta ver como interromper a corrida com o apertar do botão
-        
+                self.corrida['qualificatoriaCompleta'] = 1   #encerrada
+            else: 
+                self.corrida['qualificatoriaCompleta'] = 2  #sendo realizada
+            self.autorama.saveCorrida(corrida)
+            self.updateDadosQualificatoria(result['tag'])
             connection.requestSend({"success": True, "encerrarCorrida": corridaEnd})
         connection.requestClose()
     
@@ -72,10 +79,10 @@ class Corrida:
             pos['nome_piloto'] = pilotoAtual['nome']
             pos['nome_equipe'] = self.autorama.getEquipe(pilotoAtual['equipe_id'])['nome']
             pos['cor_carro'] = self.autorama.getCarro(pilotoAtual['carro_id'])['cor']
-            pos['tempo_volta'] = qualificacao['tempo_menor']
-            pos['voltas'] = qualificacao['voltas']
+            pos['tempo_volta'] = "9:99:999"
+            pos['voltas'] = 0
             dadosQualificatoria.append(pos)
-        return sorted(dadosQualificatoria, key=lambda pos: pos['tempo_volta'] )
+        return dadosQualificatoria
 
     def updateDadosQualificatoria(self, tag):
         corrida = self.corrida

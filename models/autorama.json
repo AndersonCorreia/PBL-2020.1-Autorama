@@ -93,6 +93,8 @@
             "corrida_id": 1,
             "quantidadeDeVoltas": 10,
             "qualificatoriaDuracao": "00:30:000",
+            "qualificatoriaCompleta": 0,
+            "corridaCompleta": 0,
             "circuito_id": 1,
             "pilotos": [
                 {
@@ -147,6 +149,8 @@
             "corrida_id": 2,
             "quantidadeDeVoltas": 5,
             "qualificatoriaDuracao": "00:1:000",
+            "qualificatoriaCompleta": 1,
+            "corridaCompleta": 0,
             "circuito_id": 1,
             "pilotos": [
                 {
@@ -166,26 +170,26 @@
                 "E20000172211012518905484": {
                     "piloto_id": 1,
                     "carro_epc": "E20000172211012518905484",
-                    "tempo_menor": "0:10:0",
-                    "timestamp": 1618610496.179,
-                    "voltas": 86,
-                    "tempo_menor_timestamp": 10.22036862373352
+                    "tempo_menor": "00:10:336",
+                    "timestamp": 1618695896.733,
+                    "voltas": 1,
+                    "tempo_menor_timestamp": 10.336886405944824
                 },
                 "E20000172211013118905493": {
                     "piloto_id": 2,
                     "carro_epc": "E20000172211013118905493",
-                    "tempo_menor": "0:10:0",
-                    "timestamp": 1618610495.967,
-                    "voltas": 86,
-                    "tempo_menor_timestamp": 10.09536862373352
+                    "tempo_menor": "00:10:098",
+                    "timestamp": 1618695896.495,
+                    "voltas": 1,
+                    "tempo_menor_timestamp": 10.098886251449585
                 },
                 "E2000017221101241890547C": {
                     "piloto_id": 3,
                     "carro_epc": "E2000017221101241890547C",
-                    "tempo_menor": "0:10:0",
-                    "timestamp": 1618610495.954,
-                    "voltas": 86,
-                    "tempo_menor_timestamp": 10.11836862564087
+                    "tempo_menor": "00:10:051",
+                    "timestamp": 1618695906.532,
+                    "voltas": 2,
+                    "tempo_menor_timestamp": 10.051000118255615
                 }
             },
             "classificacao": {
@@ -225,6 +229,8 @@
             "corrida_id": 3,
             "quantidadeDeVoltas": 3,
             "qualificatoriaDuracao": "01:00:000",
+            "qualificatoriaCompleta": 0,
+            "corridaCompleta": 0,
             "circuito_id": 1,
             "pilotos": [
                 {
@@ -303,5 +309,5 @@
     "tags": {
         "last": {}
     },
-    "corrida_ativa": 3
+    "corrida_ativa": 2
 }

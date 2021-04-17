@@ -31,7 +31,16 @@
           </tr>
         </thead>
         <tbody id="dados">
-
+            {% for pos in qualificatoria %}
+                <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <td><div style="background-color: {{pos['cor_carro']}}; width: 6em; height: 1.5em; margin: 0; padding: 0;"></div></td>
+                    <td>{{pos['nome_piloto']}}</td>
+                    <td>{{pos['nome_equipe']}}</td>
+                    <td>{{pos['tempo_volta']}}</td>
+                    <td>{{pos['voltas']}}</td>
+                </tr>
+            {% endfor %}
         </tbody>
         
     </table>
@@ -59,9 +68,12 @@
     iniciarThread()
         
     const interval = setInterval(() => {
-        
+        if (status==1) {
+            window.location.href = "{{ url_for('index') }}";
+            clearInterval(interval);
+        }
         var qualificatoria = [];
-        let divItens =  document.getElementById("dados")
+        let dados =  document.getElementById("dados")
         $.ajax({
             url: "{{url_for('updateQualificatoria')}}",
             type: 'GET',

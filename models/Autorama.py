@@ -43,6 +43,8 @@ class Autorama:
                 "voltas": 0,
                 "pits": 0
             }
+        corrida['qualificatoriaCompleta']=0  # não realizada
+        corrida['corridaCompleta']=0
         corrida['pilotos'] = pilotosDict
         corrida['qualificatoria'] = qualificatoria
         corrida['classificacao'] = classificacao
@@ -62,8 +64,8 @@ class Autorama:
         corridas = self.dados['corridas']
         for corrida in corridas:
             corrida['circuito'] = self.getPista(corrida['circuito_id'])
-            
         return corridas
+
     def getCorridaAtual(self):
         return self.getCorrida(self.dados['corrida_ativa'])
             

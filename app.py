@@ -35,18 +35,17 @@ def test():
 def qualificatoria():
     if (request.method == "GET"):
         autorama = Autorama()
-        corrida = autorama.getCorridaAtual()
-        corrida_ = Corrida(corrida['corrida_id'])
+        corrida_ = Corrida()
+        corrida = corrida_.corrida
         qualificatoria = corrida_.getDadosQualificatoria()
-        return render_template('qualificatoria/qualificatoria.html', ativo=True, qualificatoria=qualificatoria, circuito = autorama.getPista(corrida['circuito_id']))
+        return render_template('qualificatoria/qualificatoria.html', status = corrida['qualificatoriaCompleta'], qualificatoria=qualificatoria, circuito = autorama.getPista(corrida['circuito_id']))
 
 @app.route('/qualificatoria/atualizar', methods=['GET'])
 def updateQualificatoria():
     if (request.method == "GET"):
         autorama = Autorama()
-        corrida = autorama.getCorridaAtual()
-        corrida_ = Corrida(corrida['corrida_id'])
-        qualificatoria = corrida_.getDadosQualificatoria()
+        corrida = Corrida()
+        qualificatoria = corrida.getDadosQualificatoria()
         return {'data': qualificatoria }
 
 @app.route("/rest")
