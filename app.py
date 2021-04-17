@@ -4,6 +4,7 @@ from models.Carro import Carro
 from models.Corrida import Corrida
 from models.Autorama import Autorama
 from threads.QualificatoriaThread import QualificatoriaThread
+from threads.InterromperCorridaThread import InterromperCorridaThread
 
 app = Flask(__name__)
 app.secret_key = "pbl"
@@ -139,8 +140,10 @@ def qualificatoriaThread():
     if (request.method == "GET"):
         qualificatoriaT = QualificatoriaThread()
         qualificatoriaT.start()
-        return redirect(url_for('qualificatoria'))
-        #return {'success': True}
+        interromperCorridaT = InterromperCorridaThread(qualificatoriaT.corrida)
+        interromperCorridaT.start()
+        return {'success': True}
+        # return redirect(url_for('qualificatoria'))
 
 @app.route('/configuração/corridas', methods=['GET'])
 def listCorrida():
