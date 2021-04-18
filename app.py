@@ -47,7 +47,7 @@ def updateQualificatoria():
         autorama = Autorama()
         corrida = Corrida()
         qualificatoria = corrida.getDadosQualificatoria()
-        return {'data': qualificatoria }
+        return {'data': qualificatoria, 'status': corrida.corrida['qualificatoriaCompleta'] }
 
 @app.route("/rest/qualificatoria")
 def rest():

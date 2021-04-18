@@ -6,7 +6,7 @@
 {% block content %}
     <div class="row my-4">
         <div class="col-12 col-md-6">
-            <h5>{% block title %}SESSÃO DE QUALIFICAÇÃO: {% endblock %}</h5>
+            <h5>{% block title %}SESSÃO DE QUALIFICAÇÃO: <a id='time'></a> {% endblock %}</h5>
         </div>
         <div class="col-12 col-md-6">
             <h5>Recorde do Circuito: {{circuito['recorde']}}</h5>
@@ -65,12 +65,10 @@
             console.log( "error na solicitação ajax" );
         })
     }
-    if ('{{status}}' != '1') {// se a qualificatoria não estiver completa excecuta o javascript
+    if ('{{status}}' != '1') { // se a qualificatoria não estiver completa excecuta o javascript
         iniciarThread()
         
         const interval = setInterval(() => {
-                // window.location.href = "{{ url_for('index') }}";
-                // clearInterval(interval);
             var qualificatoria = [];
             let dados =  document.getElementById("dados")
             $.ajax({
@@ -82,6 +80,7 @@
                 }
             }).done(function(result){
                 qualificatoria = result.data;
+                console.log(result.status);
                 dados.innerHTML = ""
                 qualificatoria.forEach(function (item, pos) {
                     pos=pos+1;
@@ -95,6 +94,9 @@
                         "<td>"+ item['voltas']+"</td>"+
                     "</tr>";
                 });
+                if(result.status == 1){
+                    clearInterval(interval);
+                }
             });
         }, 1000);
     }

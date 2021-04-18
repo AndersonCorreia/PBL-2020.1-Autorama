@@ -84,8 +84,8 @@
             "circuito_id": 1,
             "nome": "Autódromo de Interlagos",
             "pais": "Brasil",
-            "recorde": "1:20:3280",
-            "autor": "Jessie",
+            "recorde": "00:10:002",
+            "autor": "Anderson",
             "tempoMinimoVolta": 10
         }
     ],
@@ -310,5 +310,5 @@
     "tags": {
         "last": {}
     },
-    "corrida_ativa": 3
+    "corrida_ativa": 2
 }
