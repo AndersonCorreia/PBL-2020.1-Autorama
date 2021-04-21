@@ -10,3 +10,6 @@ class Leitor:
     def save(self, dados):
         self.dados = dados
         open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False,))
+
+    def getDados(self):
+        return self.dados

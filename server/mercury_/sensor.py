@@ -6,11 +6,14 @@ import mercury
 from models.Autorama import Autorama
 import json
 import os
+from models import Leitor
 
+leitor = Leitor()
 autorama = Autorama()
-reader = mercury.Reader("tmr:///dev/ttyUSB0", baudrate=115200)
-reader.set_region("NA2")
-reader.set_read_plan([1], "GEN2", read_power=1500)
+config = leitor.getDados()
+reader = mercury.Reader(config['serial'], config['baudrate'])
+reader.set_region(config['region'])
+reader.set_read_plan([int(config['antena'])], config['protocol'], config['read_power'])
 
 
 def read():
