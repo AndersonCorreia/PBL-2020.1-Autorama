@@ -11,9 +11,9 @@ from models.Leitor import Leitor
 leitor = Leitor()
 autorama = Autorama()
 config = leitor.getDados()
-reader = mercury.Reader(config['serial'], config['baudrate'])
+reader = mercury.Reader(config['serial'], int(config['baudrate']))
 reader.set_region(config['region'])
-reader.set_read_plan([int(config['antena'])], config['protocol'], config['read_power'])
+reader.set_read_plan([int(config['antena'])], config['protocol'], int(config['read_power']))
 
 
 def read():
