@@ -1,1 +1,3 @@
-172.16.1.0, ip externo do raspberry
+ssh pi@augusto.ddns.net -p 2222
+autorama
+sudo ss -tulpn

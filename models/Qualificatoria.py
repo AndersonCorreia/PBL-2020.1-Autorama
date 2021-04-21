@@ -63,9 +63,10 @@ class Qualificatoria:
                 self.corrida['qualificatoriaCompleta'] = 1   #encerrada
             else: 
                 self.corrida['qualificatoriaCompleta'] = 2  #sendo realizada
-            self.autorama.saveCorrida(corrida)
+            self.save()
             connection.requestSend({"success": True, "encerrarCorrida": self.corridaEnd})
         connection.requestClose()
+        self.setPosInicialForCorrida()
     
     def getDadosQualificatoria(self):
         corrida = self.corrida
@@ -85,6 +86,14 @@ class Qualificatoria:
             self.dadosQualificatoria.append(pos)
         self.dadosQualificatoria = sorted(self.dadosQualificatoria, key=lambda pos: pos['timestamp'])
         return self.dadosQualificatoria
+    
+    def setPosInicialForCorrida(self):
+        self.getDadosQualificatoria()
+        pos = 1
+        for piloto in self.dadosQualificatoria:
+            self.corrida["classificacao"][piloto['carro_epc']]['pos_inicial'] = pos
+            pos = pos + 1
+        self.save()
     
     def resetQualificatoria(self):
         corrida = self.corrida

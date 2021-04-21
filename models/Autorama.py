@@ -41,7 +41,8 @@ class Autorama:
                 "tempo_atual": "9:99:999",
                 "timestamp": 0,
                 "voltas": 0,
-                "pits": 0
+                "pits": 0,
+                "pos_inicial": 0
             }
         corrida['qualificatoriaCompleta']=0  # não realizada
         corrida['corridaCompleta']=0

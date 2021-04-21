@@ -9,7 +9,7 @@ class Corrida:
         self.autorama = Autorama()
         self.leitor = Leitor()
         self.corridaEnd = False
-        self.dadosQualificatoria = None
+        self.dadosCorrida = None
         if(corrida_id == None):
             self.corrida = self.autorama.getCorridaAtual()
         else:
@@ -19,7 +19,7 @@ class Corrida:
     def save(self):
         self.autorama.saveCorrida(self.corrida)
         
-    def qualificatoria(self):
+    def corrida(self):
         connection = self.leitor.getConnection()
         headers = { 'pilotos': self.corrida['pilotos'], 'tempoMinimoVolta': self.autorama.getPista(self.corrida['circuito_id'])['tempoMinimoVolta'] }
         connection.request('/corrida/qualificatoria/carros', 'POST', headers)#informa ao leitor quais as tags que devem ser lidas
@@ -67,10 +67,10 @@ class Corrida:
             connection.requestSend({"success": True, "encerrarCorrida": self.corridaEnd})
         connection.requestClose()
     
-    def getDadosQualificatoria(self):
+    def getDadosCorrida(self):
         corrida = self.corrida
         qualificatoria = corrida['qualificatoria']
-        self.dadosQualificatoria = []
+        self.dadosCorrida = []
         for piloto in corrida['pilotos']:
             pilotoAtual = self.autorama.getPiloto(piloto['piloto_id'])
             qualificacao = qualificatoria[piloto['carro_epc']]
@@ -82,9 +82,9 @@ class Corrida:
             pos['tempo_volta'] = qualificacao['tempo_menor']
             pos['timestamp'] = qualificacao['tempo_menor_timestamp']
             pos['voltas'] = qualificacao['voltas']
-            self.dadosQualificatoria.append(pos)
-        self.dadosQualificatoria = sorted(self.dadosQualificatoria, key=lambda pos: pos['timestamp'])
-        return self.dadosQualificatoria
+            self.dadosCorrida.append(pos)
+        self.dadosCorrida = sorted(self.dadosCorrida, key=lambda pos: pos['timestamp'])
+        return self.dadosCorrida
     
     def resetQualificatoria(self):
         corrida = self.corrida
