@@ -31,7 +31,11 @@
         </div>
     </nav>
     <div class="container content">
-        <div class="border my-4 col-md-11 col-lg-10 mx-auto border-secondary rounded">
+        {% if contentLarge %}
+            <div class="border my-4 col-12 mx-auto border-secondary rounded">
+        {% else %}
+            <div class="border my-4 col-md-11 col-lg-10 mx-auto border-secondary rounded">
+        {% endif %}
             {% block content %} {% endblock %}
         </div>
     </div>

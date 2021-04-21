@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="/static/css/timer.css"> 
+{% endblock %}
+
+{% block content %}
+    <h2 class="heading m-2">Contagem Regressiva</h2>
+
+    <span class="timer" id="timer">{{ rest }}s</span>
+    <progress max="{{ rest }}" value="{{ rest }}" class="progress progress--rest" id="progressBar"></progress>
+    <audio id="countdown">
+        <source src="/static/sound/race-countdown-beeps-05.mp3" type="audio/mpeg">
+    </audio>
+    <button class="float-right btn btn-info mt-5" onclick="playCountdown()">Simular pressionamento do botão</button>
+{% endblock %}
+
+{% block js %}
+<script type="application/javascript">
+    
+    function playCountdown(){
+        
+        const timerElement = document.getElementById("timer");
+        const progressBar = document.getElementById("progressBar")
+        var timerCounter = progressBar.max;
+        document.querySelector('#countdown').play()
+        
+        const interval = setInterval(() => {
+            
+            if (timerCounter <= 0) {
+                window.location.href = "{{ url_for('classificacao') }}";
+                clearInterval(interval);
+            }
+            
+            timerCounter = timerCounter - 1;
+            
+            timerElement.innerText = timerCounter + "s";
+            progressBar.value = timerCounter;
+        }, 1000);
+    }
+    
+    function awaitButton(){
+        $.getJSON("{{url_for('buttonPres')}}", function (data) {
+            if(data.success){
+                playCountdown()
+            }
+            else {
+                console.log( "error na conexão com o servidor" );
+                setTimeout( () => {
+                    awaitButton()
+                },1000)
+            }
+        })
+        .fail(function() {
+            console.log( "error na solicitação ajax" );
+        })
+    }
+    awaitButton()
+</script>
+{% endblock %}

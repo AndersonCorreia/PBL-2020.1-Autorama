@@ -2,8 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from models.Leitor import Leitor
 from models.Carro import Carro
 from models.Qualificatoria import Qualificatoria
+from models.Classificacao import Classificacao
 from models.Autorama import Autorama
 from threads.QualificatoriaThread import QualificatoriaThread
+from threads.ClassificacaoThread import ClassificacaoThread
 from threads.InterromperCorridaThread import InterromperCorridaThread
 
 app = Flask(__name__)
@@ -56,6 +58,31 @@ def rest():
     qualificatoria = Qualificatoria()
     qualificatoria.resetQualificatoria()
     return render_template("qualificatoria/timer.html", rest=session["rest"])
+
+@app.route('/classificacao', methods=['GET'])
+def classificacao():
+    if (request.method == "GET"):
+        autorama = Autorama()
+        classificacao = Classificacao()
+        corrida = classificacao.corrida
+        classificacaoDados = classificacao.getDadosClassificacao()
+        return render_template('classificacao/classificacao.html', status = corrida['corridaCompleta'], classificacao=classificacaoDados, circuito = autorama.getPista(corrida['circuito_id']), contentLarge=True)
+
+@app.route('/classificacao/atualizar', methods=['GET'])
+def updateClassificacao():
+    if (request.method == "GET"):
+        autorama = Autorama()
+        classificacao = Classificacao()
+        classificacaoDados = classificacao.getDadosClassificacao()
+        return {'data': classificacaoDados, 'status': classificacao.corrida['corridaCompleta'] }
+
+@app.route("/rest/classificacao")
+def restClassificacao():
+    session["rest"] = 5
+    session["set_counter"] = 0
+    classificacao = Classificacao()
+    classificacao.resetClassificacao()
+    return render_template("classificacao/timer.html", rest=session["rest"])
 
 @app.route("/button/pres")
 def buttonPres():
@@ -135,7 +162,7 @@ def setCorridaAtiva():
         autorama.setCorridaAtiva(request.form.to_dict())
         return redirect(url_for('listCorrida'))
     
-@app.route('/configuração/corrida/qualificatoria', methods=['GET'])
+@app.route('/thread/corrida/qualificatoria', methods=['GET'])
 def qualificatoriaThread():
     if (request.method == "GET"):
         qualificatoriaT = QualificatoriaThread()
@@ -143,7 +170,15 @@ def qualificatoriaThread():
         interromperCorridaT = InterromperCorridaThread(qualificatoriaT.corrida)
         interromperCorridaT.start()
         return {'success': True}
-        # return redirect(url_for('qualificatoria'))
+    
+@app.route('/thread/corrida/classificacao', methods=['GET'])
+def classificacaoThread():
+    if (request.method == "GET"):
+        classificacaoT = ClassificacaoThread()
+        classificacaoT.start()
+        interromperCorridaT = InterromperCorridaThread(classificacaoT.corrida)
+        interromperCorridaT.start()
+        return {'success': True}
 
 @app.route('/configuração/corridas', methods=['GET'])
 def listCorrida():

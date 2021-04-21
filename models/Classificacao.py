@@ -3,7 +3,7 @@
 from client.src.socket_.Client import Client
 from models.Autorama import Autorama
 from models.Leitor import Leitor
-from operator import attrgetter
+from operator import itemgetter
 import time
 
 class Classificacao:
@@ -33,23 +33,22 @@ class Classificacao:
         connection = self.leitor.getConnection()
         connection.requestOpen('/corrida/qualificatoria/acompanhar', 'GET', '')
         self.corridaEnd = False
-        corrida = self.autorama.getCorridaAtual()
-        classificacao = corrida['classificacao']
+        classificacao = self.corrida['classificacao']
         while not self.corridaEnd:
             # result = {"tag": epc , "timestamp": timestamp, "time": timestamp desde o inicio da classificacao ) }
             result = connection.requestRecv()#aguarda o leitor responder com uma tag
             pos = classificacao[result['tag']]
             if pos['voltas'] < self.corrida['quantidadeDeVoltas']: # se o primeiro carro não terminou a corrida
-                pos['time_total'] = self.autorama.timestampFormat(result['time'])
+                pos['tempo_total'] = self.autorama.timestampFormat(result['time'])
                 if(pos['timestamp'] == 0):
                     lap_time = result['time']
                 else:
                     lap_time = result['timestamp'] - pos['timestamp']
                 lap_time_s = self.autorama.timestampFormat(lap_time)
-                pos['time_total'] = lap_time_s
+                pos['tempo_atual'] = lap_time_s
                 if(pos['tempo_menor'] > lap_time_s ):
                     pos['tempo_menor'] = lap_time_s
-                    circuito = self.autorama.getPista( corrida['circuito_id'])
+                    circuito = self.autorama.getPista( self.corrida['circuito_id'])
                     if( pos['tempo_menor'] < circuito['recorde'] ):
                         piloto = self.autorama.getPiloto(pos['piloto_id'])
                         circuito['recorde'] = pos['tempo_menor']
@@ -59,20 +58,20 @@ class Classificacao:
                 pos['timestamp'] = result['timestamp']
                 pos['voltas'] += 1
                 classificacao[result['tag']] = pos
-                corrida['classificacao'] = classificacao
+                self.corrida['classificacao'] = classificacao
                 if pos['voltas'] > self.primeiroVoltas:
                     self.primeiroVoltas = pos['voltas']
                     self.primeiroTimestamp = pos['timestamp']
                 print(classificacao)
-                tempoAposPrimeiro = self.autorama.timestampFormat( (result['time'] - self.primeiroTimestamp) )
-                # tempo desde que o primeiro colocado concluiu uma volta
-                print(tempoAposPrimeiro)
-                if(self.primeiroVoltas >= self.corrida['quantidadeDeVoltas'] and tempoAposPrimeiro > "00:15:000" ):
-                    self.corridaEnd = True
-                    self.corrida['corridaCompleta'] = 1   #encerrada
-                else: 
-                    self.corrida['corridaCompleta'] = 2  #sendo realizada
-                self.autorama.saveCorrida(corrida)
+            tempoAposPrimeiro = self.autorama.timestampFormat( (result['timestamp'] - self.primeiroTimestamp) )
+            # tempo desde que o primeiro colocado concluiu uma volta
+            print(tempoAposPrimeiro)
+            if(self.primeiroVoltas >= self.corrida['quantidadeDeVoltas'] and tempoAposPrimeiro > "00:15:000" ):
+                self.corridaEnd = True
+                self.corrida['corridaCompleta'] = 1   #encerrada
+            else: 
+                self.corrida['corridaCompleta'] = 2  #sendo realizada
+            self.save()
             connection.requestSend({"success": True, "encerrarCorrida": self.corridaEnd})
         connection.requestClose()
     
@@ -96,10 +95,10 @@ class Classificacao:
             posicao['pits'] = pos['pits']
             posicao['pos_inicial'] = pos['pos_inicial']
             self.dadosCorrida.append(posicao)
-        self.dadosCorrida = sorted(self.dadosCorrida, key=attrgetter('tempo_corrida', 'pos_incial'))
-        self.dadosCorrida = sorted(self.dadosCorrida, key=attrgetter('voltas'), True)
-        for i x in range(1, len(self.dadosCorrida) - 1 ):
-            posAnt = self.dadosCorrida[i-1]
+        self.dadosCorrida = sorted(self.dadosCorrida, key=itemgetter('tempo_corrida', 'pos_inicial'))
+        self.dadosCorrida = sorted(self.dadosCorrida, key=itemgetter('voltas'), reverse=True)
+        for i in range(1, len(self.dadosCorrida) ):
+            posAnt = self.dadosCorrida[0]
             pos = self.dadosCorrida[i]
             if( pos['voltas'] < posAnt['voltas']):
                 pos['tempo_corrida'] = '+' + str(posAnt['voltas'] - pos['voltas']) + ' volta'
