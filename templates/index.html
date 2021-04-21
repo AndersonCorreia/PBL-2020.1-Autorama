@@ -1,7 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2 class="text-center m-4">{% block title %}Autorama{% endblock %}</h2>
+<h2 class="text-center m-4">{% block title %}Autorama{% endblock %}</h2>
+    {% if success %}
+        <div class="alert my-3 w-75 alert-success mx-auto alert-dismissible fade show text-center" role="alert">
+            Conexão com leitor efetuada com sucesso
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+    {% if error %}
+        <div class="alert my-3 w-75 alert-danger mx-auto alert-dismissible fade show text-center" role="alert">
+            Falha na conexão com o leitor
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
     {% if ativo %}
         <ul class="list-group">
             <li class="list-group-item">
@@ -23,22 +39,6 @@
         </ul>
     {% endif %}
 
-    {% if success %}
-        <div class="alert my-3 w-75 alert-success mx-auto alert-dismissible fade show text-center" role="alert">
-            Conexão com leitor efetuada com sucesso
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    {% endif %}
-    {% if error %}
-        <div class="alert my-3 w-75 alert-danger mx-auto alert-dismissible fade show text-center" role="alert">
-            Falha na conexão com o leitor
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    {% endif %}
     <div class="w-100">
         <a href="{{url_for('test')}}" class="btn btn-success m-2 mr-auto"> Testar conexão com o leitor</a>
     </div>
