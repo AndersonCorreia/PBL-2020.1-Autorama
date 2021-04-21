@@ -6,7 +6,7 @@ import mercury
 from models.Autorama import Autorama
 import json
 import os
-from models import Leitor
+from models.Leitor import Leitor
 
 leitor = Leitor()
 autorama = Autorama()

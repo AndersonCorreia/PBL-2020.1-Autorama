@@ -1,10 +1,10 @@
 {
     "ip": "172.16.1.0",
-    "port": "2001",
+    "port": "5030",
     "serial": "tmr:///dev/ttyUSB0",
     "baudrate": "115200",
-    "region": "NAasa3",
-    "protocol": "GN2",
-    "read_power": "1100",
+    "region": "NA2",
+    "protocol": "GEN2",
+    "read_power": "1500",
     "antena": "1"
 }
