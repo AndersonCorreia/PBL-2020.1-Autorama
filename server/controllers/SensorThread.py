@@ -27,10 +27,12 @@ class SensorThread(Thread):
 			finally:
 				saveLog(self.buffer)
 				reader.stop_reading()
+			return
 		elif(self.funcao == 'send'):
 			while(not self.buffer['close']):
 				self.send()
 				time.sleep(0.5)
+			return
 		else:
 			print("função deschonhecida para iniciar a thread do sensor: ")
 			print(self.funcao)
