@@ -59,7 +59,7 @@ class Qualificatoria:
             print(tempoPercorrido)
             print(corrida['qualificatoriaDuracao'])
             if(corrida['qualificatoriaDuracao'] <= tempoPercorrido ):
-                self.corridaEnd = True #falta ver como interromper a corrida com o apertar do botão
+                self.corridaEnd = True
                 self.corrida['qualificatoriaCompleta'] = 1   #encerrada
             else: 
                 self.corrida['qualificatoriaCompleta'] = 2  #sendo realizada
