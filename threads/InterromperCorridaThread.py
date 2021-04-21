@@ -1,5 +1,4 @@
 # coding=utf-8
-from models.Corrida import Corrida
 from threading import Thread
 from models.Leitor import Leitor
 

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from models.Leitor import Leitor
 from models.Carro import Carro
-from models.Corrida import Corrida
+from models.Qualificatoria import Qualificatoria
 from models.Autorama import Autorama
 from threads.QualificatoriaThread import QualificatoriaThread
 from threads.InterromperCorridaThread import InterromperCorridaThread
@@ -28,7 +28,7 @@ def test():
     autorama = Autorama()
     if autorama.dados['corrida_ativa'] > 0 and success:
         corrida = autorama.getCorridaAtual()
-        return render_template('index.html', success=success, error=error)
+        return render_template('index.html', success=success, error=error, ativo=True, corrida = corrida, circuito = autorama.getPista(corrida['circuito_id']))
     
     return render_template('index.html', success=success, error=error)
 
@@ -36,25 +36,25 @@ def test():
 def qualificatoria():
     if (request.method == "GET"):
         autorama = Autorama()
-        corrida_ = Corrida()
-        corrida = corrida_.corrida
-        qualificatoria = corrida_.getDadosQualificatoria()
-        return render_template('qualificatoria/qualificatoria.html', status = corrida['qualificatoriaCompleta'], qualificatoria=qualificatoria, circuito = autorama.getPista(corrida['circuito_id']))
+        qualificatoria = Qualificatoria()
+        corrida = qualificatoria.corrida
+        qualificatoriaDados = qualificatoria.getDadosQualificatoria()
+        return render_template('qualificatoria/qualificatoria.html', status = corrida['qualificatoriaCompleta'], qualificatoria=qualificatoriaDados, circuito = autorama.getPista(corrida['circuito_id']))
 
 @app.route('/qualificatoria/atualizar', methods=['GET'])
 def updateQualificatoria():
     if (request.method == "GET"):
         autorama = Autorama()
-        corrida = Corrida()
-        qualificatoria = corrida.getDadosQualificatoria()
-        return {'data': qualificatoria, 'status': corrida.corrida['qualificatoriaCompleta'] }
+        qualificatoria = Qualificatoria()
+        qualificatoriaDados = qualificatoria.getDadosQualificatoria()
+        return {'data': qualificatoriaDados, 'status': qualificatoria.corrida['qualificatoriaCompleta'] }
 
 @app.route("/rest/qualificatoria")
 def rest():
     session["rest"] = 5
     session["set_counter"] = 0
-    corrida = Corrida()
-    corrida.resetQualificatoria()
+    qualificatoria = Qualificatoria()
+    qualificatoria.resetQualificatoria()
     return render_template("qualificatoria/timer.html", rest=session["rest"])
 
 @app.route("/button/pres")

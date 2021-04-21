@@ -1,13 +1,13 @@
 # coding=utf-8
-from models.Corrida import Corrida
+from models.Qualificatoria import Qualificatoria
 from threading import Thread
 
 class QualificatoriaThread(Thread):
 
 	def __init__ (self, corrida_id = None):
 		Thread.__init__(self)
-		self.corrida = Corrida(corrida_id)
+		self.qualificatoria = qualificatoria(corrida_id)
   
 	def run(self):
-		self.corrida.qualificatoria()
-		self.corrida.qualificatoriaAcompanhar()
+		self.qualificatoria.qualificatoria()
+		self.qualificatoria.qualificatoriaAcompanhar()
