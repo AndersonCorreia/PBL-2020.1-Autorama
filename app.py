@@ -41,7 +41,7 @@ def qualificatoria():
         qualificatoria = Qualificatoria()
         corrida = qualificatoria.corrida
         qualificatoriaDados = qualificatoria.getDadosQualificatoria()
-        return render_template('qualificatoria/qualificatoria.html', status = corrida['qualificatoriaCompleta'], qualificatoria=qualificatoriaDados, circuito = autorama.getPista(corrida['circuito_id']))
+        return render_template('qualificatoria/qualificatoria.html', tempo = corrida['qualificatoriaDuracao'], status = corrida['qualificatoriaCompleta'], qualificatoria=qualificatoriaDados, circuito = autorama.getPista(corrida['circuito_id']))
 
 @app.route('/qualificatoria/atualizar', methods=['GET'])
 def updateQualificatoria():
@@ -59,14 +59,16 @@ def rest():
     qualificatoria.resetQualificatoria()
     return render_template("qualificatoria/timer.html", rest=session["rest"])
 
-@app.route('/classificacao', methods=['GET'])
+@app.route('/classificacao', methods=['GET', 'POST'])
 def classificacao():
+    classificacao = Classificacao()
     if (request.method == "GET"):
         autorama = Autorama()
-        classificacao = Classificacao()
         corrida = classificacao.corrida
         classificacaoDados = classificacao.getDadosClassificacao()
-        return render_template('classificacao/classificacao.html', status = corrida['corridaCompleta'], classificacao=classificacaoDados, circuito = autorama.getPista(corrida['circuito_id']), contentLarge=True)
+        return render_template('classificacao/classificacao.html', tempo = corrida['classificacaoDuracao'], status = corrida['corridaCompleta'], classificacao=classificacaoDados, circuito = autorama.getPista(corrida['circuito_id']), contentLarge=True)
+    if (request.method == "POST"):
+        classificacao.setTime(request.form['time'])
 
 @app.route('/classificacao/atualizar', methods=['GET'])
 def updateClassificacao():

@@ -121,3 +121,7 @@ class Classificacao:
             pos['timestamp'] = 0
             pos['voltas'] = 0
         self.save()
+
+    def setTime(self, time):
+        self.corrida['classificacaoDuracao'] = time
+        self.save()

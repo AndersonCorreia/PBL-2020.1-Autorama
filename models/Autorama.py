@@ -49,6 +49,7 @@ class Autorama:
         corrida['pilotos'] = pilotosDict
         corrida['qualificatoria'] = qualificatoria
         corrida['classificacao'] = classificacao
+        corrida['classificacaoDuracao']="00:00:00"
         if int(corrida['corrida_id']) == 0:
             corrida['circuito_id'] = int(corrida['circuito_id'])
             corrida['quantidadeDeVoltas'] = int(corrida['quantidadeDeVoltas'])

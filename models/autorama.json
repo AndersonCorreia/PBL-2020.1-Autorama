@@ -92,9 +92,10 @@
     "corridas": [
         {
             "corrida_id": 1,
-            "quantidadeDeVoltas": 10,
+            "quantidadeDeVoltas": 4,
             "qualificatoriaDuracao": "00:30:000",
-            "qualificatoriaCompleta": 0,
+            "classificacaoDuracao": "00:00:00",
+            "qualificatoriaCompleta": 1,
             "corridaCompleta": 0,
             "circuito_id": 1,
             "pilotos": [
@@ -111,38 +112,42 @@
                 "E20000172211012518905484": {
                     "piloto_id": 1,
                     "carro_epc": "E20000172211012518905484",
-                    "tempo_menor": "9:99:999",
-                    "timestamp": 0,
-                    "voltas": 0
+                    "tempo_menor": "00:10:029",
+                    "timestamp": 1619048365.779,
+                    "voltas": 4,
+                    "tempo_menor_timestamp": 10.02999997138977
                 },
                 "E20000172211013118905493": {
                     "piloto_id": 2,
                     "carro_epc": "E20000172211013118905493",
-                    "tempo_menor": "9:99:999",
-                    "timestamp": 0,
-                    "voltas": 0
+                    "tempo_menor": "00:10:004",
+                    "timestamp": 1619048375.787,
+                    "voltas": 6,
+                    "tempo_menor_timestamp": 10.004000186920166
                 }
             },
             "classificacao": {
                 "E20000172211012518905484": {
                     "piloto_id": 1,
                     "carro_epc": "E20000172211012518905484",
-                    "tempo_total": "9:99:999",
-                    "tempo_menor": "9:99:999",
-                    "tempo_atual": "9:99:999",
-                    "timestamp": 0,
-                    "voltas": 0,
-                    "pits": 0
+                    "tempo_total": "00:30:492",
+                    "tempo_menor": "00:10:042",
+                    "tempo_atual": "00:10:042",
+                    "timestamp": 1619053055.178,
+                    "voltas": 3,
+                    "pits": 0,
+                    "pos_inicial": 2
                 },
                 "E20000172211013118905493": {
                     "piloto_id": 2,
                     "carro_epc": "E20000172211013118905493",
-                    "tempo_total": "9:99:999",
-                    "tempo_menor": "9:99:999",
-                    "tempo_atual": "9:99:999",
-                    "timestamp": 0,
-                    "voltas": 0,
-                    "pits": 0
+                    "tempo_total": "00:30:233",
+                    "tempo_menor": "00:10:037",
+                    "tempo_atual": "00:10:084",
+                    "timestamp": 1619053054.919,
+                    "voltas": 3,
+                    "pits": 0,
+                    "pos_inicial": 1
                 }
             }
         },
@@ -150,6 +155,7 @@
             "corrida_id": 2,
             "quantidadeDeVoltas": 5,
             "qualificatoriaDuracao": "00:12:000",
+            "classificacaoDuracao": "00:00:00",
             "qualificatoriaCompleta": 1,
             "corridaCompleta": 1,
             "circuito_id": 1,
@@ -233,6 +239,7 @@
             "corrida_id": 3,
             "quantidadeDeVoltas": 3,
             "qualificatoriaDuracao": "01:00:000",
+            "classificacaoDuracao": "00:00:00",
             "qualificatoriaCompleta": 1,
             "corridaCompleta": 1,
             "circuito_id": 1,
@@ -316,5 +323,5 @@
     "tags": {
         "last": {}
     },
-    "corrida_ativa": 3
+    "corrida_ativa": 1
 }

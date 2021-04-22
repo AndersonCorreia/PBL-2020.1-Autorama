@@ -6,7 +6,7 @@
 {% block content %}
     <div class="row my-4">
         <div class="col-12 col-md-6">
-            <h5>{% block title %}SESSÃO DE QUALIFICAÇÃO: <a id='time'></a> {% endblock %}</h5>
+            <h5>{% block title %}SESSÃO DE QUALIFICAÇÃO: <a id='time'>{{'00:00:00' if status==0 else tempo}}</a> {% endblock %}</h5>
         </div>
         <div class="col-12 col-md-6">
             <h5>Recorde do Circuito: {{circuito['recorde']}}</h5>
@@ -70,10 +70,15 @@
     }
     if ('{{status}}' != '1') { // se a qualificatoria não estiver completa excecuta o javascript
         iniciarThread()
-        
+        const count = new Date();
+        count.setHours(00,00,00);
+        const zeroFill = n => {
+            return ('0' + n).slice(-2);
+        }
         const interval = setInterval(() => {
             var qualificatoria = [];
             let dados =  document.getElementById("dados")
+            let time = document.getElementById("time");
             $.ajax({
                 url: "{{url_for('updateQualificatoria')}}",
                 type: 'GET',
@@ -84,7 +89,7 @@
             }).done(function(result){
                 qualificatoria = result.data;
                 console.log(result.status);
-                dados.innerHTML = ""
+                dados.innerHTML = "";
                 qualificatoria.forEach(function (item, pos) {
                     pos=pos+1;
                     dados.innerHTML = dados.innerHTML + 
@@ -102,6 +107,10 @@
                     clearInterval(interval);
                 }
             });
+            //formata e atualiza o tempo percorrido na tela
+            count.setSeconds(count.getSeconds() + 1);
+            const pastTime = zeroFill(count.getHours()) + ':' + zeroFill(count.getMinutes()) + ':' + zeroFill(count.getSeconds());
+            time.innerHTML = pastTime;
         }, 1000);
     }
 </script>
