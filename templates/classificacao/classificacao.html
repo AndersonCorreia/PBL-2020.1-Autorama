@@ -111,6 +111,24 @@
                     "</tr>";
                 });
                 if(result.status == 1){
+                    //enviar o tempo de duração da classificação para ser armazenado
+                    $.ajax({
+                        data: {
+                            time: document.getElementById("time")
+                        },
+                        type: 'POST',
+                        url: "{{url_for('updateClassificacao')}}"
+                    }).done(function(data){
+                        console.log(data.time);
+                        if (data.error) {
+                            $('#errorAlert').text(data.error).show();
+                            $('#successAlert').hide();
+                        }
+                        else {
+                            $('#successAlert').text(data.name).show();
+                            $('#errorAlert').hide();
+                        }
+                    });
                     clearInterval(interval);
                 }
             });
@@ -120,23 +138,7 @@
             time.innerHTML = pastTime;
             
         }, 1000);
-        //enviar o tempo de duração da classificação para ser armazenado
-        $.ajax({
-            data: {
-                time: document.getElementById("time")
-            },
-            type: 'POST',
-            url: "{{url_for('classificacao')}}"
-        }).done(function(data){
-            if (data.error) {
-                $('#errorAlert').text(data.error).show();
-                $('#successAlert').hide();
-            }
-            else {
-                $('#successAlert').text(data.name).show();
-                $('#errorAlert').hide();
-            }
-        });
+        
     }
 </script>
 {% endblock %}

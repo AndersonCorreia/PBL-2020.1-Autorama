@@ -59,24 +59,24 @@ def rest():
     qualificatoria.resetQualificatoria()
     return render_template("qualificatoria/timer.html", rest=session["rest"])
 
-@app.route('/classificacao', methods=['GET', 'POST'])
+@app.route('/classificacao', methods=['GET'])
 def classificacao():
-    classificacao = Classificacao()
-    if (request.method == "GET"):
-        autorama = Autorama()
-        corrida = classificacao.corrida
-        classificacaoDados = classificacao.getDadosClassificacao()
-        return render_template('classificacao/classificacao.html', tempo = corrida['classificacaoDuracao'], status = corrida['corridaCompleta'], classificacao=classificacaoDados, circuito = autorama.getPista(corrida['circuito_id']), contentLarge=True)
-    if (request.method == "POST"):
-        classificacao.setTime(request.form['time'])
-
-@app.route('/classificacao/atualizar', methods=['GET'])
-def updateClassificacao():
     if (request.method == "GET"):
         autorama = Autorama()
         classificacao = Classificacao()
+        corrida = classificacao.corrida
+        classificacaoDados = classificacao.getDadosClassificacao()
+        return render_template('classificacao/classificacao.html', tempo = corrida['classificacaoDuracao'], status = corrida['corridaCompleta'], classificacao=classificacaoDados, circuito = autorama.getPista(corrida['circuito_id']), contentLarge=True)
+
+@app.route('/classificacao/atualizar', methods=['GET', 'POST'])
+def updateClassificacao():
+    classificacao = Classificacao()
+    if (request.method == "GET"):
+        autorama = Autorama()
         classificacaoDados = classificacao.getDadosClassificacao()
         return {'data': classificacaoDados, 'status': classificacao.corrida['corridaCompleta'] }
+    if (request.method == "POST"):
+        classificacao.setTime(request.form['time'])
 
 @app.route("/rest/classificacao")
 def restClassificacao():
