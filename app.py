@@ -77,6 +77,7 @@ def updateClassificacao():
         return {'data': classificacaoDados, 'status': classificacao.corrida['corridaCompleta'] }
     if (request.method == "POST"):
         classificacao.setTime(request.form['time'])
+        return redirect(url_for('classificacao'))
 
 @app.route("/rest/classificacao")
 def restClassificacao():
