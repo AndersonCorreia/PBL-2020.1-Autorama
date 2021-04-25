@@ -34,6 +34,15 @@ def test():
     
     return render_template('index.html', success=success, error=error)
 
+@app.route('/qualificatoria/<int:id>', methods=['GET'])
+def qualificatoriaHistorico(id):
+    if (request.method == "GET"):
+        autorama = Autorama()
+        qualificatoria = Qualificatoria(id)
+        corrida = qualificatoria.corrida
+        qualificatoriaDados = qualificatoria.getDadosQualificatoria()
+        return render_template('qualificatoria/qualificatoria.html', status = corrida['qualificatoriaCompleta'], qualificatoria=qualificatoriaDados, circuito = autorama.getPista(corrida['circuito_id']))
+
 @app.route('/qualificatoria', methods=['GET'])
 def qualificatoria():
     if (request.method == "GET"):
@@ -58,6 +67,15 @@ def rest():
     qualificatoria = Qualificatoria()
     qualificatoria.resetQualificatoria()
     return render_template("qualificatoria/timer.html", rest=session["rest"])
+
+@app.route('/classificacao/<int:id>', methods=['GET'])
+def classificacaoHistorico(id):
+    if (request.method == "GET"):
+        autorama = Autorama()
+        classificacao = Classificacao(id)
+        corrida = classificacao.corrida
+        classificacaoDados = classificacao.getDadosClassificacao()
+        return render_template('classificacao/classificacao.html', status = corrida['corridaCompleta'], classificacao=classificacaoDados, circuito = autorama.getPista(corrida['circuito_id']), contentLarge=True)
 
 @app.route('/classificacao', methods=['GET'])
 def classificacao():

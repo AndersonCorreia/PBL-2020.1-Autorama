@@ -26,14 +26,14 @@
                     {%if not corrida['qualificatoriaCompleta'] %}
                         Não ocorreu
                     {% else %}
-                        <a href="{{url_for('qualificatoria')}}" class="btn-sm btn-info text-white m-2">Resultado</a>
+                        <a href="{{url_for('qualificatoriaHistorico', id=corrida['corrida_id'])}}" class="btn-sm btn-info text-white m-2">Resultado</a>
                     {% endif %}
                 </td>
                 <td>
                     {%if not corrida['corridaCompleta'] %}
                         Não ocorreu
                     {% else %}
-                        <a href="{{url_for('classificacao')}}" class="btn-sm btn-success text-white m-2">Resultado</a>
+                        <a href="{{url_for('classificacaoHistorico', id=corrida['corrida_id'])}}" class="btn-sm btn-success text-white m-2">Resultado</a>
                     {% endif %}
                 </td>
             </tr>
