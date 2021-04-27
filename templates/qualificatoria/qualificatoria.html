@@ -5,16 +5,16 @@
 
 {% block content %}
     <div class="row my-4">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-7">
             <h5>{% block title %}SESSÃO DE QUALIFICAÇÃO: <a id='time'>{{'00:00:00' if status==0 else tempo}}</a> {% endblock %}</h5>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-5">
             <h5>Recorde do Circuito: {{circuito['recorde']}}</h5>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-7">
             <h5>CLASSIFICAÇÃO</h5>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-5">
             <h5>Autor: {{circuito['autor']}}</h5>
         </div>
     </div>
@@ -103,14 +103,16 @@
                         "<td>"+ item['voltas']+"</td>"+
                     "</tr>";
                 });
+                //formata e atualiza o tempo percorrido na tela
+                count.setSeconds(count.getSeconds() + 1);
+                const pastTime = zeroFill(count.getHours()) + ':' + zeroFill(count.getMinutes()) + ':' + zeroFill(count.getSeconds());
+                time.innerHTML = pastTime;
                 if(result.status == 1){
                     clearInterval(interval);
+                    time.innerHTML = pastTime + " - Finalizada";
                 }
             });
-            //formata e atualiza o tempo percorrido na tela
-            count.setSeconds(count.getSeconds() + 1);
-            const pastTime = zeroFill(count.getHours()) + ':' + zeroFill(count.getMinutes()) + ':' + zeroFill(count.getSeconds());
-            time.innerHTML = pastTime;
+            
         }, 1000);
     }
 </script>

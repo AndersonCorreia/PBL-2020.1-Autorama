@@ -116,6 +116,7 @@
                 time.innerHTML = pastTime;
 
                 if(result.status == 1){
+                    time.innerHTML = pastTime + " - Finalizada";
                     clearInterval(interval);
                     //enviar o tempo de duração da classificação para ser armazenado
                     $.ajax({
