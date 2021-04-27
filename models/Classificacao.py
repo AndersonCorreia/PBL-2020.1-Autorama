@@ -66,7 +66,7 @@ class Classificacao:
             tempoAposPrimeiro = self.autorama.timestampFormat( (result['timestamp'] - self.primeiroTimestamp) )
             # tempo desde que o primeiro colocado concluiu uma volta
             print(tempoAposPrimeiro)
-            if(self.primeiroVoltas >= self.corrida['quantidadeDeVoltas'] and tempoAposPrimeiro > "00:15:000" ):
+            if(self.primeiroVoltas >= self.corrida['quantidadeDeVoltas'] and tempoAposPrimeiro > "00:15:000" or self.corridaEnd ):
                 self.corridaEnd = True
                 self.corrida['corridaCompleta'] = 1   #encerrada
             else: 

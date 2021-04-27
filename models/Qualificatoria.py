@@ -58,7 +58,7 @@ class Qualificatoria:
             tempoPercorrido = self.autorama.timestampFormat((result['time']))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
             print(tempoPercorrido)
             print(corrida['qualificatoriaDuracao'])
-            if(corrida['qualificatoriaDuracao'] <= tempoPercorrido ):
+            if(corrida['qualificatoriaDuracao'] <= tempoPercorrido or self.corridaEnd):
                 self.corridaEnd = True
                 self.corrida['qualificatoriaCompleta'] = 1   #encerrada
             else: 
