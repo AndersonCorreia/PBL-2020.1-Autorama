@@ -14,7 +14,7 @@ class Autorama:
 
     def addCircuito(self, circuito):
         if int(circuito['circuito_id']) == 0:
-            circuito['circuito_id'] = self.dados['circuitos'][-1]['circuito_id'] + 1
+            circuito['circuito_id'] =  self.dados['circuitos'][-1]['circuito_id'] + 1 if len(self.dados['circuitos']) > 0 else 1
             self.dados['circuitos'].append(circuito)
             self.save()
             # depois fazer função de update
@@ -53,7 +53,7 @@ class Autorama:
         if int(corrida['corrida_id']) == 0:
             corrida['circuito_id'] = int(corrida['circuito_id'])
             corrida['quantidadeDeVoltas'] = int(corrida['quantidadeDeVoltas'])
-            corrida['corrida_id'] = self.dados['corridas'][-1]['corrida_id'] + 1 #autoincremento
+            corrida['corrida_id'] = self.dados['corridas'][-1]['corrida_id'] + 1 if len(self.dados['corridas']) > 0 else 1 #autoincremento
             corrida.pop('piloto_id[]', '')
             self.dados['corridas'].append(corrida)
             self.save()
