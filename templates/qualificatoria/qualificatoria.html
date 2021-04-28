@@ -108,8 +108,8 @@
                 const pastTime = zeroFill(count.getHours()) + ':' + zeroFill(count.getMinutes()) + ':' + zeroFill(count.getSeconds());
                 time.innerHTML = pastTime;
                 if(result.status == 1){
-                    clearInterval(interval);
                     time.innerHTML = pastTime + " - Finalizada";
+                    clearInterval(interval);
                 }
             });
             
