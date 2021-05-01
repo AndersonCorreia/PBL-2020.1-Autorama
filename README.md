@@ -7,7 +7,7 @@ Para rodar o programa, você vai precisar ter instalado em sua máquina as segui
 [pip](https://pypi.org/project/pip/)
 [Flask](https://flask.palletsprojects.com/en/1.1.x/installation/)
 
-'''bash
+```bash
 # Clone este repositório
 $ git clone <https://github.com/AndersonCorreia/PBL-2020.1-Autorama.git>
 
@@ -18,15 +18,15 @@ $ python3 -m venv venv
 $ source venv/bin/activate
 
 # No Windows
-> py -3 -m venv venv
-> venv\Scripts\activate
+>> py -3 -m venv venv
+>> venv\Scripts\activate
 
 # Instale o Flask
 $ pip install Flask
-'''
+```
 
 ### Para executar a aplicação web dentro do ambiente virtual
-'''bash
+```bash
 # Definir as variáveis de ambiente:
 $ export FLASK_APP=app
 $ export FLASK_ENV=development
@@ -35,4 +35,4 @@ $ export FLASK_ENV=development
 $ flask run
 
 Ao abrir a URL <http://127.0.0.1:5000/>, que será exibida no terminal, a aplicação já poderá ser usada. 
-'''
+```
