@@ -3,7 +3,7 @@
 
 ### Pré-requisitos
 
-Para rodar a aplicação web, você vai precisar ter instalado em sua máquina as seguintes ferramentas 🛠:
+Para rodar o servidor, você vai precisar ter instalado em sua máquina as seguintes ferramentas 🛠:
 [Python 3.5 ou superior](https://www.python.org/downloads/) 
 
 ### Para executar a aplicação do servidor
