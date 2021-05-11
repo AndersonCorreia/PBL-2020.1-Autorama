@@ -1,3 +1,7 @@
 ssh pi@augusto.ddns.net -p 2222
 autorama
 sudo ss -tulpn
+ClientId: anderson-strife@outlook.com
+    User: andersonstrife
+Password: hTj81HMd-ef88de2B
+             
