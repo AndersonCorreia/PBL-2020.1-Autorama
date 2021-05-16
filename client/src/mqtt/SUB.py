@@ -6,20 +6,21 @@ logging.basicConfig(level=logging.INFO)
 
 class Subscriber:
     
-    def __init__(self, host, port, ID, user, passwd):
+    def __init__(self, host, port, ID, user, passwd, topic = "/#"):
         self.host = host
         self.port = port
         self.client = mqtt.Client(ID, False)
         self.client.username_pw_set(user, passwd)
-        self.topic = None
+        self.topic = topic
         self.receiveMsg = False
         self.msg = None
         self.client.on_log = self.on_log
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
 
-    def request(self, path="/#"):
-        self.topic = path
+    def request(self, path=None):
+        if path != None:
+            self.topic = path
         self.client.connect(self.host, self.port)
         self.client.loop_start()
 
@@ -41,14 +42,16 @@ class Subscriber:
         self.receiveMsg = True
         
     def requestRecv(self, stop=True):
-        if( self.receiveMsg ):
+        if self.receiveMsg :
             self.receiveMsg = False
-            if( stop ):
+            if stop :
                 self.client.disconnect()
                 self.client.loop_stop()
             return self.msg
         time.sleep(0.5)
-
+        
+    def setTopic(self, topic):
+        self.topic = topic
 # para teste
-sub = Subscriber("node02.myqtthub.com", 1883, "marianalima0803@gmail.com", "marianasls", "oUJeeKGZ-RxhrHx4T")
-sub.request()
+# sub = Subscriber("node02.myqtthub.com", 1883, "marianalima0803@gmail.com", "marianasls", "oUJeeKGZ-RxhrHx4T")
+# sub.request()
