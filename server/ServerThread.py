@@ -1,66 +1,55 @@
 # coding=utf-8
-from controllers.AutoramaController import AutoramaController
+from server.mqtt import PUB
+from server.controllers.AutoramaController import AutoramaController
 import json
-from models import Botão
+from server.models import Botão
 from threading import Thread
 
 class ServerThread(Thread):
     
-    def __init__(self, client, data):
+    def __init__(self, data, pub):
         Thread.__init__(self)
-        self.client = client
         self.data = data
+        self.pub = pub
 
     def run(self):
         if self.data:
-            response = self.route(self.data, self.client)
-            self.client.send(response.encode('utf-8'))
-            # end connection
-            if not self.data['remainsOpen']:
-                self.client.close()
-        else:
-            self.client.close()
+            response = self.route(self.data, self.pub)
+            self.pub.request(self.data['path'],response.encode('utf-8'))
             
-    def route(self, data, client):
+    def route(self, data, pub):
         print("data\n")
         print(data)
-        if data['path'] and data['method']:
-            dados = self.redirecionamento(client, data['path'], data['method'], data['headers'])
+        if data['path']:
+            dados = self.redirecionamento(pub, data['path'], data['headers'])
             print("dados\n")
             print(dados)
             return json.dumps({'success': dados['success'], "response": dados['dados']})
         else:
-            return json.dumps({'success': False, "response": {"erro": "O path e/ou method não foram informados"} })
+            return json.dumps({'success': False, "response": {"erro": "O topico não foi informado"} })
 
-    def redirecionamento(self, client, path, method, headers=[]):
+    def redirecionamento(self,pub, path, headers=[]):
         if path == "/test":
-            if method == "GET":
-                return {"success": True, 'dados': ''}
+            return {"success": True, 'dados': ''}
 
         if path == "/config/leitor":
-            if method == "POST":
-                AutoramaController.setConfigLeitor(headers)
-                return {'success': True, 'dados': ''}
+            AutoramaController.setConfigLeitor(headers)
+            return {'success': True, 'dados': ''}
 
         if path == "/configuração/carro":
-            if method == "GET":
-                return AutoramaController.readTag()
+            return AutoramaController.readTag()
 
         if path == "/autorama/tags/read":
-            if method == "GET":
-                return AutoramaController.readTag()
-            
-        if path == "/corrida/qualificatoria/carros":
-            if method == "POST":
-                return AutoramaController.definirTagsParaLeitura(headers)
-            
-        if path == "/corrida/qualificatoria/acompanhar":
-            if method == "GET":
-                return AutoramaController.qualificatoria(headers, client)
+            return AutoramaController.readTag()
         
+        if path == "/corrida/qualificatoria/carros":
+            return AutoramaController.definirTagsParaLeitura(headers)
+        
+        if path == "/corrida/qualificatoria/acompanhar":
+            return AutoramaController.qualificatoria(headers, pub)
+    
         if path == "/button":
-            if method == "GET":
-                Botão.button()
-                return {'success': True, 'dados': ''}
+            Botão.button()
+            return {'success': True, 'dados': ''}
 
         return {'success': False, 'dados': 'Rota não encontrada'}

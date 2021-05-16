@@ -1,14 +1,14 @@
 # coding=utf-8
-from models.Autorama import Autorama
-from models.Leitor import Leitor
-from mercury_.sensor import *
+from server.models.Autorama import Autorama
+from server.models.Leitor import Leitor
+from server.mercury_.sensor import *
 from threading import Thread
 
 class SensorThread(Thread):
 
-	def __init__ (self, client, buffer, function='read_send'):
+	def __init__ (self, pub, buffer, function='read_send'):
 		Thread.__init__(self)
-		self.client = client
+		self.pub = pub
 		self.buffer = buffer
 		self.funcao = function
 
@@ -33,6 +33,11 @@ class SensorThread(Thread):
 				self.send()
 				time.sleep(0.5)
 			return
+		elif(self.funcao == 'encerrar'):
+			sub = self.pub.getSUB('/corrida/encerrar')
+			sub.request()
+			sub.requestRecv()# aguardar até receber mensagem no topico de encerrar corrida
+			self.buffer['close'] = True
 		else:
 			print("função deschonhecida para iniciar a thread do sensor: ")
 			print(self.funcao)
@@ -52,19 +57,10 @@ class SensorThread(Thread):
 					tag = self.buffer['tagsNoSend'].pop(0)#sempre pega a primeira na fila para enviar
 					print(tag)
 					print('\n')
-					self.client.send(json.dumps(tag).encode('utf-8') )
-					data = json.loads( self.client.recv(2048) )#se necessario lembra de pegar esse valor dos argumentos
-					print(data)
-					if( data['success'] == True):#cliente deve retornar que recebeu a informação com successo
-						print('tag enviada com sucesso')
-						self.buffer['tagsSend'].append(tag)
-						if( data['encerrarCorrida'] == True):
-							self.client.close()
-							self.buffer['close'] = True
-							#encerrar a thread nesse caso
-					else:
-						print ("Tag não foi enviada com sucesso")
-						self.buffer['tagsNoSend'].insert(0,tag)
+					self.pub.request(json.dumps(tag).encode('utf-8') )
+					self.buffer['tagsSend'].append(tag)
+					# print ("Tag não foi enviada com sucesso")
+					# self.buffer['tagsNoSend'].insert(0,tag)
 			except Exception as e: 
 				print ("Other exception: %s" %str(e))
 				print ("Tag não foi enviada com sucesso")
@@ -89,20 +85,10 @@ class SensorThread(Thread):
 				print("Enviando a tag:\n")
 				print(tag)
 				print('\n')
-				self.client.send(json.dumps(tag).encode('utf-8') )
-				data = json.loads( self.client.recv(2048) )#se necessario lembra de pegar esse valor dos argumentos
-				print("resposta do cliente: ")
-				print(data)
-				if( data['success'] == True):#cliente deve retornar que recebeu a informação com successo
-					print('tag enviada com sucesso')
-					self.buffer['tagsSend'].append(tag)
-					if( data['encerrarCorrida'] == True):
-						self.client.close()
-						self.buffer['close'] = True
-						#encerrar a thread nesse caso
-				else:
-					print ("Tag não foi enviada com sucesso")
-					self.buffer['tagsNoSend'].insert(0,tag)
+				self.pub.request(json.dumps(tag).encode('utf-8') )
+				self.buffer['tagsSend'].append(tag)
+				# print ("Tag não foi enviada com sucesso")
+				# self.buffer['tagsNoSend'].insert(0,tag)
 		except Exception as e: 
 			print ("Exception: %s" %str(e))
 			print ("Tag não foi enviada com sucesso")

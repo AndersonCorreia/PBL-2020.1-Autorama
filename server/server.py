@@ -3,35 +3,25 @@ import socket
 import sys
 import argparse
 import json
-from ServerThread import ServerThread
+from server.ServerThread import ServerThread
+from server.mqtt.SUB import Subscriber
+from server.mqtt.PUB import Publisher
 
 parser = argparse.ArgumentParser(description='arg')
-parser.add_argument('--host', '-ip',help= "host/ip para conexão", default='172.16.1.0')
-parser.add_argument('--port', '-p', type=int, help= "porta usada para a conexão", default=5030)
-parser.add_argument('--data_payload', '-dp', type=int,help= "A quantidade maxima de dados recebidos de uma vez",
-                    default='2048')
-parser.add_argument('--listen_qtd', '-l', type=int,help= "Numero maximo de conexões ativas.",
-                    default='204')
+parser.add_argument('--host', '-ip',help= "host/ip para conexão", default='node02.myqtthub.com')
+parser.add_argument('--port', '-p', type=int, help= "porta usada para a conexão", default=1883)
+parser.add_argument('--mqttid', '-mid', help= "mqtt: Id do dispositivo", default='1')
+parser.add_argument('--mqttuser', '-mu', help= "mqtt: usuario", default='cliente1')
+parser.add_argument('--mqttpassword', '-mp', help= "mqtt: senha", default='24680')
 args = parser.parse_args()
 
-def server(host = args.host, port = args.port, listen = args.listen_qtd):
-    data_payload = args.data_payload #The maximum amount of data to be received at once
-    # Create a TCP socket
-    sock = socket.socket(socket.AF_INET,  socket.SOCK_STREAM)
-    # Enable reuse address/port 
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    # Bind the socket to the port
-    server_address = (host, port)
-    print ("Starting server on %s port %s" % server_address)
-    sock.bind(server_address)
-    # Listen to clients, argument specifies the max no. of queued connections
-    sock.listen(listen) 
-    i = 0
+def server(host = args.host, port = args.port, id = args.mqttid, user = args.mqttuser, password = args.mqttpassword):
+    sub = Subscriber(host, port, id, user, password)
+    sub.request()
     while True: 
-        client, address = sock.accept() 
-        data = client.recv(data_payload)
-        data = json.loads(data)
-        if data:
-            serverT = ServerThread(client, data)
-            serverT.start()  
+        msg = sub.requestRecv(False)
+        data = { "path" : msg.topic , "headers" : msg.payload}
+        pub = Publisher(host, port, id, user, password, msg.topic)
+        serverT = ServerThread(data, pub)
+        serverT.start()  
 server()

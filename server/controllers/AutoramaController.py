@@ -1,8 +1,8 @@
 # coding=utf-8
-from models.Autorama import Autorama
-from models.Leitor import Leitor
-from mercury_.sensor import *
-from controllers.SensorThread import SensorThread
+from server.models.Autorama import Autorama
+from server.models.Leitor import Leitor
+from server.mercury_.sensor import *
+from server.controllers.SensorThread import SensorThread
 class AutoramaController:
     
     @staticmethod
@@ -29,12 +29,14 @@ class AutoramaController:
         return {'success': True, 'dados': []}
     
     @staticmethod  
-    def qualificatoria(headers, client):
+    def qualificatoria(headers, pub):
         log = loadLog()
-        sensorTRead = SensorThread(client, log, 'read')
+        sensorTRead = SensorThread(pub, log, 'read')
         sensorTRead.start()
-        sensorTSend = SensorThread(client, log, 'send')
+        sensorTSend = SensorThread(pub, log, 'send')
         sensorTSend.start()
+        sensorTEncerrar = SensorThread(pub, log, 'encerrar')
+        sensorTEncerrar.start()
         return {'success': True, 'dados': []}
     
     @staticmethod

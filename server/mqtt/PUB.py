@@ -1,3 +1,4 @@
+from server.mqtt.SUB import Subscriber
 import paho.mqtt.client as mqtt
 import time
 import logging
@@ -6,20 +7,24 @@ logging.basicConfig(level=logging.INFO)
 
 class Publisher:
     
-    def __init__(self, host, port, ID, user, passwd):
+    def __init__(self, host, port, ID, user, passwd, topic = "/#"):
         self.host = host
         self.port = port
+        self.ID = ID
+        self.user = user
+        self.passwd = passwd
         self.client = mqtt.Client(ID, False)
         self.client.username_pw_set(user, passwd)
-        self.topic = None
+        self.topic = topic
         self.client.on_log = self.on_log
         self.client.on_connect = self.on_connect
         self.client.on_disconnect = self.on_disconnect
         self.client.on_publish = self.on_publish      
         mqtt.Client.connected_flag=False
 
-    def request(self, path="/", message=""):
-        self.topic = path
+    def request(self, message="", path= None):
+        if path != None:
+            self.topic = path
         self.client.connect(self.host, self.port)
 
         self.client.loop_start()
@@ -52,8 +57,13 @@ class Publisher:
         logging.info("data published \n")     
 
     def reset(self):
-        ret = self.client.publish("/test", "", 0, True)  
-
+        ret = self.client.publish("/test", "", 0, True)
+        
+    def setTopic(self, topic):
+        self.topic = topic
+    
+    def getSUB(self, topic = None):
+        return Subscriber(self.host, self.port, self.ID, self.user, self.passwd, topic)
 # para teste
-pub = Publisher("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
-pub.request("/test", "teste")
+# pub = Publisher("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
+# pub.request("/test", "teste")
