@@ -27,13 +27,13 @@ class Qualificatoria:
     #o codigo abaixo deve ser executado em uma thread separada
     def qualificatoriaAcompanhar(self):
         connection = self.leitor.getConnection()
-        connection.requestOpen('/corrida/qualificatoria/acompanhar', 'GET', '')
+        connection.request('/corrida/qualificatoria/acompanhar')
         self.corridaEnd = False
         corrida = self.autorama.getCorridaAtual()
         qualificatoria = corrida['qualificatoria']
         while not self.corridaEnd:
             # result = {"tag": epc , "timestamp": timestamp, "time": timestamp desde o inicio da qualificatoria ) }
-            result = connection.requestRecv()#aguarda o leitor responder com uma tag
+            result = connection.requestRecv(False)#aguarda o leitor responder com uma tag
             qualificacao = qualificatoria[result['tag']]
             if(qualificacao['timestamp'] == 0):
                 lap_time = result['time']

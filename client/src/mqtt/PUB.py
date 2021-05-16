@@ -27,11 +27,10 @@ class Publisher:
             time.sleep(1)
 
         # Send data 
-        message = json.dumps({"message": message})
-        ret = self.client.publish("/test", message.encode('utf-8'), 0)   #using qoS-0 
+        message = json.dumps({"headers": message})
+        ret = self.client.publish(self.topic, message.encode('utf-8'), 0)   #using qoS-0 
         logging.info("published return="+str(ret))
-    
-        time.sleep(2)
+        
         self.client.loop_stop()
         self.client.disconnect()
 

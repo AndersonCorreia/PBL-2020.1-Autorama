@@ -1,3 +1,5 @@
+import json
+import time
 import paho.mqtt.client as mqtt
 import logging
 logging.basicConfig(level=logging.INFO)
@@ -10,6 +12,8 @@ class Subscriber:
         self.client = mqtt.Client(ID, False)
         self.client.username_pw_set(user, passwd)
         self.topic = None
+        self.receiveMsg = False
+        self.msg = None
         self.client.on_log = self.on_log
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
@@ -17,7 +21,7 @@ class Subscriber:
     def request(self, path="/#"):
         self.topic = path
         self.client.connect(self.host, self.port)
-        self.client.loop_forever()
+        self.client.loop_start()
 
     #create functions for callback
     def on_log(self, client, userdata, level, buf):
@@ -30,7 +34,20 @@ class Subscriber:
         
     # The callback for when a PUBLISH message is received from the server.
     def on_message(self, client, userdata, msg):
-        logging.info(msg.topic+" "+msg.payload.decode("utf-8"))
+        msg.payload = msg.payload.decode("utf-8")
+        logging.info(msg.topic+" "+msg.payload)
+        msg.payload = json.loads(msg.payload)
+        self.msg = msg
+        self.receiveMsg = True
+        
+    def requestRecv(self, stop=True):
+        if( self.receiveMsg ):
+            self.receiveMsg = False
+            if( stop ):
+                self.client.disconnect()
+                self.client.loop_stop()
+            return self.msg
+        time.sleep(0.5)
 
 # para teste
 sub = Subscriber("node02.myqtthub.com", 1883, "marianalima0803@gmail.com", "marianasls", "oUJeeKGZ-RxhrHx4T")
