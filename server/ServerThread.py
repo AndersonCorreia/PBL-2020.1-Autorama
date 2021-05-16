@@ -34,7 +34,7 @@ class ServerThread(Thread):
 
     def redirecionamento(self, client, path, method, headers=[]):
         if path == "/test":
-            if method == "GET":# posteriormente testa uma conexão real com o leitor
+            if method == "GET":
                 return {"success": True, 'dados': ''}
 
         if path == "/config/leitor":
