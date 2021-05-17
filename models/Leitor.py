@@ -1,8 +1,9 @@
-
 # coding=utf-8
+from client.src.mqtt.SUB import Subscriber
 import json
 import os
 from client.src.socket_.Client import Client
+from client.src.mqtt.PUB import Publisher
 
 class Leitor:
     def __init__(self, file=os.path.dirname(os.path.realpath(__file__))+"/leitor.json"):
@@ -13,15 +14,20 @@ class Leitor:
         self.dados = dados
         open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False,))
         connection = self.getConnection()
-        return connection.request('/config/leitor', "POST", self.dados)
+        connection.request('/config/leitor', self.dados)
+        return connection.requestRecv()['headers']
 
     def testConnection(self):
         open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False,))
         connection = self.getConnection()
-        return connection.request('/test', "GET")
+        connection.request('/test')
+        return connection.requestRecv()['headers']
     
-    def getConnection(self):
-        return Client(self.dados['ip'], int(self.dados['port']), 2048)
+    def getConnection(self, i=1):
+        if i: return Publisher("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
+        else: return Subscriber("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
 
     def getButton(self):
-        return self.getConnection().request('/button', "GET")
+        connection = self.getConnection(2)
+        connection.request('/button')
+        return connection.requestRecv()['headers']

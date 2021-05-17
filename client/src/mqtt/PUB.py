@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 
 class Publisher:
     
-    def __init__(self, host, port, ID, user, passwd, topic = "/#"):
+    def __init__(self, host, port, ID, user, passwd, topic = "/"):
         self.host = host
         self.port = port
         self.ID = ID

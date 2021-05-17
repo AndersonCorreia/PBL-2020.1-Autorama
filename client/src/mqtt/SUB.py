@@ -42,13 +42,13 @@ class Subscriber:
         self.receiveMsg = True
         
     def requestRecv(self, stop=True):
-        if self.receiveMsg :
-            self.receiveMsg = False
-            if stop :
-                self.client.disconnect()
-                self.client.loop_stop()
-            return self.msg
-        time.sleep(0.5)
+        while not self.receiveMsg:
+            time.sleep(0.5)
+        self.receiveMsg = False
+        if stop :
+            self.client.disconnect()
+            self.client.loop_stop()
+        return self.msg
         
     def setTopic(self, topic):
         self.topic = topic
