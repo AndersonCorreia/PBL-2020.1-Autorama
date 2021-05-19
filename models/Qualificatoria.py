@@ -64,7 +64,7 @@ class Qualificatoria:
             else: 
                 self.corrida['qualificatoriaCompleta'] = 2  #sendo realizada
             self.save()
-            connection.request({"success": True, "encerrarCorrida": self.corridaEnd})
+        connection.request('/corrida/encerrar')
         self.setPosInicialForCorrida()
     
     def getDadosQualificatoria(self):

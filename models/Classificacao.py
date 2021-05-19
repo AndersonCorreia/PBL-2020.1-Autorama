@@ -72,7 +72,7 @@ class Classificacao:
             else: 
                 self.corrida['corridaCompleta'] = 2  #sendo realizada
             self.save()
-            connection.request({"success": True, "encerrarCorrida": self.corridaEnd})
+        connection.request('/corrida/encerrar')
     
     def getDadosClassificacao(self):
         corrida = self.corrida
