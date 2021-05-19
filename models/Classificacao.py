@@ -26,12 +26,12 @@ class Classificacao:
     def classificacao(self):
         connection = self.leitor.getConnection()
         headers = { 'pilotos': self.corrida['pilotos'], 'tempoMinimoVolta': self.autorama.getPista(self.corrida['circuito_id'])['tempoMinimoVolta'] }
-        connection.request('/corrida/qualificatoria/carros', 'POST', headers)#informa ao leitor quais as tags que devem ser lidas
+        connection.request('/corrida/qualificatoria/carros', headers)#informa ao leitor quais as tags que devem ser lidas
         
     #o codigo abaixo deve ser executado em uma thread separada
     def classificacaoAcompanhar(self):
         connection = self.leitor.getConnection()
-        connection.requestOpen('/corrida/qualificatoria/acompanhar', 'GET', '')
+        connection.request('/corrida/qualificatoria/acompanhar', '')
         self.corridaEnd = False
         classificacao = self.corrida['classificacao']
         while not self.corridaEnd:
@@ -72,8 +72,7 @@ class Classificacao:
             else: 
                 self.corrida['corridaCompleta'] = 2  #sendo realizada
             self.save()
-            connection.requestSend({"success": True, "encerrarCorrida": self.corridaEnd})
-        connection.requestClose()
+            connection.request({"success": True, "encerrarCorrida": self.corridaEnd})
     
     def getDadosClassificacao(self):
         corrida = self.corrida
