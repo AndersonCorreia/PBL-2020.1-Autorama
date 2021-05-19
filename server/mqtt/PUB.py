@@ -1,4 +1,4 @@
-from server.mqtt.SUB import Subscriber
+from mqtt.SUB import Subscriber
 import paho.mqtt.client as mqtt
 import time
 import logging
@@ -16,13 +16,13 @@ class Publisher:
         self.client = mqtt.Client(ID, False)
         self.client.username_pw_set(user, passwd)
         self.topic = topic
-        self.client.on_log = self.on_log
+        # self.client.on_log = self.on_log
         self.client.on_connect = self.on_connect
         self.client.on_disconnect = self.on_disconnect
         self.client.on_publish = self.on_publish      
         mqtt.Client.connected_flag=False
 
-    def request(self, message="", path= None):
+    def request(self, path= None, message=""):
         if path != None:
             self.topic = path
         self.client.connect(self.host, self.port)
@@ -33,7 +33,7 @@ class Publisher:
 
         # Send data 
         message = json.dumps({"headers": message})
-        ret = self.client.publish(self.topic, message.encode('utf-8'), 0)   #using qoS-0 
+        ret = self.client.publish(self.topic, message, 0)   #using qoS-0 
         logging.info("published return="+str(ret))
         
         self.client.loop_stop()
@@ -62,8 +62,17 @@ class Publisher:
     def setTopic(self, topic):
         self.topic = topic
     
-    def getSUB(self, topic = None):
+    def getSUB(self, path = None):
+        if path != None: topic = path
+        else: topic = self.topic
         return Subscriber(self.host, self.port, self.ID, self.user, self.passwd, topic)
+    
+    # realizar um subscribe no mesmo topico que enviou informações e espera uma resposta
+    # já devolve o payload da mensagem
+    def requestRecv(self):
+        sub = self.getSUB()
+        sub.request()
+        return sub.requestRecv().payload
 # para teste
 # pub = Publisher("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
 # pub.request("/test", "teste")

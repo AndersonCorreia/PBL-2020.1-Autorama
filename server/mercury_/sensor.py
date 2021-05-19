@@ -3,10 +3,10 @@ from __future__ import print_function
 import time
 from datetime import datetime
 # import mercury
-from server.models.Autorama import Autorama
+from models.Autorama import Autorama
 import json
 import os
-from server.models.Leitor import Leitor
+from models.Leitor import Leitor
 
 leitor = Leitor()
 autorama = Autorama()

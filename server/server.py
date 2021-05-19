@@ -3,9 +3,9 @@ import socket
 import sys
 import argparse
 import json
-from server.ServerThread import ServerThread
-from server.mqtt.SUB import Subscriber
-from server.mqtt.PUB import Publisher
+from ServerThread import ServerThread
+from mqtt.SUB import Subscriber
+from mqtt.PUB import Publisher
 
 parser = argparse.ArgumentParser(description='arg')
 parser.add_argument('--host', '-ip',help= "host/ip para conexão", default='node02.myqtthub.com')
@@ -20,7 +20,9 @@ def server(host = args.host, port = args.port, id = args.mqttid, user = args.mqt
     sub.request()
     while True: 
         msg = sub.requestRecv(False)
-        data = { "path" : msg.topic , "headers" : msg.payload}
+        print(msg)
+        data = msg.payload
+        data["path"] = msg.topic
         pub = Publisher(host, port, id, user, password, msg.topic)
         serverT = ServerThread(data, pub)
         serverT.start()  

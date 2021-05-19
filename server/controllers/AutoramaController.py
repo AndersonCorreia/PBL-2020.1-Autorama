@@ -1,8 +1,8 @@
 # coding=utf-8
-from server.models.Autorama import Autorama
-from server.models.Leitor import Leitor
-from server.mercury_.sensor import *
-from server.controllers.SensorThread import SensorThread
+from models.Autorama import Autorama
+from models.Leitor import Leitor
+from mercury_.sensor import *
+from controllers.SensorThread import SensorThread
 class AutoramaController:
     
     @staticmethod

@@ -1,7 +1,7 @@
 # coding=utf-8
-from server.models.Autorama import Autorama
-from server.models.Leitor import Leitor
-from server.mercury_.sensor import *
+from models.Autorama import Autorama
+from models.Leitor import Leitor
+from mercury_.sensor import *
 from threading import Thread
 
 class SensorThread(Thread):
@@ -87,7 +87,7 @@ class SensorThread(Thread):
 				print('\n')
 				self.pub.request(json.dumps(tag).encode('utf-8') )
 				self.buffer['tagsSend'].append(tag)
-    			time.sleep(1)
+				time.sleep(1)
 				# print ("Tag não foi enviada com sucesso")
 				# self.buffer['tagsNoSend'].insert(0,tag)
 		except Exception as e: 
