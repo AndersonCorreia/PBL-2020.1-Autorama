@@ -3,6 +3,7 @@
 import json
 import os
 from client.src.socket_.Client import Client
+from client.src.mqtt.SUB import Subscriber
 
 class Carro:
     def __init__(self, file=os.path.dirname(os.path.realpath(__file__))+"/autorama.json"):
@@ -17,9 +18,8 @@ class Carro:
         
     def getTags(self):
         connection = self.getConnection()
-        return connection.request('/configuração/carro', 'GET', '')
-    
+        connection.request('/config/carro')
+        return connection.requestRecv()['headers']
+
     def getConnection(self):
-        file=os.path.dirname(os.path.realpath(__file__))+"/leitor.json"
-        leitor = json.loads(open(file, 'r').read() )
-        return Client(leitor['ip'], int(leitor['port']), 2048)
+        return Subscriber("node02.myqtthub.com", 1883, "2", "cliente2", "135790")

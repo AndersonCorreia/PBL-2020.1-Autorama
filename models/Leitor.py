@@ -2,7 +2,6 @@
 from client.src.mqtt.SUB import Subscriber
 import json
 import os
-from client.src.socket_.Client import Client
 from client.src.mqtt.PUB import Publisher
 
 class Leitor:

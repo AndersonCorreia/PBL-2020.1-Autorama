@@ -52,6 +52,10 @@ class Subscriber:
         
     def setTopic(self, topic):
         self.topic = topic
+
 # para teste
-# sub = Subscriber("node02.myqtthub.com", 1883, "marianalima0803@gmail.com", "marianasls", "oUJeeKGZ-RxhrHx4T")
-# sub.request()
+'''
+sub = Subscriber("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
+sub.request("/config/carro")
+print(sub.requestRecv(False))
+'''

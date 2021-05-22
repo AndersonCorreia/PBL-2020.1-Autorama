@@ -22,7 +22,7 @@ class Publisher:
         self.client.on_publish = self.on_publish      
         mqtt.Client.connected_flag=False
 
-    def request(self, path= None, message=""):
+    def request(self, path= None, message="", rt=False):
         if path != None:
             self.topic = path
         self.client.connect(self.host, self.port)
@@ -33,7 +33,7 @@ class Publisher:
 
         # Send data 
         message = json.dumps({"headers": message})
-        ret = self.client.publish(self.topic, message, 0)   #using qoS-0 
+        ret = self.client.publish(self.topic, message, 0, retain=rt)   #using qoS-0 
         logging.info("published return="+str(ret))
         
         self.client.loop_stop()
@@ -74,5 +74,7 @@ class Publisher:
         sub.request()
         return sub.requestRecv().payload
 # para teste
-# pub = Publisher("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
-# pub.request("/test", "teste")
+'''
+pub = Publisher("node02.myqtthub.com", 1883, "1", "cliente1", "24680")
+pub.request("/config/carro", "12345c")
+'''
