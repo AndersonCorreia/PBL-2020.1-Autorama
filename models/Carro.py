@@ -19,7 +19,7 @@ class Carro:
     def getTags(self):
         connection = self.getConnection()
         connection.request('/config/carro')
-        return connection.requestRecv()['headers']
-
+        dado = connection.requestRecv()
+        return dado.payload['headers']
     def getConnection(self):
         return Subscriber("node02.myqtthub.com", 1883, "2", "cliente2", "135790")

@@ -57,7 +57,7 @@ class Publisher:
         logging.info("data published \n")     
 
     def reset(self):
-        ret = self.client.publish("/test", "", 0, True)
+        ret = self.client.publish(self.topic, "", 0, True)
         
     def setTopic(self, topic):
         self.topic = topic
