@@ -30,6 +30,7 @@ class SensorThread(Thread):
 			return
 		elif(self.funcao == 'send'):
 			while(not self.buffer['close']):
+				print('função send')
 				self.send()
 				time.sleep(0.5)
 			return
@@ -80,6 +81,7 @@ class SensorThread(Thread):
     
 	def send(self):
 		try: 
+			print(self.buffer)
 			while( len(self.buffer['tagsNoSend']) > 0 and not self.buffer['close']):
 				tag = self.buffer['tagsNoSend'].pop(0)#sempre pega a primeira na fila para enviar
 				print("Enviando a tag:\n")

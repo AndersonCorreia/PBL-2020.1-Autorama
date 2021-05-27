@@ -31,8 +31,8 @@ class AutoramaController:
     @staticmethod  
     def qualificatoria(headers, pub):
         log = loadLog()
-        sensorTRead = SensorThread(pub, log, 'read')
-        sensorTRead.start()
+        # sensorTRead = SensorThread(pub, log, 'read')
+        # sensorTRead.start()
         sensorTSend = SensorThread(pub, log, 'send')
         sensorTSend.start()
         sensorTEncerrar = SensorThread(pub, log, 'encerrar')
