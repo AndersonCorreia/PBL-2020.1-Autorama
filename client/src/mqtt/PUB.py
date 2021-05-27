@@ -16,10 +16,12 @@ class Publisher:
         self.client = mqtt.Client(ID, False)
         self.client.username_pw_set(user, passwd)
         self.topic = topic
-        # self.client.on_log = self.on_log
+        self.receiveMsg = False
+        self.client.on_log = self.on_log
         self.client.on_connect = self.on_connect
         self.client.on_disconnect = self.on_disconnect
-        self.client.on_publish = self.on_publish      
+        self.client.on_publish = self.on_publish  
+        self.client.on_message = self.on_message    
         mqtt.Client.connected_flag=False
 
     def request(self, path= None, message="", rt=False):
@@ -38,7 +40,14 @@ class Publisher:
         
         self.client.loop_stop()
         self.client.disconnect()
-    
+        
+    def requestSub(self, path=None):
+        if path != None:
+            self.topic = path
+        self.client.connect(self.host, self.port)
+        self.client.loop_start()
+        self.client.subscribe(self.topic, 0) #qoS-0
+
     # create functions for callback
     def on_log(self, client, userdata, level, buf):
         logging.info(buf)
@@ -54,8 +63,16 @@ class Publisher:
         logging.info("client disconnected")
 
     def on_publish(self, client,userdata,mid):            
-        logging.info("data published \n")     
-
+        logging.info("data published \n")
+   
+    # The callback for when a PUBLISH message is received from the server.
+    def on_message(self, client, userdata, msg):
+        msg.payload = msg.payload.decode("utf-8")
+        logging.info(msg.topic+" "+msg.payload)
+        msg.payload = json.loads(msg.payload)
+        self.msg = msg
+        self.receiveMsg = True
+        
     def reset(self):
         ret = self.client.publish(self.topic, "", 0, True)
         
@@ -69,10 +86,20 @@ class Publisher:
     
     # realizar um subscribe no mesmo topico que enviou informações e espera uma resposta
     # já devolve o payload da mensagem
-    def requestRecv(self):
-        sub = self.getSUB()
-        sub.request()
-        return sub.requestRecv().payload
+    def requestRecv(self, stop=True):
+        # sub = self.getSUB()
+        self.requestSub()
+        return self.requestRecvSub(stop).payload
+    
+    def requestRecvSub(self, stop=True):
+        print('valor do stop ' + str(stop))
+        while not self.receiveMsg:
+            time.sleep(0.5)
+        self.receiveMsg = False
+        if stop :
+            self.client.disconnect()
+            self.client.loop_stop()
+        return self.msg
 # para teste
 '''
 pub = Publisher("node02.myqtthub.com", 1883, "1", "cliente1", "24680")

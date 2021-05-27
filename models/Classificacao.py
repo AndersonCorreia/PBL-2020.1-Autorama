@@ -36,7 +36,9 @@ class Classificacao:
         classificacao = self.corrida['classificacao']
         while not self.corridaEnd:
             # result = {"tag": epc , "timestamp": timestamp, "time": timestamp desde o inicio da classificacao ) }
-            result = connection.requestRecv()#aguarda o leitor responder com uma tag
+            print('sub')
+            result = connection.requestRecv(False)#aguarda o leitor responder com uma tag
+            print('sub-end')
             pos = classificacao[result['tag']]
             if pos['voltas'] < self.corrida['quantidadeDeVoltas']: # se o primeiro carro não terminou a corrida
                 pos['tempo_total'] = self.autorama.timestampFormat(result['time'])

@@ -108,6 +108,7 @@ def restClassificacao():
 @app.route("/button/pres")
 def buttonPres():
     if (request.method == "GET"):
+        return {'success': False}
         leitor = Leitor()
         return leitor.getButton()
 
@@ -188,8 +189,8 @@ def qualificatoriaThread():
     if (request.method == "GET"):
         qualificatoriaT = QualificatoriaThread()
         qualificatoriaT.start()
-        interromperCorridaT = InterromperCorridaThread(qualificatoriaT.corrida)
-        interromperCorridaT.start()
+        # interromperCorridaT = InterromperCorridaThread(qualificatoriaT.corrida)
+        # interromperCorridaT.start()
         return {'success': True}
     
 @app.route('/thread/corrida/classificacao', methods=['GET'])
@@ -197,8 +198,8 @@ def classificacaoThread():
     if (request.method == "GET"):
         classificacaoT = ClassificacaoThread()
         classificacaoT.start()
-        interromperCorridaT = InterromperCorridaThread(classificacaoT.corrida)
-        interromperCorridaT.start()
+        # interromperCorridaT = InterromperCorridaThread(classificacaoT.corrida)
+        # interromperCorridaT.start()
         return {'success': True}
 
 @app.route('/configuração/corridas', methods=['GET'])
