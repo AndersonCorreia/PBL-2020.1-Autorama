@@ -2,8 +2,7 @@
 # coding=utf-8
 import json
 import os
-from client.src.socket_.Client import Client
-from client.src.mqtt.SUB import Subscriber
+from client.src.mqtt.PUB import Publisher
 
 class Carro:
     def __init__(self, file=os.path.dirname(os.path.realpath(__file__))+"/autorama.json"):
@@ -19,7 +18,7 @@ class Carro:
     def getTags(self):
         connection = self.getConnection()
         connection.request('/config/carro')
-        dado = connection.requestRecv()
-        return dado.payload['headers']
+        return connection.requestRecv()['headers']
+
     def getConnection(self):
-        return Subscriber("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
+        return Publisher("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
