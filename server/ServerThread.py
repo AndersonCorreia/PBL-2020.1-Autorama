@@ -36,8 +36,9 @@ class ServerThread(Thread):
             AutoramaController.setConfigLeitor(headers)
             return {'success': True, 'dados': ''}
 
-        if path == "/configuração/carro":
-            return AutoramaController.readTag()
+        if path == "/config/carro":
+            #return AutoramaController.readTag()
+            return AutoramaController.readTagSimulate() 
 
         if path == "/autorama/tags/read":
             return AutoramaController.readTag()

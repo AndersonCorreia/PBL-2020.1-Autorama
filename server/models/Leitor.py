@@ -8,8 +8,8 @@ class Leitor:
         self.dados = json.loads(open(file, 'r').read() )
     
     def save(self, dados):
-        self.dados = dados
-        open(self.fileName, 'w').write( json.dumps(self.dados, indent=4, ensure_ascii=False,))
+        self.dados = json.loads(dados)
+        open(self.fileName, 'w').write(dados)
 
     def getDados(self):
         return self.dados

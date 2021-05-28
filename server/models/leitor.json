@@ -1,5 +1,5 @@
 {
-    "ip": "172.16.1.0",
+    "ip": "augusto.ddns.net",
     "port": "5030",
     "serial": "tmr:///dev/ttyUSB0",
     "baudrate": "115200",

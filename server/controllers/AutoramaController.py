@@ -3,6 +3,7 @@ from models.Autorama import Autorama
 from models.Leitor import Leitor
 from mercury_.sensor import *
 from controllers.SensorThread import SensorThread
+import os, json
 class AutoramaController:
     
     @staticmethod
@@ -19,6 +20,13 @@ class AutoramaController:
     def readTag():
         return read()
     
+    # retorna nos dados um array com 5 tags
+    @staticmethod
+    def readTagSimulate():
+        file=os.path.dirname(os.path.realpath(__file__))+"/tags.json"
+        tags = json.loads(open(file, 'r').read() )
+        return {'success': True, 'dados': tags}
+
     @staticmethod
     def definirTagsParaLeitura(headers):
         tags = []
