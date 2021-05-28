@@ -46,8 +46,8 @@ class Subscriber:
             time.sleep(0.5)
         self.receiveMsg = False
         if stop :
-            self.client.disconnect()
-            self.client.loop_stop()
+            # self.client.disconnect()
+            # self.client.loop_stop()
         return self.msg
         
     def setTopic(self, topic):

@@ -36,8 +36,8 @@ class Publisher:
         ret = self.client.publish(self.topic, message, 0)   #using qoS-0 
         logging.info("published return="+str(ret))
         
-        self.client.loop_stop()
-        self.client.disconnect()
+        # self.client.loop_stop()
+        # self.client.disconnect()
 
     #create functions for callback
     def on_log(self, client, userdata, level, buf):
