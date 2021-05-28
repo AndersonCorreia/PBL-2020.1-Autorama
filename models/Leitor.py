@@ -22,6 +22,7 @@ class Leitor:
         return connection.requestRecv()['headers']
     
     def getConnection(self):
+        # return Publisher("node02.myqtthub.com", 1883, "cliente", "cliente", "cliente")
         return Publisher("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
 
     def getButton(self):

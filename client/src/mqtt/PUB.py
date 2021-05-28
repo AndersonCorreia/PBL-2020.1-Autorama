@@ -23,13 +23,13 @@ class Publisher:
         self.client.on_publish = self.on_publish  
         self.client.on_message = self.on_message    
         mqtt.Client.connected_flag=False
+        self.client.connect(self.host, self.port)
+        self.client.loop_start()
 
     def request(self, path= None, message="", rt=False):
         if path != None:
             self.topic = path
-        self.client.connect(self.host, self.port)
 
-        self.client.loop_start()
         while not self.client.connected_flag:
             time.sleep(1)
 
@@ -38,15 +38,15 @@ class Publisher:
         ret = self.client.publish(self.topic, message, 0, retain=rt)   #using qoS-0 
         logging.info("published return="+str(ret))
         
-        self.client.loop_stop()
-        self.client.disconnect()
+        # self.client.loop_stop()
+        # self.client.disconnect()
         
     def requestSub(self, path=None):
         if path != None:
             self.topic = path
-        self.client.connect(self.host, self.port)
-        self.client.loop_start()
-        self.client.subscribe(self.topic, 0) #qoS-0
+        # self.client.connect(self.host, self.port)
+        # self.client.loop_start()
+        self.client.subscribe(self.topic + '/response', 0) #qoS-0
 
     # create functions for callback
     def on_log(self, client, userdata, level, buf):
@@ -68,10 +68,13 @@ class Publisher:
     # The callback for when a PUBLISH message is received from the server.
     def on_message(self, client, userdata, msg):
         msg.payload = msg.payload.decode("utf-8")
-        logging.info(msg.topic+" "+msg.payload)
+        logging.info("topico:" + msg.topic)
+        logging.info("mensagem:" + msg.payload)
         msg.payload = json.loads(msg.payload)
         self.msg = msg
-        self.receiveMsg = True
+        if msg.topic == self.topic + '/response':
+            self.receiveMsg = True
+            logging.info("mensagem: recebida")
         
     def reset(self):
         ret = self.client.publish(self.topic, "", 0, True)
