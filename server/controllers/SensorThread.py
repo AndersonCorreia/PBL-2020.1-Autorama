@@ -81,13 +81,12 @@ class SensorThread(Thread):
     
 	def send(self):
 		try: 
-			print(self.buffer)
 			while( len(self.buffer['tagsNoSend']) > 0 and not self.buffer['close']):
 				tag = self.buffer['tagsNoSend'].pop(0)#sempre pega a primeira na fila para enviar
 				print("Enviando a tag:\n")
 				print(tag)
 				print('\n')
-				self.pub.request(json.dumps(tag).encode('utf-8') )
+				self.pub.request( None, json.dumps(tag) )
 				self.buffer['tagsSend'].append(tag)
 				time.sleep(1)
 				# print ("Tag não foi enviada com sucesso")

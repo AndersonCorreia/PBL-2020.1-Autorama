@@ -17,12 +17,13 @@ class Subscriber:
         self.client.on_log = self.on_log
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
+        self.client.connect(self.host, self.port)
+        self.client.loop_start()
 
     def request(self, path=None):
         if path != None:
             self.topic = path
-        self.client.connect(self.host, self.port)
-        self.client.loop_start()
+        self.client.subscribe(self.topic, 0) #qoS-0
 
     #create functions for callback
     def on_log(self, client, userdata, level, buf):
@@ -31,23 +32,27 @@ class Subscriber:
     # The callback for when the client receives a CONNACK response from the server.
     def on_connect(self, client, userdata, flags, rc):
         logging.info("Connected with result code "+str(rc))
-        client.subscribe(self.topic, 0) #qoS-0
         
     # The callback for when a PUBLISH message is received from the server.
     def on_message(self, client, userdata, msg):
         msg.payload = msg.payload.decode("utf-8")
-        logging.info(msg.topic+" "+msg.payload)
+        logging.info("topico:" + msg.topic)
+        logging.info("mensagem:" + msg.payload)
         msg.payload = json.loads(msg.payload)
         self.msg = msg
         self.receiveMsg = True
         
     def requestRecv(self, stop=True):
+        
+        print('aqui')
+
         while not self.receiveMsg:
             time.sleep(0.5)
+        print('depois do while no sub')
         self.receiveMsg = False
         if stop :
-            # self.client.disconnect()
-            # self.client.loop_stop()
+            self.client.disconnect()
+            self.client.loop_stop()
         return self.msg
         
     def setTopic(self, topic):

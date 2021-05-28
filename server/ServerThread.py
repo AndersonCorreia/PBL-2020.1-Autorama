@@ -9,13 +9,15 @@ class ServerThread(Thread):
     
     def __init__(self, data, pub):
         Thread.__init__(self)
+        print('data')
+        print(data)
         self.data = data
         self.pub = pub
 
     def run(self):
         if self.data:
             response = self.route(self.data, self.pub)
-            self.pub.request(self.data['path'],response)
+            self.pub.request(None,response)
             
     def route(self, data, pub):
         print("data\n")
