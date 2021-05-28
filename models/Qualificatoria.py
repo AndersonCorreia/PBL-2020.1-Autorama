@@ -27,7 +27,7 @@ class Qualificatoria:
     #o codigo abaixo deve ser executado em uma thread separada
     def qualificatoriaAcompanhar(self):
         connection = self.leitor.getConnection()
-        connection.request('/corrida/qualificatoria/acompanhar')
+        connection.request('/corrida/qualificatoria/acompanhar', '', True)
         self.corridaEnd = False
         corrida = self.autorama.getCorridaAtual()
         qualificatoria = corrida['qualificatoria']

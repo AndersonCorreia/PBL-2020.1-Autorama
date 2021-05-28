@@ -31,7 +31,7 @@ class Classificacao:
     #o codigo abaixo deve ser executado em uma thread separada
     def classificacaoAcompanhar(self):
         connection = self.leitor.getConnection()
-        connection.request('/corrida/qualificatoria/acompanhar', '')
+        connection.request('/corrida/qualificatoria/acompanhar', '', True)
         self.corridaEnd = False
         classificacao = self.corrida['classificacao']
         while not self.corridaEnd:
