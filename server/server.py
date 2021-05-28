@@ -23,7 +23,7 @@ def server(host = args.host, port = args.port, id = args.mqttid, user = args.mqt
         print(msg)
         data = msg.payload
         data["path"] = msg.topic
-        pub = Publisher(host, port, id, user, password, msg.topic)
+        pub = Publisher(host, port, id, user, password, msg.topic + '/response')
         serverT = ServerThread(data, pub)
         serverT.start()  
 server()
