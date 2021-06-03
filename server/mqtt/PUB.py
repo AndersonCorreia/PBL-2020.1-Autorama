@@ -13,7 +13,7 @@ class Publisher:
         self.ID = ID
         self.user = user
         self.passwd = passwd
-        self.client = mqtt.Client(ID, False)
+        self.client = mqtt.Client(ID, True)
         self.client.username_pw_set(user, passwd)
         self.topic = topic
         self.receiveMsg = False
@@ -36,7 +36,7 @@ class Publisher:
         print('depois do while')
         # Send data 
         message = json.dumps({"headers": message})
-        ret = self.client.publish(self.topic, message, 0, retain=rt)   #using qoS-0 
+        ret = self.client.publish(self.topic, message, 1, retain=rt)   #using qoS-0 
         logging.info("published return="+str(ret))
         
         # self.client.loop_stop()
@@ -47,7 +47,7 @@ class Publisher:
             self.topic = path
         # self.client.connect(self.host, self.port)
         # self.client.loop_start()
-        self.client.subscribe(self.topic + '/response', 0) #qoS-0
+        self.client.subscribe(self.topic + '/response', 1) #qoS-0
 
     # create functions for callback
     def on_log(self, client, userdata, level, buf):
@@ -73,8 +73,8 @@ class Publisher:
         logging.info("mensagem:" + msg.payload)
         msg.payload = json.loads(msg.payload)
         self.msg = msg
-        if msg.topic == self.topic + '/response':
-            self.receiveMsg = True
+        # if msg.topic == self.topic + '/response':
+        self.receiveMsg = True
         
     def reset(self):
         ret = self.client.publish(self.topic, "", 0, True)

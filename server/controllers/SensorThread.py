@@ -6,9 +6,9 @@ from threading import Thread
 
 class SensorThread(Thread):
 
-	def __init__ (self, pub, buffer, function='read_send'):
+	def __init__ (self, sub, buffer, function='read_send'):
 		Thread.__init__(self)
-		self.pub = pub
+		self.sub = sub
 		self.buffer = buffer
 		self.funcao = function
 
@@ -30,14 +30,13 @@ class SensorThread(Thread):
 			return
 		elif(self.funcao == 'send'):
 			while(not self.buffer['close']):
-				print('função send')
 				self.send()
 				time.sleep(0.5)
 			return
 		elif(self.funcao == 'encerrar'):
-			sub = self.pub.getSUB('/corrida/encerrar')
-			sub.request()
-			sub.requestRecv()# aguardar até receber mensagem no topico de encerrar corrida
+			self.sub.request('/corrida/encerrar')
+			self.sub.requestRecv(False, '/corrida/encerrar')# aguardar até receber mensagem no topico de encerrar corrida
+			print("corrida finalizada")
 			self.buffer['close'] = True
 		else:
 			print("função deschonhecida para iniciar a thread do sensor: ")
@@ -58,7 +57,7 @@ class SensorThread(Thread):
 					tag = self.buffer['tagsNoSend'].pop(0)#sempre pega a primeira na fila para enviar
 					print(tag)
 					print('\n')
-					self.pub.request(json.dumps(tag).encode('utf-8') )
+					self.sub.publishResponse( "/corrida/qualificatoria/acompanhar", tag )
 					self.buffer['tagsSend'].append(tag)
 					# print ("Tag não foi enviada com sucesso")
 					# self.buffer['tagsNoSend'].insert(0,tag)
@@ -86,7 +85,7 @@ class SensorThread(Thread):
 				print("Enviando a tag:\n")
 				print(tag)
 				print('\n')
-				self.pub.request( None, json.dumps(tag) )
+				self.sub.publishResponse( "/corrida/qualificatoria/acompanhar",tag )
 				self.buffer['tagsSend'].append(tag)
 				time.sleep(1)
 				# print ("Tag não foi enviada com sucesso")

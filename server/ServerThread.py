@@ -7,30 +7,30 @@ from threading import Thread
 
 class ServerThread(Thread):
     
-    def __init__(self, data, pub):
+    def __init__(self, data, sub):
         Thread.__init__(self)
         print('data')
         print(data)
         self.data = data
-        self.pub = pub
+        self.sub = sub
 
     def run(self):
         if self.data:
-            response = self.route(self.data, self.pub)
-            self.pub.request(None,response)
+            response = self.route(self.data, self.sub)
+            self.sub.publishResponse(self.data['path'],response)
             
-    def route(self, data, pub):
+    def route(self, data, sub):
         print("data\n")
         print(data)
         if data['path']:
-            dados = self.redirecionamento(pub, data['path'], data['headers'])
+            dados = self.redirecionamento(sub, data['path'], data['headers'])
             print("dados\n")
             print(dados)
             return {'success': dados['success'], "response": dados['dados']}
         else:
             return {'success': False, "response": {"erro": "O topico não foi informado"} }
 
-    def redirecionamento(self,pub, path, headers=[]):
+    def redirecionamento(self,sub, path, headers=[]):
         if path == "/test":
             return {"success": True, 'dados': ''}
 
@@ -49,7 +49,7 @@ class ServerThread(Thread):
             return AutoramaController.definirTagsParaLeitura(headers)
         
         if path == "/corrida/qualificatoria/acompanhar":
-            return AutoramaController.qualificatoria(headers, pub)
+            return AutoramaController.qualificatoria(headers, sub)
     
         if path == "/button":
             # Botão.button()
