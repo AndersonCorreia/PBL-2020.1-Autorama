@@ -9,7 +9,7 @@ class Subscriber:
     def __init__(self, host, port, ID, user, passwd, topic = "/#"):
         self.host = host
         self.port = port
-        self.client = mqtt.Client(ID, False)
+        self.client = mqtt.Client(ID, True)
         self.client.username_pw_set(user, passwd)
         self.topic = topic
         self.receiveMsg = False

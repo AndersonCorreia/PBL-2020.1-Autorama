@@ -13,7 +13,7 @@ class Publisher:
         self.ID = ID
         self.user = user
         self.passwd = passwd
-        self.client = mqtt.Client(ID, False)
+        self.client = mqtt.Client(ID, True)
         self.client.username_pw_set(user, passwd)
         self.topic = topic
         self.receiveMsg = False

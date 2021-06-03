@@ -37,43 +37,44 @@ class Classificacao:
         while not self.corridaEnd:
             # result = {"tag": epc , "timestamp": timestamp, "time": timestamp desde o inicio da classificacao ) }
             print('sub')
-            result = connection.requestRecv(False)#aguarda o leitor responder com uma tag
+            result = connection.requestRecv(False)['headers']#aguarda o leitor responder com uma tag
             print('sub-end')
-            pos = classificacao[result['tag']]
-            if pos['voltas'] < self.corrida['quantidadeDeVoltas']: # se o primeiro carro não terminou a corrida
-                pos['tempo_total'] = self.autorama.timestampFormat(result['time'])
-                if(pos['timestamp'] == 0):
-                    lap_time = result['time']
-                else:
-                    lap_time = result['timestamp'] - pos['timestamp']
-                lap_time_s = self.autorama.timestampFormat(lap_time)
-                pos['tempo_atual'] = lap_time_s
-                if(pos['tempo_menor'] > lap_time_s ):
-                    pos['tempo_menor'] = lap_time_s
-                    circuito = self.autorama.getPista( self.corrida['circuito_id'])
-                    if( pos['tempo_menor'] < circuito['recorde'] ):
-                        piloto = self.autorama.getPiloto(pos['piloto_id'])
-                        circuito['recorde'] = pos['tempo_menor']
-                        circuito['autor'] = piloto['nome']
-                        self.autorama.savePista(circuito)
-                
-                pos['timestamp'] = result['timestamp']
-                pos['voltas'] += 1
-                classificacao[result['tag']] = pos
-                self.corrida['classificacao'] = classificacao
-                if pos['voltas'] > self.primeiroVoltas:
-                    self.primeiroVoltas = pos['voltas']
-                    self.primeiroTimestamp = pos['timestamp']
-                print(classificacao)
-            tempoAposPrimeiro = self.autorama.timestampFormat( (result['timestamp'] - self.primeiroTimestamp) )
-            # tempo desde que o primeiro colocado concluiu uma volta
-            print(tempoAposPrimeiro)
-            if(self.primeiroVoltas >= self.corrida['quantidadeDeVoltas'] and tempoAposPrimeiro > "00:15:000" or self.corridaEnd ):
-                self.corridaEnd = True
-                self.corrida['corridaCompleta'] = 1   #encerrada
-            else: 
-                self.corrida['corridaCompleta'] = 2  #sendo realizada
-            self.save()
+            if 'tag' in result:
+                pos = classificacao[result['tag']]
+                if pos['voltas'] < self.corrida['quantidadeDeVoltas']: # se o primeiro carro não terminou a corrida
+                    pos['tempo_total'] = self.autorama.timestampFormat(result['time'])
+                    if(pos['timestamp'] == 0):
+                        lap_time = result['time']
+                    else:
+                        lap_time = result['timestamp'] - pos['timestamp']
+                    lap_time_s = self.autorama.timestampFormat(lap_time)
+                    pos['tempo_atual'] = lap_time_s
+                    if(pos['tempo_menor'] > lap_time_s ):
+                        pos['tempo_menor'] = lap_time_s
+                        circuito = self.autorama.getPista( self.corrida['circuito_id'])
+                        if( pos['tempo_menor'] < circuito['recorde'] ):
+                            piloto = self.autorama.getPiloto(pos['piloto_id'])
+                            circuito['recorde'] = pos['tempo_menor']
+                            circuito['autor'] = piloto['nome']
+                            self.autorama.savePista(circuito)
+                    
+                    pos['timestamp'] = result['timestamp']
+                    pos['voltas'] += 1
+                    classificacao[result['tag']] = pos
+                    self.corrida['classificacao'] = classificacao
+                    if pos['voltas'] > self.primeiroVoltas:
+                        self.primeiroVoltas = pos['voltas']
+                        self.primeiroTimestamp = pos['timestamp']
+                    print(classificacao)
+                tempoAposPrimeiro = self.autorama.timestampFormat( (result['timestamp'] - self.primeiroTimestamp) )
+                # tempo desde que o primeiro colocado concluiu uma volta
+                print(tempoAposPrimeiro)
+                if(self.primeiroVoltas >= self.corrida['quantidadeDeVoltas'] and tempoAposPrimeiro > "00:15:000" or self.corridaEnd ):
+                    self.corridaEnd = True
+                    self.corrida['corridaCompleta'] = 1   #encerrada
+                else: 
+                    self.corrida['corridaCompleta'] = 2  #sendo realizada
+                self.save()
         connection.request('/corrida/encerrar')
     
     def getDadosClassificacao(self):

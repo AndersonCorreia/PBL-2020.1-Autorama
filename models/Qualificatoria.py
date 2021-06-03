@@ -22,7 +22,7 @@ class Qualificatoria:
     def qualificatoria(self):
         connection = self.leitor.getConnection()
         headers = { 'pilotos': self.corrida['pilotos'], 'tempoMinimoVolta': self.autorama.getPista(self.corrida['circuito_id'])['tempoMinimoVolta'] }
-        connection.request('/corrida/qualificatoria/carros', 'POST', headers)#informa ao leitor quais as tags que devem ser lidas
+        connection.request('/corrida/qualificatoria/carros',headers)#informa ao leitor quais as tags que devem ser lidas
         
     #o codigo abaixo deve ser executado em uma thread separada
     def qualificatoriaAcompanhar(self):
@@ -33,37 +33,38 @@ class Qualificatoria:
         qualificatoria = corrida['qualificatoria']
         while not self.corridaEnd:
             # result = {"tag": epc , "timestamp": timestamp, "time": timestamp desde o inicio da qualificatoria ) }
-            result = connection.requestRecv(False)#aguarda o leitor responder com uma tag
-            qualificacao = qualificatoria[result['tag']]
-            if(qualificacao['timestamp'] == 0):
-                lap_time = result['time']
-            else:
-                lap_time = result['timestamp'] - qualificacao['timestamp']
-            lap_time_s = self.autorama.timestampFormat(lap_time)
-            if(qualificacao['tempo_menor'] > lap_time_s ):
-                qualificacao['tempo_menor'] = lap_time_s
-                qualificacao['tempo_menor_timestamp'] = lap_time
-                circuito = self.autorama.getPista( corrida['circuito_id'])
-                if( qualificacao['tempo_menor'] < circuito['recorde'] ):
-                    piloto = self.autorama.getPiloto(qualificacao['piloto_id'])
-                    circuito['recorde'] = qualificacao['tempo_menor']
-                    circuito['autor'] = piloto['nome']
-                    self.autorama.savePista(circuito)
-            
-            qualificacao['timestamp'] = result['timestamp']
-            qualificacao['voltas'] += 1
-            qualificatoria[result['tag']] = qualificacao
-            corrida['qualificatoria'] = qualificatoria
-            print(qualificatoria)
-            tempoPercorrido = self.autorama.timestampFormat((result['time']))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
-            print(tempoPercorrido)
-            print(corrida['qualificatoriaDuracao'])
-            if(corrida['qualificatoriaDuracao'] <= tempoPercorrido or self.corridaEnd):
-                self.corridaEnd = True
-                self.corrida['qualificatoriaCompleta'] = 1   #encerrada
-            else: 
-                self.corrida['qualificatoriaCompleta'] = 2  #sendo realizada
-            self.save()
+            result = connection.requestRecv(False)['headers']#aguarda o leitor responder com uma tag
+            if 'tag' in result:
+                qualificacao = qualificatoria[result['tag']]
+                if(qualificacao['timestamp'] == 0):
+                    lap_time = result['time']
+                else:
+                    lap_time = result['timestamp'] - qualificacao['timestamp']
+                lap_time_s = self.autorama.timestampFormat(lap_time)
+                if(qualificacao['tempo_menor'] > lap_time_s ):
+                    qualificacao['tempo_menor'] = lap_time_s
+                    qualificacao['tempo_menor_timestamp'] = lap_time
+                    circuito = self.autorama.getPista( corrida['circuito_id'])
+                    if( qualificacao['tempo_menor'] < circuito['recorde'] ):
+                        piloto = self.autorama.getPiloto(qualificacao['piloto_id'])
+                        circuito['recorde'] = qualificacao['tempo_menor']
+                        circuito['autor'] = piloto['nome']
+                        self.autorama.savePista(circuito)
+                
+                qualificacao['timestamp'] = result['timestamp']
+                qualificacao['voltas'] += 1
+                qualificatoria[result['tag']] = qualificacao
+                corrida['qualificatoria'] = qualificatoria
+                print(qualificatoria)
+                tempoPercorrido = self.autorama.timestampFormat((result['time']))# interromper a corrida quando já tiver passado 1 minuto depois do tempo limite
+                print(tempoPercorrido)
+                print(corrida['qualificatoriaDuracao'])
+                if(corrida['qualificatoriaDuracao'] <= tempoPercorrido or self.corridaEnd):
+                    self.corridaEnd = True
+                    self.corrida['qualificatoriaCompleta'] = 1   #encerrada
+                else: 
+                    self.corrida['qualificatoriaCompleta'] = 2  #sendo realizada
+                self.save()
         connection.request('/corrida/encerrar')
         self.setPosInicialForCorrida()
     
