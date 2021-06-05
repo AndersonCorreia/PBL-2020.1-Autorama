@@ -1,6 +1,7 @@
 # coding=utf-8
 import json
 import os
+from client.src.mqtt.PUB import Publisher
 class Autorama:
     def __init__(self, file=os.path.dirname(os.path.realpath(__file__))+"/autorama.json"):
         self.fileName = file
@@ -61,6 +62,10 @@ class Autorama:
     def setCorridaAtiva(self, dados):
         self.dados['corrida_ativa'] = int(dados['corrida_ativa'])
         self.save()
+        pub = self.getConnection()
+        corrida = self.getCorridaAtual()
+        dados = { 'corrida': self.getCorridaAtual(), 'circuito': self.getPista(corrida['circuito_id'])}
+        pub.request('/acompanhar/corrida/atual', dados, True, False)
 
     def getCorridas(self):
         corridas = self.dados['corridas']
@@ -150,3 +155,7 @@ class Autorama:
         milisegundos = str( float(time%1))
         milisegundos = milisegundos[2:5]
         return "" + minutos + ":" + segundos  + ":" + milisegundos
+    
+    def getConnection(self):
+        return Publisher("node02.myqtthub.com", 1883, "cliente", "cliente", "cliente")
+        # return Publisher("node02.myqtthub.com", 1883, "2", "cliente2", "135790")

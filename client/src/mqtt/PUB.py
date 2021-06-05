@@ -26,15 +26,18 @@ class Publisher:
         self.client.connect(self.host, self.port)
         self.client.loop_start()
 
-    def request(self, path= None, message="", rt=False):
+    def request(self, path= None, message="", rt=False, useHeaders=True):
         if path != None:
             self.topic = path
 
         while not self.client.connected_flag:
             time.sleep(1)
 
-        # Send data 
-        message = json.dumps({"headers": message})
+        # Send data
+        if useHeaders:
+            message = json.dumps({"headers": message})
+        else:
+            message = json.dumps(message)
         ret = self.client.publish(self.topic, message, 0, retain=rt)   #using qoS-0 
         logging.info("published return="+str(ret))
         

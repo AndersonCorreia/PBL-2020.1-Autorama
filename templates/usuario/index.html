@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-center m-4">{% block title %}Autorama{% endblock %}</h2>
+    {% if ativo %}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <b>Corrida #{{corrida['corrida_id']}}</b>
+                 - Circuito: {{circuito['nome']}}, Recorde do circuito: {{circuito['recorde']}}
+            </li>
+            <li class="list-group-item">
+                {% if corrida['qualificatoriaCompleta'] %}
+                    <a href="{{url_for('qualificatoriaUsuario')}}" class="btn btn-info mr-auto">Ver resultado da Qualificatória</a>
+                    {% if corrida['corridaCompleta'] %}
+                        <a href="{{url_for('classificacaoUsuario')}}" class="btn btn-primary float-right">Ver resultado da Corrida</a>
+                    {% else %}
+                        <a href="{{url_for('classificacaoUsuario')}}" class="btn btn-primary float-right">Corrida</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{url_for('qualificatoriaUsuario')}}" class="btn btn-info mr-auto"> Qualificatória</a>
+                {% endif %}
+            </li>
+        </ul>
+    {% else %}
+        <ul class="list-group">
+            <li class="list-group-item">
+                Proxima corrida desconhecida
+            </li>
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        $.getJSON("{{url_for('updateCorridaUsuario')}}", function (data) {
+            if(data.atualizado){
+                console.log( "Nova corrida recarregando tela" );
+                document.location.reload(true);
+            }
+        })
+        .fail(function() {
+            console.log( "error na solicitação ajax" );
+        })
+    </script>
+{% endblock %}

@@ -4,6 +4,7 @@ from models.Carro import Carro
 from models.Qualificatoria import Qualificatoria
 from models.Classificacao import Classificacao
 from models.Autorama import Autorama
+from models.usuario.Autorama import Autorama as AutoramaUser
 from threads.QualificatoriaThread import QualificatoriaThread
 from threads.ClassificacaoThread import ClassificacaoThread
 from threads.InterromperCorridaThread import InterromperCorridaThread
@@ -16,11 +17,19 @@ def index():
     if (request.method == "GET"):
         autorama = Autorama()
         
-        if autorama.dados['corrida_ativa'] > 0: 
-            corrida = autorama.getCorridaAtual()
-            return render_template('index.html', ativo=True, corrida = corrida, circuito = autorama.getPista(corrida['circuito_id']))
+        if autorama.dados['administrador']:
+            if autorama.dados['corrida_ativa'] > 0: 
+                corrida = autorama.getCorridaAtual()
+                return render_template('index.html', ativo=True, corrida = corrida, circuito = autorama.getPista(corrida['circuito_id']))
 
-        return render_template('index.html', ativo=False)
+            return render_template('index.html', ativo=False)
+        else:
+            autorama = AutoramaUser()
+            if autorama.dados['corrida_ativa']: 
+                corrida = autorama.dados['corrida']
+                circuito = autorama.dados['circuito']
+                return render_template('usuario/index.html', ativo=True, corrida = corrida, circuito = circuito )
+            return render_template('usuario/index.html', ativo=False)
 
 @app.route('/teste')
 def test():
@@ -227,3 +236,56 @@ def listPilotos():
 @app.route('/sobre')
 def about():
     return render_template('about.html')
+
+# rotas do usuario 
+@app.route('/usuario/', methods=['GET'])
+def indexUsuario():
+    if (request.method == "GET"):
+        autorama = AutoramaUser()
+        if autorama.dados['corrida_ativa']: 
+            corrida = autorama.dados['corrida']
+            circuito = autorama.dados['circuito']
+            return render_template('usuario/index.html', ativo=True, corrida = corrida, circuito = circuito )
+        return render_template('usuario/index.html', ativo=False)
+
+@app.route('/usuario/qualificatoria', methods=['GET'])
+def qualificatoriaUsuario():
+    if (request.method == "GET"):
+        autorama = Autorama()
+        qualificatoria = Qualificatoria()
+        corrida = qualificatoria.corrida
+        qualificatoriaDados = qualificatoria.getDadosQualificatoria()
+        return render_template('qualificatoria/qualificatoria.html', tempo = corrida['qualificatoriaDuracao'], status = corrida['qualificatoriaCompleta'], qualificatoria=qualificatoriaDados, circuito = autorama.getPista(corrida['circuito_id']))
+
+@app.route('/usuario/qualificatoria/atualizar', methods=['GET'])
+def updateQualificatoriaUsuario():
+    if (request.method == "GET"):
+        autorama = Autorama()
+        qualificatoria = Qualificatoria()
+        qualificatoriaDados = qualificatoria.getDadosQualificatoria()
+        return {'data': qualificatoriaDados, 'status': qualificatoria.corrida['qualificatoriaCompleta'] }
+
+@app.route('/usuario/classificacao', methods=['GET'])
+def classificacaoUsuario():
+    if (request.method == "GET"):
+        autorama = Autorama()
+        classificacao = Classificacao()
+        corrida = classificacao.corrida
+        classificacaoDados = classificacao.getDadosClassificacao()
+        return render_template('classificacao/classificacao.html', tempo = corrida['classificacaoDuracao'], status = corrida['corridaCompleta'], classificacao=classificacaoDados, circuito = autorama.getPista(corrida['circuito_id']), contentLarge=True)
+
+@app.route('/usuario/classificacao/atualizar', methods=['GET', 'POST'])
+def updateClassificacaoUsuario():
+    classificacao = Classificacao()
+    if (request.method == "GET"):
+        autorama = Autorama()
+        classificacaoDados = classificacao.getDadosClassificacao()
+        return {'data': classificacaoDados, 'status': classificacao.corrida['corridaCompleta'] }
+    if (request.method == "POST"):
+        classificacao.setTime(request.form['time'])
+        return redirect(url_for('classificacao'))
+    
+@app.route('/usuario/update/corrida/atual', methods=['GET'])
+def updateCorridaUsuario():
+    autorama = AutoramaUser()
+    return autorama.updateCorridaAtual()

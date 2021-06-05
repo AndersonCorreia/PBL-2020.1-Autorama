@@ -17,12 +17,14 @@ class Subscriber:
         self.client.on_log = self.on_log
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
+        self.client.connect(self.host, self.port)
+        self.client.loop_start()
 
     def request(self, path=None):
         if path != None:
             self.topic = path
-        self.client.connect(self.host, self.port)
-        self.client.loop_start()
+        self.client.subscribe(self.topic, 0) #qoS-0
+        self.receiveMsg = False
 
     #create functions for callback
     def on_log(self, client, userdata, level, buf):
@@ -30,13 +32,17 @@ class Subscriber:
 
     # The callback for when the client receives a CONNACK response from the server.
     def on_connect(self, client, userdata, flags, rc):
-        logging.info("Connected with result code "+str(rc))
-        client.subscribe(self.topic, 0) #qoS-0
+        if rc == 0:
+            client.connected_flag=True
+        else:
+            logging.info("bad connection returned code="+str(rc))
+            client.loop_stop()
         
     # The callback for when a PUBLISH message is received from the server.
     def on_message(self, client, userdata, msg):
         msg.payload = msg.payload.decode("utf-8")
-        logging.info(msg.topic+" "+msg.payload)
+        logging.info("topico:" + msg.topic)
+        logging.info("mensagem:" + msg.payload)
         msg.payload = json.loads(msg.payload)
         self.msg = msg
         self.receiveMsg = True
