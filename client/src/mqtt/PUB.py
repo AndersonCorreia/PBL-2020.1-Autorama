@@ -26,8 +26,8 @@ class Publisher:
         self.client.connect(self.host, self.port)
         self.client.loop_start()
 
-    def request(self, path= None, message="", rt=False, useHeaders=True):
-        if path != None:
+    def request(self, path= None, message="", rt=False, useHeaders=True, changeTopic=True):
+        if path != None and changeTopic:
             self.topic = path
 
         while not self.client.connected_flag:
@@ -38,7 +38,7 @@ class Publisher:
             message = json.dumps({"headers": message})
         else:
             message = json.dumps(message)
-        ret = self.client.publish(self.topic, message, 0, retain=rt)   #using qoS-0 
+        ret = self.client.publish(path, message, 0, retain=rt)   #using qoS-0 
         logging.info("published return="+str(ret))
         
         # self.client.loop_stop()
@@ -74,10 +74,10 @@ class Publisher:
         logging.info("topico:" + msg.topic)
         logging.info("mensagem:" + msg.payload)
         msg.payload = json.loads(msg.payload)
+        print(self.topic)
         self.msg = msg
         if msg.topic == self.topic + '/response':
             self.receiveMsg = True
-            logging.info("mensagem: recebida")
         
     def reset(self):
         ret = self.client.publish(self.topic, "", 0, True)

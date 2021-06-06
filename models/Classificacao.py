@@ -75,8 +75,17 @@ class Classificacao:
                 else: 
                     self.corrida['corridaCompleta'] = 2  #sendo realizada
                 self.save()
+                self.publicarDadosClassificacao(result['tag'], connection)
         connection.request('/corrida/encerrar')
     
+    def publicarDadosClassificacao(self, tag, pub):
+        self.getDadosClassificacao()
+        pub.request('/acompanhar/corrida/' + str(self.corrida['corrida_id']), self.dadosCorrida, True, False, False)
+        for piloto in self.dadosCorrida:
+            if piloto['carro_epc'] == tag:
+                pub.request('/acompanhar/corrida/' + str(self.corrida['corrida_id']) + '/piloto/' + tag, piloto, True, False, False)
+                break
+                
     def getDadosClassificacao(self):
         corrida = self.corrida
         classificacao = corrida['classificacao']
@@ -89,6 +98,7 @@ class Classificacao:
             posicao['nome_piloto'] = pilotoAtual['nome']
             posicao['nome_equipe'] = self.autorama.getEquipe(pilotoAtual['equipe_id'])['nome']
             posicao['cor_carro'] = self.autorama.getCarro(pilotoAtual['carro_id'])['cor']
+            posicao['num_carro'] = self.autorama.getCarro(pilotoAtual['carro_id'])['num']
             posicao['tempo_corrida'] = pos['tempo_total']
             posicao['tempo_volta'] = pos['tempo_atual']
             posicao['tempo_menor'] = pos['tempo_menor']
@@ -99,17 +109,47 @@ class Classificacao:
             self.dadosCorrida.append(posicao)
         self.dadosCorrida = sorted(self.dadosCorrida, key=itemgetter('tempo_corrida', 'pos_inicial'))
         self.dadosCorrida = sorted(self.dadosCorrida, key=itemgetter('voltas'), reverse=True)
+        self.dadosCorrida[0]['posicao'] = 1
+        self.posicaoEntrePilotos(self.dadosCorrida[0], None, self.dadosCorrida[1])
         for i in range(1, len(self.dadosCorrida) ):
-            posAnt = self.dadosCorrida[0]
+            posPrimeiro = self.dadosCorrida[0]
             pos = self.dadosCorrida[i]
-            if( pos['voltas'] < posAnt['voltas']):
-                pos['tempo_corrida'] = '+' + str(posAnt['voltas'] - pos['voltas']) + ' volta'
-                if( posAnt['voltas'] - pos['voltas'] > 1):
+            pos['posicao'] = i+1
+            if( pos['voltas'] < posPrimeiro['voltas']):
+                pos['tempo_corrida'] = '+' + str(posPrimeiro['voltas'] - pos['voltas']) + ' volta'
+                if( posPrimeiro['voltas'] - pos['voltas'] > 1):
                     pos['tempo_corrida'] = pos['tempo_corrida'] + 's'
             else:
-                pos['tempo_corrida'] = "+" + self.autorama.timestampFormat( pos['timestamp'] - posAnt['timestamp'])
+                pos['tempo_corrida'] = "+" + self.autorama.timestampFormat( pos['timestamp'] - posPrimeiro['timestamp'])
+            if i == (len(self.dadosCorrida) - 1):
+                self.posicaoEntrePilotos(pos, self.dadosCorrida[i-1])
+            else:
+                self.posicaoEntrePilotos(pos, self.dadosCorrida[i-1], self.dadosCorrida[i+1] )
             self.dadosCorrida[i] = pos
         return self.dadosCorrida
+    
+    def posicaoEntrePilotos(self, pos, proximo=None, anterior=None):
+        pos['piloto_proximo'] = False
+        pos['piloto_anterior'] = False
+        if proximo:
+            pos['piloto_proximo'] = proximo['nome_piloto']
+            pos['num_proximo'] = proximo['num_carro']
+            if( pos['voltas'] < proximo['voltas']):
+                pos['tempo_proximo'] = '+' + str(proximo['voltas'] - pos['voltas']) + ' volta'
+                if( proximo['voltas'] - pos['voltas'] > 1):
+                    pos['tempo_proximo'] = pos['tempo_proximo'] + 's'
+            else:
+                pos['tempo_proximo'] = "+" + self.autorama.timestampFormat( pos['timestamp'] - proximo['timestamp'])
+            
+        if anterior:
+            pos['piloto_anterior'] = anterior['nome_piloto']
+            pos['num_anterior'] = anterior['num_carro']
+            if( pos['voltas'] > anterior['voltas']):
+                pos['tempo_anterior'] = '+' + str( pos['voltas'] - anterior['voltas']) + ' volta'
+                if(  pos['voltas'] - anterior['voltas'] > 1):
+                    pos['tempo_anterior'] = pos['tempo_anterior'] + 's'
+            else:
+                pos['tempo_anterior'] = "+" + self.autorama.timestampFormat( pos['timestamp'] - anterior['timestamp'])
     
     def resetClassificacao(self):
         corrida = self.corrida
