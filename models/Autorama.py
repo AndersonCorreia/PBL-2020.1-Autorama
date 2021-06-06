@@ -64,7 +64,25 @@ class Autorama:
         self.save()
         pub = self.getConnection()
         corrida = self.getCorridaAtual()
-        dados = { 'corrida': self.getCorridaAtual(), 'circuito': self.getPista(corrida['circuito_id'])}
+        corrida['qualificatoria'] = None
+        corrida['classificacao'] = None
+        pilotos = []
+        for piloto in corrida['pilotos']:
+            p = self.getPiloto(piloto['piloto_id'])
+            p['carro_epc'] = piloto['carro_epc']
+            pilotos.append(p)
+        carros = []
+        equipes = []
+        for piloto in pilotos:
+            carros.append( self.getCarro(piloto['carro_epc']))
+            equipes.append( self.getEquipe(piloto['equipe_id']))
+        dados = { 
+                 'corrida': self.getCorridaAtual(), 
+                 'circuito': self.getPista(corrida['circuito_id']),
+                 'pilotos': pilotos,
+                 'carros': carros,
+                 'equipes': equipes
+                 }
         pub.request('/acompanhar/corrida/atual', dados, True, False)
 
     def getCorridas(self):
@@ -130,7 +148,7 @@ class Autorama:
             
     def getCarro(self, carro_id):
         for carro in self.dados['carros']:
-            if carro['carro_id'] == carro_id:
+            if carro['carro_id'] == carro_id or carro['epc'] == carro_id:
                 return carro
             
     def getPiloto(self, piloto_id):

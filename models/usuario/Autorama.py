@@ -58,10 +58,13 @@ class Autorama:
         while( not atualizado):
             time.sleep(2)
             corrida = connection.requestRecv(False).payload
-            if self.dados['corrida_ativa'] and self.dados['corrida']['corrida_id'] != corrida['corrida']['corrida_id']:
+            if self.dados['corrida']['corrida_id'] != corrida['corrida']['corrida_id']:
                 atualizado = True
                 self.dados['corrida'] = corrida['corrida']
                 self.dados['circuito'] = corrida['circuito']
+                self.dados['pilotos'] = corrida['pilotos']
+                self.dados['equipes'] = corrida['equipes']
+                self.dados['carros'] = corrida['carros']
                 self.dados['corrida_ativa'] = True
                 self.save()
         return {'atualizado': atualizado }

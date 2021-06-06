@@ -24,7 +24,6 @@ class Subscriber:
         if path != None:
             self.topic = path
         self.client.subscribe(self.topic, 0) #qoS-0
-        self.receiveMsg = False
 
     #create functions for callback
     def on_log(self, client, userdata, level, buf):

@@ -1,7 +1,145 @@
 {
-    "carros": [],
-    "pilotos": [],
-    "equipes": [],
+    "carros": [
+        {
+            "carro_id": 1,
+            "epc": "E2000017221101241890547C",
+            "modelo": "formula 1",
+            "cor": "#54545f",
+            "marca": "Mercedes",
+            "num": "1"
+        },
+        {
+            "carro_id": 2,
+            "epc": "E20000172211011718905474",
+            "modelo": "formula 1",
+            "cor": "#a19797",
+            "marca": "Mercedes",
+            "num": "2"
+        },
+        {
+            "carro_id": 3,
+            "epc": "E2000017221101321890548C",
+            "modelo": "formula 1",
+            "cor": "#0a0797",
+            "marca": "Red Bull",
+            "num": "3"
+        },
+        {
+            "carro_id": 4,
+            "epc": "E20000172211012518905484",
+            "modelo": "formula 1",
+            "cor": "#120995",
+            "marca": "Red Bull",
+            "num": "4"
+        },
+        {
+            "carro_id": 5,
+            "epc": "E20000172211013118905493",
+            "modelo": "formula 1",
+            "cor": "#e70404",
+            "marca": "Ferrari",
+            "num": "5"
+        }
+    ],
+    "pilotos": [
+        {
+            "piloto_id": 1,
+            "nome": "Mariana",
+            "apelido": "Mari",
+            "nacionalidade": "Brasil",
+            "nascimento": "00/00/0000",
+            "carro_id": 1,
+            "equipe_id": 1,
+            "ativo": true,
+            "carro_epc": "E2000017221101241890547C"
+        },
+        {
+            "piloto_id": 2,
+            "nome": "Elisangêla",
+            "apelido": "Eli",
+            "nacionalidade": "Brasil",
+            "nascimento": "00/00/0000",
+            "carro_id": 2,
+            "equipe_id": 1,
+            "ativo": true,
+            "carro_epc": "E20000172211011718905474"
+        },
+        {
+            "piloto_id": 3,
+            "nome": "Anderson",
+            "apelido": "And",
+            "nacionalidade": "BRASIL",
+            "nascimento": "00/00/0000",
+            "carro_id": 3,
+            "equipe_id": 2,
+            "ativo": true,
+            "carro_epc": "E2000017221101321890548C"
+        },
+        {
+            "piloto_id": 4,
+            "nome": "Antonio",
+            "apelido": "Prof",
+            "nacionalidade": "Brasil",
+            "nascimento": "00/00/0000",
+            "carro_id": 4,
+            "equipe_id": 2,
+            "ativo": true,
+            "carro_epc": "E20000172211012518905484"
+        },
+        {
+            "piloto_id": 5,
+            "nome": "Tales",
+            "apelido": "tales",
+            "nacionalidade": "brasil",
+            "nascimento": "00/00/0000",
+            "carro_id": 5,
+            "equipe_id": 3,
+            "ativo": true,
+            "carro_epc": "E20000172211013118905493"
+        }
+    ],
+    "equipes": [
+        {
+            "equipe_id": 1,
+            "nome": "Mercedes",
+            "apelido": "Mer",
+            "nacionalidade": "Alemanha",
+            "ano": "01/01/1920",
+            "pontos": 0
+        },
+        {
+            "equipe_id": 1,
+            "nome": "Mercedes",
+            "apelido": "Mer",
+            "nacionalidade": "Alemanha",
+            "ano": "01/01/1920",
+            "pontos": 0
+        },
+        {
+            "equipe_id": 2,
+            "nome": "Red Bull",
+            "apelido": "RB",
+            "nacionalidade": "Austria",
+            "ano": "01/01/1920",
+            "pontos": 0
+        },
+        {
+            "equipe_id": 2,
+            "nome": "Red Bull",
+            "apelido": "RB",
+            "nacionalidade": "Austria",
+            "ano": "01/01/1920",
+            "pontos": 0
+        },
+        {
+            "equipe_id": 3,
+            "nome": "Ferrari",
+            "apelido": "Fer",
+            "nacionalidade": "Italia",
+            "ano": "01/01/1920",
+            "pontos": 0
+        }
+    ],
     "circuito": {
         "circuito_id": 1,
         "nome": "Monza",
@@ -11,12 +149,12 @@
         "autor": "Elisangêla"
     },
     "corrida": {
-        "corrida_id": 1,
-        "quantidadeDeVoltas": 5,
-        "qualificatoriaDuracao": "05:00:000",
+        "corrida_id": 2,
+        "quantidadeDeVoltas": 79,
+        "qualificatoriaDuracao": "00:40:000",
         "circuito_id": 1,
-        "qualificatoriaCompleta": 1,
-        "corridaCompleta": 1,
+        "qualificatoriaCompleta": 0,
+        "corridaCompleta": 0,
         "pilotos": [
             {
                 "piloto_id": 1,
@@ -39,106 +177,9 @@
                 "carro_epc": "E20000172211013118905493"
             }
         ],
-        "qualificatoria": {
-            "E2000017221101241890547C": {
-                "piloto_id": 1,
-                "carro_epc": "E2000017221101241890547C",
-                "tempo_menor": "00:30:006",
-                "timestamp": 1619557310.342,
-                "voltas": 8,
-                "tempo_menor_timestamp": 30.00600004196167
-            },
-            "E20000172211011718905474": {
-                "piloto_id": 2,
-                "carro_epc": "E20000172211011718905474",
-                "tempo_menor": "00:30:006",
-                "timestamp": 1619557255.102,
-                "voltas": 6,
-                "tempo_menor_timestamp": 30.00600004196167
-            },
-            "E2000017221101321890548C": {
-                "piloto_id": 3,
-                "carro_epc": "E2000017221101321890548C",
-                "tempo_menor": "00:30:052",
-                "timestamp": 1619557260.243,
-                "voltas": 6,
-                "tempo_menor_timestamp": 30.05299997329712
-            },
-            "E20000172211012518905484": {
-                "piloto_id": 4,
-                "carro_epc": "E20000172211012518905484",
-                "tempo_menor": "00:30:023",
-                "timestamp": 1619557266.724,
-                "voltas": 6,
-                "tempo_menor_timestamp": 30.02300000190735
-            },
-            "E20000172211013118905493": {
-                "piloto_id": 5,
-                "carro_epc": "E20000172211013118905493",
-                "tempo_menor": "00:30:019",
-                "timestamp": 1619557270.051,
-                "voltas": 6,
-                "tempo_menor_timestamp": 30.019999980926514
-            }
-        },
-        "classificacao": {
-            "E2000017221101241890547C": {
-                "piloto_id": 1,
-                "carro_epc": "E2000017221101241890547C",
-                "tempo_total": "02:30:511",
-                "tempo_menor": "00:30:009",
-                "tempo_atual": "00:30:378",
-                "timestamp": 1619557600.351,
-                "voltas": 5,
-                "pits": 0,
-                "pos_inicial": 1
-            },
-            "E20000172211011718905474": {
-                "piloto_id": 2,
-                "carro_epc": "E20000172211011718905474",
-                "tempo_total": "02:33:314",
-                "tempo_menor": "00:30:006",
-                "tempo_atual": "00:30:006",
-                "timestamp": 1619557603.154,
-                "voltas": 5,
-                "pits": 0,
-                "pos_inicial": 2
-            },
-            "E2000017221101321890548C": {
-                "piloto_id": 3,
-                "carro_epc": "E2000017221101321890548C",
-                "tempo_total": "02:39:352",
-                "tempo_menor": "00:30:005",
-                "tempo_atual": "00:30:046",
-                "timestamp": 1619557609.192,
-                "voltas": 5,
-                "pits": 0,
-                "pos_inicial": 5
-            },
-            "E20000172211012518905484": {
-                "piloto_id": 4,
-                "carro_epc": "E20000172211012518905484",
-                "tempo_total": "02:43:542",
-                "tempo_menor": "00:30:012",
-                "tempo_atual": "00:30:042",
-                "timestamp": 1619557613.382,
-                "voltas": 5,
-                "pits": 0,
-                "pos_inicial": 4
-            },
-            "E20000172211013118905493": {
-                "piloto_id": 5,
-                "carro_epc": "E20000172211013118905493",
-                "tempo_total": "02:30:503",
-                "tempo_menor": "00:30:001",
-                "tempo_atual": "00:30:378",
-                "timestamp": 1619557600.343,
-                "voltas": 5,
-                "pits": 0,
-                "pos_inicial": 3
-            }
-        },
-        "classificacaoDuracao": "00:00:29"
+        "qualificatoria": null,
+        "classificacao": null,
+        "classificacaoDuracao": "00:00:00"
     },
     "corrida_ativa": true
 }
