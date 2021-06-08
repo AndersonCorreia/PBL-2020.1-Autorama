@@ -65,8 +65,17 @@ class Qualificatoria:
                 else: 
                     self.corrida['qualificatoriaCompleta'] = 2  #sendo realizada
                 self.save()
+                # self.publicarDadosQualificatoria(result['tag'], connection)
         connection.request('/corrida/encerrar')
         self.setPosInicialForCorrida()
+        
+    def publicarDadosQualificatoria(self, tag, pub):
+        self.getDadosQualificatoria()
+        pub.request('/acompanhar/corrida/' + str(self.corrida['corrida_id']), self.dadosCorrida, True, False, False)
+        for piloto in self.dadosCorrida:
+            if piloto['carro_epc'] == tag:
+                pub.request('/acompanhar/corrida/' + str(self.corrida['corrida_id']) + '/piloto/' + tag, piloto, True, False, False)
+                break
     
     def getDadosQualificatoria(self):
         corrida = self.corrida
@@ -80,6 +89,7 @@ class Qualificatoria:
             pos['nome_piloto'] = pilotoAtual['nome']
             pos['nome_equipe'] = self.autorama.getEquipe(pilotoAtual['equipe_id'])['nome']
             pos['cor_carro'] = self.autorama.getCarro(pilotoAtual['carro_id'])['cor']
+            pos['num_carro'] = self.autorama.getCarro(pilotoAtual['carro_id'])['num']
             pos['tempo_volta'] = qualificacao['tempo_menor']
             pos['timestamp'] = qualificacao['tempo_menor_timestamp']
             pos['voltas'] = qualificacao['voltas']

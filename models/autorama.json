@@ -126,8 +126,8 @@
             "nome": "Monza",
             "pais": "Italia",
             "tempoMinimoVolta": 30,
-            "recorde": "00:30:000",
-            "autor": "Elisangêla"
+            "recorde": "00:00:0",
+            "autor": "Tales"
         }
     ],
     "corridas": [
@@ -390,5 +390,5 @@
     "tags": {
         "last": {}
     },
-    "corrida_ativa": 2
+    "corrida_ativa": 1
 }
