@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block css %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch&family=Orbitron:wght@400;450;460&display=swap');
+    </style>
+    <link rel="stylesheet" href="/static/css/user.css">
+{% endblock %}
+
+{% block content %}
+
+<diV class="container">
+    <div class="row">
+        <div class="col-8">
+            <h2 class="text-left m-4">{% block title %} {{dados['nome_piloto']}} {% endblock %}</h2>
+        </div>
+        <div class="col-4">
+            <h4 class="mt-5 float-left"> Corrida Volta 10 </h4>
+            <img src="{{dados['bandeira_piloto']}}" class="img-fluid rounded float-right mt-5" alt="bandeira" width="50" height="40">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8 foto">
+            <img src="{{dados['foto_piloto']}}" class="img-fluid rounded" alt="foto">
+        </div>
+        <div class="col-4 logo">
+            <div class="row mt-4">
+                <div class="col-6">
+                    <img src="{{dados['logo_equipe']}}" class="img-fluid" alt="logo" width="60" height="50">
+                    <h5>{{dados['nome_equipe']}}</h5>
+                </div>
+                <div class="col-6">
+                    <p class="num">{{dados['num_carro']}}</p>
+                </div>
+            </div>
+            <h5 class="row mt-4 border-top border-light rounded">Posição 8</h5>
+            <h5 class="row mt-2 border-top border-light rounded">44 HAM +3:435</h5>
+            <h5 class="row mt-2 border-top border-light rounded">33 VES +5:435</h5>
+            <h5 class="row mt-2 border-top border-light rounded">Último Tempo 1:21:544</h5>
+            <h5 class="row mt-2 border-top border-light rounded">Melhor Tempo 1:20:234</h5>
+
+        </div>
+    </div>
+</diV>
+    
+{% endblock %}

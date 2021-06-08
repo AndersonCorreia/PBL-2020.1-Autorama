@@ -69,4 +69,21 @@ class Autorama:
                 self.save()
         return {'atualizado': atualizado }
         
-        
+    #retorna os dados necessários para a tela de acompanhar piloto    
+    def showPilot(self, id):
+        piloto = self.getPiloto(id)
+        carro = self.getCarro(piloto['carro_id'])
+        equipe = self.getEquipe(piloto['equipe_id'])
+
+        dados = {
+            'nome_piloto': piloto['nome'],
+            'apelido_piloto': piloto['apelido'],
+            #'bandeira_piloto': piloto['bandeira'],
+            'bandeira_piloto': "/static/img/pilotos/bandeira_1.jpg",
+            'foto_piloto': "/static/img/pilotos/foto_1.jpg",
+            'num_carro': carro['num'],
+            'nome_equipe': equipe['nome'],
+            #'logo_equipe': equipe['logo']
+            'logo_equipe': "/static/img/equipes/logo_1.png"
+        }
+        return dados

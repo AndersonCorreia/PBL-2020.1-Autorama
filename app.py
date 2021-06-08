@@ -289,3 +289,11 @@ def updateClassificacaoUsuario():
 def updateCorridaUsuario():
     autorama = AutoramaUser()
     return autorama.updateCorridaAtual()
+
+@app.route('/usuario/classificacao/piloto/<int:id>', methods=['GET', 'POST'])
+def acompanharPiloto(id):
+    user = AutoramaUser()
+    if (request.method == "GET"):
+        dados = user.showPilot(id)
+        print(dados)
+        return render_template('usuario/acompanhaPiloto.html', dados=dados)
