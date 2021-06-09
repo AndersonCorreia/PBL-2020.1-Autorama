@@ -13,8 +13,8 @@
         <div class="col-8">
             <h2 class="text-left m-4">{% block title %} {{dados['nome_piloto']}} {% endblock %}</h2>
         </div>
-        <div class="col-4">
-            <h4 class="mt-5 float-left"> Corrida Volta 10 </h4>
+        <div class="col-4" id="voltas">
+            <h4 class="mt-5 float-left"> Corrida Volta {{dados['voltas']}} </h4>
             <img src="{{dados['bandeira_piloto']}}" class="img-fluid rounded float-right mt-5" alt="bandeira" width="50" height="40">
         </div>
     </div>
@@ -22,7 +22,7 @@
         <div class="col-8 foto">
             <img src="{{dados['foto_piloto']}}" class="img-fluid rounded" alt="foto">
         </div>
-        <div class="col-4 logo">
+        <div class="col-4">
             <div class="row mt-4">
                 <div class="col-6">
                     <img src="{{dados['logo_equipe']}}" class="img-fluid" alt="logo" width="60" height="50">
@@ -32,14 +32,63 @@
                     <p class="num">{{dados['num_carro']}}</p>
                 </div>
             </div>
-            <h5 class="row mt-4 border-top border-light rounded">Posição 8</h5>
-            <h5 class="row mt-2 border-top border-light rounded">44 HAM +3:435</h5>
-            <h5 class="row mt-2 border-top border-light rounded">33 VES +5:435</h5>
-            <h5 class="row mt-2 border-top border-light rounded">Último Tempo 1:21:544</h5>
-            <h5 class="row mt-2 border-top border-light rounded">Melhor Tempo 1:20:234</h5>
-
+            <div id="dadosCorrida">
+                <h5 class="row mt-4 border-top border-light rounded">Posição {{dados['posicao']}}</h5>
+                {% if dados[piloto_proximo] != False %}
+                <h5 class="row mt-2 border-top border-light rounded">&uarr; {{dados['posicao_proximo']}} {{dados['piloto_proximo']}}  {{dados['tempo_proximo']}} </h5>
+                {% endif %}
+                {% if dados[piloto_anterior] != False %}
+                <h5 class="row mt-2 border-top border-light rounded">&darr; {{dados['posicao_anterior']}} {{dados['piloto_anterior']}}  {{dados['tempo_anterior']}} </h5>
+                {% endif %}
+                <h5 class="row mt-2 border-top border-light rounded">Último Tempo {{dados['tempo_volta']}}</h5>
+                <h5 class="row mt-2 border-top border-light rounded">Melhor Tempo {{dados['tempo_menor']}}</h5>
+            </div>
         </div>
     </div>
 </diV>
     
+{% endblock %}
+
+
+{% block js %}
+<script type="application/javascript">
+    console.log('{{status}}');
+    if ('{{status}}') {  // se a corrida estiver ativa excecuta o javascript
+        const interval = setInterval(() => {
+            var qualificatoria = [];
+            let voltas = document.getElementById("voltas");
+            let dadosCorrida = document.getElementById("dadosCorrida");
+            let piloto_id = '{{piloto_id}}';
+            $.ajax({
+                url: url_for('updatePiloto', piloto_id),
+                type: 'GET',
+                success: function(){},
+                error: function(err){
+                    console.log(err);
+                }
+            }).done(function(result){
+                dados = result.data;
+                console.log(result.status);
+                voltas.innerHTML = dados['voltas'];
+                dadosCorrida.innerHTML = 
+                '<h5 class="row mt-4 border-top border-light rounded">Posição '+ dados['posicao'] + '</h5>';
+                if( dados[piloto_proximo] ) {
+                    dadosCorrida.innerHTML = dadosCorrida.innerHTML + '<h5 class="row mt-2 border-top border-light rounded">&uarr; '+ 
+                        dados['posicao_proximo']+ " " + dados['piloto_proximo'] + " " + dados['tempo_proximo'] + '</h5>';
+                }
+                if( dados[piloto_anterior] ) {
+                    dadosCorrida.innerHTML = dadosCorrida.innerHTML + '<h5 class="row mt-2 border-top border-light rounded">&darr; '+
+                        dados['posicao_anterior'] + " " + dados['piloto_anterior'] + " " + dados['tempo_anterior'] + '</h5>';
+                }
+                dadosCorrida.innerHTML = dadosCorrida.innerHTML + 
+                '<h5 class="row mt-2 border-top border-light rounded">Último Tempo '+ dados['tempo_volta'] + '</h5>' + 
+                '<h5 class="row mt-2 border-top border-light rounded">Melhor Tempo '+ dados['tempo_menor'] + '</h5>';
+
+                if(!result.status){
+                    clearInterval(interval);
+                }
+            });
+        }, 1000);
+    }
+</script>
 {% endblock %}

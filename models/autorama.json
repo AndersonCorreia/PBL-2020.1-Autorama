@@ -126,8 +126,8 @@
             "nome": "Monza",
             "pais": "Italia",
             "tempoMinimoVolta": 30,
-            "recorde": "00:00:0",
-            "autor": "Tales"
+            "recorde": "-1:59:924",
+            "autor": "Mariana"
         }
     ],
     "corridas": [
@@ -206,10 +206,10 @@
                 "E2000017221101241890547C": {
                     "piloto_id": 1,
                     "carro_epc": "E2000017221101241890547C",
-                    "tempo_total": "02:30:511",
-                    "tempo_menor": "00:30:009",
-                    "tempo_atual": "00:30:378",
-                    "timestamp": 1619557600.351,
+                    "tempo_total": "01:30:067",
+                    "tempo_menor": "00:00:0",
+                    "tempo_atual": "00:30:009",
+                    "timestamp": 1619557539.907,
                     "voltas": 5,
                     "pits": 0,
                     "pos_inicial": 1
@@ -217,10 +217,10 @@
                 "E20000172211011718905474": {
                     "piloto_id": 2,
                     "carro_epc": "E20000172211011718905474",
-                    "tempo_total": "02:33:314",
-                    "tempo_menor": "00:30:006",
-                    "tempo_atual": "00:30:006",
-                    "timestamp": 1619557603.154,
+                    "tempo_total": "00:33:177",
+                    "tempo_menor": "00:00:0",
+                    "tempo_atual": "00:29:993",
+                    "timestamp": 1619557483.017,
                     "voltas": 5,
                     "pits": 0,
                     "pos_inicial": 2
@@ -228,10 +228,10 @@
                 "E2000017221101321890548C": {
                     "piloto_id": 3,
                     "carro_epc": "E2000017221101321890548C",
-                    "tempo_total": "02:39:352",
-                    "tempo_menor": "00:30:005",
-                    "tempo_atual": "00:30:046",
-                    "timestamp": 1619557609.192,
+                    "tempo_total": "00:39:249",
+                    "tempo_menor": "00:00:0",
+                    "tempo_atual": "00:29:969",
+                    "timestamp": 1619557489.089,
                     "voltas": 5,
                     "pits": 0,
                     "pos_inicial": 5
@@ -239,27 +239,27 @@
                 "E20000172211012518905484": {
                     "piloto_id": 4,
                     "carro_epc": "E20000172211012518905484",
-                    "tempo_total": "02:43:542",
-                    "tempo_menor": "00:30:012",
-                    "tempo_atual": "00:30:042",
-                    "timestamp": 1619557613.382,
-                    "voltas": 5,
+                    "tempo_total": "00:43:022",
+                    "tempo_menor": "00:00:0",
+                    "tempo_atual": "00:29:987",
+                    "timestamp": 1619557492.862,
+                    "voltas": 4,
                     "pits": 0,
                     "pos_inicial": 4
                 },
                 "E20000172211013118905493": {
                     "piloto_id": 5,
                     "carro_epc": "E20000172211013118905493",
-                    "tempo_total": "02:30:503",
-                    "tempo_menor": "00:30:001",
-                    "tempo_atual": "00:30:378",
-                    "timestamp": 1619557600.343,
-                    "voltas": 5,
+                    "tempo_total": "00:30:026",
+                    "tempo_menor": "00:00:0",
+                    "tempo_atual": "00:29:919",
+                    "timestamp": 1619557479.866,
+                    "voltas": 3,
                     "pits": 0,
                     "pos_inicial": 3
                 }
             },
-            "classificacaoDuracao": "00:00:29"
+            "classificacaoDuracao": "00:00:01"
         },
         {
             "corrida_id": 2,

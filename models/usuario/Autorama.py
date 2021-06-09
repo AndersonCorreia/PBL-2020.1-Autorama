@@ -69,21 +69,35 @@ class Autorama:
                 self.save()
         return {'atualizado': atualizado }
         
+    def getStatusCorrida(self):
+        return self.dados['corrida_ativa']
+
+    #realiza a inscrição para acompanhar dados de um piloto
+    def getDataPilot(self, tag):
+        sub = self.getConnection()
+        sub.request('/acompanhar/corrida/' + str(self.dados['corrida']['corrida_id']) + '/piloto/' + tag)
+        dados = sub.requestRecv().payload
+        return dados
+            
     #retorna os dados necessários para a tela de acompanhar piloto    
     def showPilot(self, id):
         piloto = self.getPiloto(id)
         carro = self.getCarro(piloto['carro_id'])
         equipe = self.getEquipe(piloto['equipe_id'])
-
-        dados = {
-            'nome_piloto': piloto['nome'],
-            'apelido_piloto': piloto['apelido'],
-            #'bandeira_piloto': piloto['bandeira'],
-            'bandeira_piloto': "/static/img/pilotos/bandeira_1.jpg",
-            'foto_piloto': "/static/img/pilotos/foto_1.jpg",
-            'num_carro': carro['num'],
-            'nome_equipe': equipe['nome'],
-            #'logo_equipe': equipe['logo']
-            'logo_equipe': "/static/img/equipes/logo_1.png"
-        }
+        dados=[]
+        if self.dados['corrida_ativa']:
+            dados = self.getDataPilot(carro['epc'])
+            dados['bandeira_piloto'] = "/static/img/pilotos/bandeira_1.jpg"     
+            dados['foto_piloto'] = "/static/img/pilotos/foto_1.jpg"
+            dados['logo_equipe'] = equipe['logo_equipe']
+        else:
+            dados = {
+                'nome_piloto': piloto['nome'],
+                'apelido_piloto': piloto['apelido'],
+                'bandeira_piloto': "/static/img/pilotos/bandeira_1.jpg",
+                'foto_piloto': "/static/img/pilotos/foto_1.jpg",
+                'num_carro': carro['num'],
+                'nome_equipe': equipe['nome'],
+                'logo_equipe': equipe['logo_equipe']
+            }
         return dados

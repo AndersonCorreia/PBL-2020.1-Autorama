@@ -283,7 +283,7 @@ def updateClassificacaoUsuario():
         return {'data': classificacaoDados, 'status': classificacao.corrida['corridaCompleta'] }
     if (request.method == "POST"):
         classificacao.setTime(request.form['time'])
-        return redirect(url_for('classificacao'))
+        return redirect(url_for('classificacaoUsuario'))
     
 @app.route('/usuario/update/corrida/atual', methods=['GET'])
 def updateCorridaUsuario():
@@ -291,9 +291,18 @@ def updateCorridaUsuario():
     return autorama.updateCorridaAtual()
 
 @app.route('/usuario/classificacao/piloto/<int:id>', methods=['GET', 'POST'])
-def acompanharPiloto(id):
+def getPiloto(id):
     user = AutoramaUser()
     if (request.method == "GET"):
+        status = user.getStatusCorrida()
         dados = user.showPilot(id)
-        print(dados)
-        return render_template('usuario/acompanhaPiloto.html', dados=dados)
+        return render_template('usuario/acompanhaPiloto.html', dados=dados, status=status, piloto_id=id)
+
+@app.route('/usuario/classificacao/piloto/<int:id>/atualizar', methods=['GET', 'POST'])
+def updatePiloto(id):
+    user = AutoramaUser()
+    if (request.method == "GET"):
+        status = user.getStatusCorrida()
+        dados = user.showPilot(id)
+        return {'data': dados, 'status': status}
+    
