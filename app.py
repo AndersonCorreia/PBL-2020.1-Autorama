@@ -273,7 +273,12 @@ def classificacaoUsuario():
         classificacao = ClassificacaoUser()
         corrida = classificacao.corrida
         classificacaoDados = classificacao.getDadosClassificacao()
-        return render_template('usuario/classificacao.html', tempo = corrida['classificacaoDuracao'], status = corrida['corridaCompleta'], classificacao=classificacaoDados, circuito = autorama.getPista(corrida['circuito_id']), contentLarge=True)
+        return render_template('usuario/classificacao.html',
+                tempo = corrida['classificacaoDuracao'],
+                status = corrida['corridaCompleta'], 
+                classificacao=classificacaoDados,
+                circuito = autorama.getPista(corrida['circuito_id']), 
+                pilotos = autorama.dados['pilotos'],contentLarge=True)
 
 @app.route('/usuario/classificacao/atualizar', methods=['GET', 'POST'])
 def updateClassificacaoUsuario():
@@ -291,6 +296,11 @@ def updateClassificacaoUsuario():
 def updateCorridaUsuario():
     autorama = AutoramaUser()
     return autorama.updateCorridaAtual()
+
+@app.route('/usuario/classificacao/escolher/piloto', methods=['GET', 'POST'])
+def acompanharPiloto():
+    if (request.method == "POST"):
+        return redirect(url_for('getPiloto', id=request.form['piloto']))
 
 @app.route('/usuario/classificacao/piloto/<int:id>', methods=['GET', 'POST'])
 def getPiloto(id):

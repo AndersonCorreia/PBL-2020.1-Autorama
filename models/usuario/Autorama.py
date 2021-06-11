@@ -71,7 +71,7 @@ class Autorama:
         return {'atualizado': atualizado }
         
     def getStatusCorrida(self):
-        return self.dados['corrida_ativa']
+        return self.dados['corrida_ativa'] and self.dados['corrida']['corridaCompleta'] != 1
 
     #realiza a inscrição para acompanhar dados de um piloto
     def getDataPilot(self, tag):

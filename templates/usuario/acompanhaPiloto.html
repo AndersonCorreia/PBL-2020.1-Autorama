@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'usuario/base.html' %}
 {% block css %}
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch&family=Orbitron:wght@400;450;460&display=swap');
@@ -13,8 +13,8 @@
         <div class="col-8">
             <h2 class="text-left m-4">{% block title %} {{dados['nome_piloto']}} {% endblock %}</h2>
         </div>
-        <div class="col-4" id="voltas">
-            <h4 class="mt-5 float-left"> Corrida Volta {{dados['voltas']}} </h4>
+        <div class="col-4">
+            <h4 class="mt-5 float-left"> Corrida Volta <span  id="voltas">{{dados['voltas']}}</span> </h4>
             <img src="{{dados['bandeira_piloto']}}" class="img-fluid rounded float-right mt-5" alt="bandeira" width="50" height="40">
         </div>
     </div>
@@ -60,7 +60,7 @@
             let dadosCorrida = document.getElementById("dadosCorrida");
             let piloto_id = '{{piloto_id}}';
             $.ajax({
-                url: url_for('updatePiloto', piloto_id),
+                url: "{{ url_for('updatePiloto', id=piloto_id)}}",
                 type: 'GET',
                 success: function(){},
                 error: function(err){
@@ -69,16 +69,17 @@
             }).done(function(result){
                 dados = result.data;
                 console.log(result.status);
+                // console.log(result.data);
                 voltas.innerHTML = dados['voltas'];
                 dadosCorrida.innerHTML = 
                 '<h5 class="row mt-4 border-top border-light rounded">Posição '+ dados['posicao'] + '</h5>';
-                if( dados[piloto_proximo] ) {
+                if( dados['piloto_proximo'] ) {
                     dadosCorrida.innerHTML = dadosCorrida.innerHTML + '<h5 class="row mt-2 border-top border-light rounded">&uarr; '+ 
-                        dados['posicao_proximo']+ " " + dados['piloto_proximo'] + " " + dados['tempo_proximo'] + '</h5>';
+                        dados['piloto_proximo'] + " " + dados['tempo_proximo'] + '</h5>';
                 }
-                if( dados[piloto_anterior] ) {
+                if( dados['piloto_anterior'] ) {
                     dadosCorrida.innerHTML = dadosCorrida.innerHTML + '<h5 class="row mt-2 border-top border-light rounded">&darr; '+
-                        dados['posicao_anterior'] + " " + dados['piloto_anterior'] + " " + dados['tempo_anterior'] + '</h5>';
+                        dados['piloto_anterior'] + " " + dados['tempo_anterior'] + '</h5>';
                 }
                 dadosCorrida.innerHTML = dadosCorrida.innerHTML + 
                 '<h5 class="row mt-2 border-top border-light rounded">Último Tempo '+ dados['tempo_volta'] + '</h5>' + 
