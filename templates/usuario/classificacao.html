@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="/static/css/timer.css"> 
+{% endblock %}
+
+{% block content %}
+    <div class="row my-4">
+        <div class="col-12 col-md-6">
+            <h5>{% block title %}SESSÃO DE CORRIDA: <a id='time'>{{tempo}}</a> {% endblock %}</h5>
+        </div>
+        <div class="col-12 col-md-6">
+            <h5>Recorde do Circuito: {{circuito['recorde']}}</h5>
+        </div>
+        <div class="col-12 col-md-6">
+            <h5>CLASSIFICAÇÃO</h5>
+        </div>
+        <div class="col-12 col-md-6">
+            <h5>Autor: {{circuito['autor']}}</h5>
+        </div>
+    </div>
+    <h2 class="text-center mt-4"></h2>
+    <table class="table text-center table-striped table-responsive-md table-light col-12 p-0 m-0 my-3">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col-1">POS</th>
+            <th scope="col-2">PILOTO</th>
+            <th scope="col">EQUIPE</th>
+            <th scope="col">TEMPO DE CORRIDA</th>
+            <th scope="col">TEMPO DE VOLTA</th>
+            <th scope="col">VOLTA MAIS RÁPIDA</th>
+            <th scope="col-1">VOLTAS</th>
+            <th scope="col-1">PITS</th>
+          </tr>
+        </thead>
+        <tbody id="dados">
+            {% for pos in classificacao %}
+                <tr>
+                    <th class="d-flex" scope="row" style="font-size: 25px;align-items: center;">{{loop.index}}
+                        <div class="mx-1 mt-1" style="background-color: {{pos['cor_carro']}}; width: 0.8em;
+                            height: 0.8em; margin: 0; padding: 0;border-radius: 1em;"></div>
+                    </th>
+                    <td>{{pos['nome_piloto']}}</td>
+                    <td>{{pos['nome_equipe']}}</td>
+                    <td>{{pos['tempo_corrida']}}</td>
+                    <td>{{pos['tempo_volta']}}</td>
+                    <td>{{pos['tempo_menor']}}</td>
+                    <td>{{pos['voltas']}}</td>
+                    <td>{{pos['pits']}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+
+
+{% endblock %}
+
+{% block js %}
+<script type="application/javascript">
+    
+    if ('{{status}}' != '1') { // se a classificacao não estiver completa excecuta o javascript
+        const count = new Date();
+        count.setHours(00,00,00);
+        const zeroFill = n => {
+            return ('0' + n).slice(-2);
+        }
+        const interval = setInterval(() => {
+            var qualificatoria = [];
+            let dados = document.getElementById("dados");
+            let time = document.getElementById("time");
+            $.ajax({
+                url: "{{url_for('updateClassificacaoUsuario')}}",
+                type: 'GET',
+                success: function(){},
+                error: function(err){
+                    console.log(err);
+                }
+            }).done(function(result){
+                qualificatoria = result.data;
+                console.log(result.status);
+                dados.innerHTML = "";
+                qualificatoria.forEach(function (item, pos) {
+                    pos=pos+1;
+                    dados.innerHTML = dados.innerHTML + 
+                    "<tr>"+
+                        "<th class='d-flex' scope='row' style='font-size: 25px;align-items: center;'>"+pos+
+                        "<div class='mx-auto mt-1' style='background-color: " + item['cor_carro'] + "; width: 0.8em;"+
+                            "height: 0.8em; margin: 0; padding: 0;border-radius: 1em;'></div></th>"+
+                        "<td>"+ item['nome_piloto']+"</td>"+
+                        "<td>"+ item['nome_equipe']+"</td>"+
+                        "<td>"+ item['tempo_corrida']+"</td>"+
+                        "<td>"+ item['tempo_volta']+"</td>"+
+                        "<td>"+ item['tempo_menor']+"</td>"+
+                        "<td>"+ item['voltas']+"</td>"+
+                        "<td>"+ item['pits']+"</td>"+
+                    "</tr>";
+                });
+                //formata e atualiza o tempo percorrido na tela
+                count.setSeconds(count.getSeconds() + 1);
+                const pastTime = zeroFill(count.getHours()) + ':' + zeroFill(count.getMinutes()) + ':' + zeroFill(count.getSeconds());
+                time.innerHTML = pastTime;
+                if(result.status == 1){
+                    time.innerHTML = pastTime + " - Finalizada";
+                    clearInterval(interval);
+                    //enviar o tempo de duração da classificação para ser armazenado
+                    $.ajax({
+                        url: "{{url_for('updateClassificacao')}}",
+                        type: 'POST',
+                        data: {
+                            time: pastTime
+                        },
+                        success: function(){},
+                        error: function(err){
+                            console.log(err);
+                        }
+                    }).done(function(data){
+                        console.log("tempo enviado com sucesso");
+                    });
+                }
+            });
+            
+        }, 1000);
+    }
+</script>
+{% endblock %}

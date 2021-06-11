@@ -10,14 +10,14 @@
             </li>
             <li class="list-group-item">
                 {% if corrida['qualificatoriaCompleta'] %}
-                    <a href="{{url_for('qualificatoriaUsuario')}}" class="btn btn-info mr-auto">Ver resultado da Qualificatória</a>
+                    <!-- <a href="{{url_for('qualificatoriaUsuario')}}" class="btn btn-info mr-auto">Ver resultado da Qualificatória</a> -->
                     {% if corrida['corridaCompleta'] %}
                         <a href="{{url_for('classificacaoUsuario')}}" class="btn btn-primary float-right">Ver resultado da Corrida</a>
                     {% else %}
                         <a href="{{url_for('classificacaoUsuario')}}" class="btn btn-primary float-right">Corrida</a>
                     {% endif %}
                 {% else %}
-                    <a href="{{url_for('qualificatoriaUsuario')}}" class="btn btn-info mr-auto"> Qualificatória</a>
+                    <!-- <a href="{{url_for('qualificatoriaUsuario')}}" class="btn btn-info mr-auto"> Qualificatória</a> -->
                 {% endif %}
             </li>
         </ul>

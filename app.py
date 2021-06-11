@@ -3,6 +3,7 @@ from models.Leitor import Leitor
 from models.Carro import Carro
 from models.Qualificatoria import Qualificatoria
 from models.Classificacao import Classificacao
+from models.usuario.Classificacao import Classificacao as ClassificacaoUser
 from models.Autorama import Autorama
 from models.usuario.Autorama import Autorama as AutoramaUser
 from threads.QualificatoriaThread import QualificatoriaThread
@@ -269,16 +270,17 @@ def updateQualificatoriaUsuario():
 def classificacaoUsuario():
     if (request.method == "GET"):
         autorama = Autorama()
-        classificacao = Classificacao()
+        classificacao = ClassificacaoUser()
         corrida = classificacao.corrida
         classificacaoDados = classificacao.getDadosClassificacao()
-        return render_template('classificacao/classificacao.html', tempo = corrida['classificacaoDuracao'], status = corrida['corridaCompleta'], classificacao=classificacaoDados, circuito = autorama.getPista(corrida['circuito_id']), contentLarge=True)
+        return render_template('usuario/classificacao.html', tempo = corrida['classificacaoDuracao'], status = corrida['corridaCompleta'], classificacao=classificacaoDados, circuito = autorama.getPista(corrida['circuito_id']), contentLarge=True)
 
 @app.route('/usuario/classificacao/atualizar', methods=['GET', 'POST'])
 def updateClassificacaoUsuario():
-    classificacao = Classificacao()
+    classificacao = ClassificacaoUser()
     if (request.method == "GET"):
-        autorama = Autorama()
+        autorama = AutoramaUser()
+        autorama.updateCorridaAtual(True)
         classificacaoDados = classificacao.getDadosClassificacao()
         return {'data': classificacaoDados, 'status': classificacao.corrida['corridaCompleta'] }
     if (request.method == "POST"):

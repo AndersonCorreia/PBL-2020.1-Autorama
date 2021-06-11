@@ -2,6 +2,7 @@
 import json
 import os
 import time
+import random
 from client.src.mqtt.SUB import Subscriber
 
 class Autorama:
@@ -51,14 +52,14 @@ class Autorama:
         return Subscriber("node02.myqtthub.com", 1883, "usuario", "usuario", "usuario")
         # return Subscriber("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
         
-    def updateCorridaAtual(self):
+    def updateCorridaAtual(self, force = False):
         connection = self.getConnection()
         atualizado = False
         connection.request('/acompanhar/corrida/atual')
         while( not atualizado):
             time.sleep(2)
             corrida = connection.requestRecv(False).payload
-            if self.dados['corrida']['corrida_id'] != corrida['corrida']['corrida_id']:
+            if self.dados['corrida']['corrida_id'] != corrida['corrida']['corrida_id'] or force:
                 atualizado = True
                 self.dados['corrida'] = corrida['corrida']
                 self.dados['circuito'] = corrida['circuito']
@@ -78,26 +79,36 @@ class Autorama:
         sub.request('/acompanhar/corrida/' + str(self.dados['corrida']['corrida_id']) + '/piloto/' + tag)
         dados = sub.requestRecv().payload
         return dados
+    
+    #realiza a inscrição para acompanhar dados de um piloto
+    def getDadosClassificacao(self):
+        sub = self.getConnection()
+        sub.request('/acompanhar/corrida/' + str(self.dados['corrida']['corrida_id']))
+        dados = sub.requestRecv().payload
+        return dados
             
     #retorna os dados necessários para a tela de acompanhar piloto    
     def showPilot(self, id):
         piloto = self.getPiloto(id)
         carro = self.getCarro(piloto['carro_id'])
         equipe = self.getEquipe(piloto['equipe_id'])
+        logos = ['logo_1.png', 'logo_2.png', 'logo_3.png']
+        fotos = ['foto_1.jpg']
+        bandeiras = ['bandeira_1.jpg']
         dados=[]
         if self.dados['corrida_ativa']:
             dados = self.getDataPilot(carro['epc'])
-            dados['bandeira_piloto'] = "/static/img/pilotos/bandeira_1.jpg"     
-            dados['foto_piloto'] = "/static/img/pilotos/foto_1.jpg"
-            dados['logo_equipe'] = equipe['logo_equipe']
+            dados['bandeira_piloto'] = "/static/img/pilotos/" + random.choice(bandeiras)   
+            dados['foto_piloto'] = "/static/img/pilotos/" + random.choice(fotos)
+            dados['logo_equipe'] = "/static/img/equipes/" + random.choice(logos)
         else:
             dados = {
                 'nome_piloto': piloto['nome'],
                 'apelido_piloto': piloto['apelido'],
-                'bandeira_piloto': "/static/img/pilotos/bandeira_1.jpg",
-                'foto_piloto': "/static/img/pilotos/foto_1.jpg",
+                'bandeira_piloto': "/static/img/pilotos/" + random.choice(bandeiras),
+                'foto_piloto': "/static/img/pilotos/" + random.choice(fotos),
                 'num_carro': carro['num'],
                 'nome_equipe': equipe['nome'],
-                'logo_equipe': equipe['logo_equipe']
+                'logo_equipe': "/static/img/equipes/" + random.choice(logos)
             }
         return dados
