@@ -24,8 +24,8 @@ def server(host = args.host, port = args.port, id = args.mqttid, user = args.mqt
     sub.request('/test')
     sub.request('/config/carro')
     sub.request('/config/leitor')
-    sub.request('/corrida/qualificatoria/carros')
-    sub.request('/corrida/qualificatoria/acompanhar')
+    sub.request('/corrida/carros')
+    sub.request('/corrida/acompanhar')
     sub.request('/corrida/encerrar')
     while True: 
         msg = sub.requestRecv(False)

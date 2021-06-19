@@ -3,7 +3,7 @@ from models.Autorama import Autorama
 from models.Leitor import Leitor
 from mercury_.sensor import *
 from threading import Thread
-
+import time
 class SensorThread(Thread):
 
 	def __init__ (self, sub, buffer, function='read_send'):
@@ -57,7 +57,7 @@ class SensorThread(Thread):
 					tag = self.buffer['tagsNoSend'].pop(0)#sempre pega a primeira na fila para enviar
 					print(tag)
 					print('\n')
-					self.sub.publishResponse( "/corrida/qualificatoria/acompanhar", tag )
+					self.sub.publishResponse( "/corrida/acompanhar", tag )
 					self.buffer['tagsSend'].append(tag)
 					# print ("Tag não foi enviada com sucesso")
 					# self.buffer['tagsNoSend'].insert(0,tag)
@@ -85,7 +85,7 @@ class SensorThread(Thread):
 				print("Enviando a tag:\n")
 				print(tag)
 				print('\n')
-				self.sub.publishResponse( "/corrida/qualificatoria/acompanhar",tag )
+				self.sub.publishResponse( "/corrida/acompanhar",tag )
 				self.buffer['tagsSend'].append(tag)
 				time.sleep(1)
 				# print ("Tag não foi enviada com sucesso")

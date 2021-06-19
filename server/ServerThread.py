@@ -45,11 +45,11 @@ class ServerThread(Thread):
         if path == "/autorama/tags/read":
             return AutoramaController.readTag()
         
-        if path == "/corrida/qualificatoria/carros":
+        if path == "/corrida/carros":
             return AutoramaController.definirTagsParaLeitura(headers)
         
-        if path == "/corrida/qualificatoria/acompanhar":
-            return AutoramaController.qualificatoria(headers, sub)
+        if path == "/corrida/acompanhar":
+            return AutoramaController.corrida(headers, sub)
     
         if path == "/button":
             # Botão.button()

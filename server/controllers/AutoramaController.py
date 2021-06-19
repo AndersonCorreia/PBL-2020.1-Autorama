@@ -37,7 +37,7 @@ class AutoramaController:
         return {'success': True, 'dados': []}
     
     @staticmethod  
-    def qualificatoria(headers, sub):
+    def corrida(headers, sub):
         log = loadLog()
         # sensorTRead = SensorThread(pub, log, 'read')
         # sensorTRead.start()
