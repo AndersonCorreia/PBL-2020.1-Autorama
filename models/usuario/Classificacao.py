@@ -1,7 +1,5 @@
 # coding=utf-8
 from models.usuario.Autorama import Autorama as AutoramaUser
-from operator import itemgetter
-import time
 
 class Classificacao:
     def __init__(self):
@@ -14,6 +12,11 @@ class Classificacao:
     
     def save(self):
         self.autorama.dados['corrida'] = self.corrida
+        self.autorama.save()
         
     def getDadosClassificacao(self):
-        return self.autorama.getDadosClassificacao()
+        return self.autorama.getDadosCorrida()
+
+    def setTime(self, time):
+        self.corrida['classificacaoDuracao'] = time
+        self.save()

@@ -4,6 +4,7 @@ from models.Carro import Carro
 from models.Qualificatoria import Qualificatoria
 from models.Classificacao import Classificacao
 from models.usuario.Classificacao import Classificacao as ClassificacaoUser
+from models.usuario.Qualificatoria import Qualificatoria as QualificatoriaUser
 from models.Autorama import Autorama
 from models.usuario.Autorama import Autorama as AutoramaUser
 from threads.QualificatoriaThread import QualificatoriaThread
@@ -253,18 +254,25 @@ def indexUsuario():
 def qualificatoriaUsuario():
     if (request.method == "GET"):
         autorama = Autorama()
-        qualificatoria = Qualificatoria()
+        qualificatoria = QualificatoriaUser()
         corrida = qualificatoria.corrida
         qualificatoriaDados = qualificatoria.getDadosQualificatoria()
-        return render_template('qualificatoria/qualificatoria.html', tempo = corrida['qualificatoriaDuracao'], status = corrida['qualificatoriaCompleta'], qualificatoria=qualificatoriaDados, circuito = autorama.getPista(corrida['circuito_id']))
+        return render_template('usuario/qualificatoria.html', tempo = corrida['qualificatoriaDuracao'], 
+            status = corrida['qualificatoriaCompleta'], qualificatoria=qualificatoriaDados, 
+            circuito = autorama.getPista(corrida['circuito_id']), 
+            pilotos = autorama.dados['pilotos'], contentLarge=True)
 
 @app.route('/usuario/qualificatoria/atualizar', methods=['GET'])
 def updateQualificatoriaUsuario():
+    qualificatoria = QualificatoriaUser()
     if (request.method == "GET"):
-        autorama = Autorama()
-        qualificatoria = Qualificatoria()
+        autorama = AutoramaUser()
+        autorama.updateCorridaAtual(True)
         qualificatoriaDados = qualificatoria.getDadosQualificatoria()
         return {'data': qualificatoriaDados, 'status': qualificatoria.corrida['qualificatoriaCompleta'] }
+    if (request.method == "POST"):
+        qualificatoria.setTime(request.form['time'])
+        return redirect(url_for('qualificatoriaUsuario'))
 
 @app.route('/usuario/classificacao', methods=['GET'])
 def classificacaoUsuario():
@@ -318,3 +326,7 @@ def updatePiloto(id):
         dados = user.showPilot(id)
         return {'data': dados, 'status': status}
     
+@app.route('/usuario/teste', methods=['GET'])
+def telaTeste():
+    if (request.method == "GET"):
+        return render_template('usuario/teste.html')

@@ -55,7 +55,7 @@ class Autorama:
     def updateCorridaAtual(self, force = False):
         connection = self.getConnection()
         atualizado = False
-        connection.request('/acompanhar/corrida/atual')
+        connection.request('/corrida/acompanhar/atual')
         while( not atualizado):
             time.sleep(2)
             corrida = connection.requestRecv(False).payload
@@ -76,17 +76,17 @@ class Autorama:
     #realiza a inscrição para acompanhar dados de um piloto
     def getDataPilot(self, tag):
         sub = self.getConnection()
-        sub.request('/acompanhar/corrida/' + str(self.dados['corrida']['corrida_id']) + '/piloto/' + tag)
+        sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/piloto/' + tag)
         dados = sub.requestRecv().payload
         return dados
     
     #realiza a inscrição para acompanhar dados de um piloto
-    def getDadosClassificacao(self):
+    def getDadosCorrida(self):
         sub = self.getConnection()
-        sub.request('/acompanhar/corrida/' + str(self.dados['corrida']['corrida_id']))
+        sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']))
         dados = sub.requestRecv().payload
         return dados
-            
+      
     #retorna os dados necessários para a tela de acompanhar piloto    
     def showPilot(self, id):
         piloto = self.getPiloto(id)
@@ -100,7 +100,7 @@ class Autorama:
             dados = self.getDataPilot(carro['epc'])
             dados['bandeira_piloto'] = "/static/img/pilotos/" + random.choice(bandeiras)   
             dados['foto_piloto'] = "/static/img/pilotos/" + random.choice(fotos)
-            dados['logo_equipe'] = "/static/img/equipes/" + random.choice(logos)
+            dados['logo_equipe'] = "/static/img/equipes/logo_" + str(equipe['equipe_id'])+".png"
         else:
             dados = {
                 'nome_piloto': piloto['nome'],
@@ -109,6 +109,6 @@ class Autorama:
                 'foto_piloto': "/static/img/pilotos/" + random.choice(fotos),
                 'num_carro': carro['num'],
                 'nome_equipe': equipe['nome'],
-                'logo_equipe': "/static/img/equipes/" + random.choice(logos)
+                'logo_equipe': "/static/img/equipes/logo_" + str(equipe['equipe_id'])+".png"
             }
         return dados

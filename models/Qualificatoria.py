@@ -1,6 +1,5 @@
 
 # coding=utf-8
-from client.src.socket_.Client import Client
 from models.Autorama import Autorama
 from models.Leitor import Leitor
 import time
@@ -22,12 +21,12 @@ class Qualificatoria:
     def qualificatoria(self):
         connection = self.leitor.getConnection()
         headers = { 'pilotos': self.corrida['pilotos'], 'tempoMinimoVolta': self.autorama.getPista(self.corrida['circuito_id'])['tempoMinimoVolta'] }
-        connection.request('/corrida/qualificatoria/carros',headers)#informa ao leitor quais as tags que devem ser lidas
+        connection.request('/corrida/carros',headers)#informa ao leitor quais as tags que devem ser lidas
         
     #o codigo abaixo deve ser executado em uma thread separada
     def qualificatoriaAcompanhar(self):
         connection = self.leitor.getConnection()
-        connection.request('/corrida/qualificatoria/acompanhar', '')
+        connection.request('/corrida/acompanhar', '')
         self.corridaEnd = False
         corrida = self.autorama.getCorridaAtual()
         qualificatoria = corrida['qualificatoria']
@@ -65,16 +64,16 @@ class Qualificatoria:
                 else: 
                     self.corrida['qualificatoriaCompleta'] = 2  #sendo realizada
                 self.save()
-                # self.publicarDadosQualificatoria(result['tag'], connection)
+                self.publicarDadosQualificatoria(result['tag'], connection)
         connection.request('/corrida/encerrar')
         self.setPosInicialForCorrida()
         
     def publicarDadosQualificatoria(self, tag, pub):
         self.getDadosQualificatoria()
-        pub.request('/acompanhar/corrida/' + str(self.corrida['corrida_id']), self.dadosCorrida, True, False, False)
+        pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']), self.dadosCorrida, True, False, False)
         for piloto in self.dadosCorrida:
             if piloto['carro_epc'] == tag:
-                pub.request('/acompanhar/corrida/' + str(self.corrida['corrida_id']) + '/piloto/' + tag, piloto, True, False, False)
+                pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']) + '/piloto/' + tag, piloto, True, False, False)
                 break
     
     def getDadosQualificatoria(self):

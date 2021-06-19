@@ -83,7 +83,7 @@ class Autorama:
                  'carros': carros,
                  'equipes': equipes
                  }
-        pub.request('/acompanhar/corrida/atual', dados, True, False)
+        pub.request('/corrida/acompanhar/atual', dados, True, False)
 
     def getCorridas(self):
         corridas = self.dados['corridas']
