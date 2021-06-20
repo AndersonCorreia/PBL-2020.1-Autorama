@@ -33,11 +33,12 @@ class Classificacao:
         connection.request('/corrida/acompanhar', '')
         self.corridaEnd = False
         classificacao = self.corrida['classificacao']
+        subscriber = True
         while not self.corridaEnd:
             # result = {"tag": epc , "timestamp": timestamp, "time": timestamp desde o inicio da classificacao ) }
             print('sub')
-            result = connection.requestRecv(False)['headers']#aguarda o leitor responder com uma tag
-            print('sub-end')
+            result = connection.requestRecv(False, subscriber)['headers']#aguarda o leitor responder com uma tag
+            subscriber = False
             if 'tag' in result:
                 pos = classificacao[result['tag']]
                 if pos['voltas'] < self.corrida['quantidadeDeVoltas']: # se o primeiro carro não terminou a corrida
@@ -76,6 +77,7 @@ class Classificacao:
                 self.save()
                 self.publicarDadosClassificacao(result['tag'], connection)
         connection.request('/corrida/encerrar')
+        self.autorama.setCorridaAtiva()
     
     def publicarDadosClassificacao(self, tag, pub):
         self.getDadosClassificacao()
@@ -150,7 +152,7 @@ class Classificacao:
             else:
                 pos['tempo_anterior'] = "+" + self.autorama.timestampFormat( pos['timestamp'] - anterior['timestamp'])
     
-    def resetClassificacao(self):
+    def resetClassificacao(self, save = True):
         corrida = self.corrida
         classificacao = corrida['classificacao']
         for piloto in corrida['pilotos']:
@@ -161,7 +163,8 @@ class Classificacao:
             pos['tempo_menor'] = "99:99:999"
             pos['timestamp'] = 0
             pos['voltas'] = 0
-        self.save()
+        if save:
+            self.save()
 
     def setTime(self, time):
         self.corrida['classificacaoDuracao'] = time

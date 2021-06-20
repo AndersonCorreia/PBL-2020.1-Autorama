@@ -92,9 +92,10 @@ class Publisher:
     
     # realizar um subscribe no mesmo topico que enviou informações e espera uma resposta
     # já devolve o payload da mensagem
-    def requestRecv(self, stop=True):
+    def requestRecv(self, stop=True, sub= True):
         # sub = self.getSUB()
-        self.requestSub()
+        if sub:
+            self.requestSub()
         return self.requestRecvSub(stop).payload
     
     def requestRecvSub(self, stop=True):

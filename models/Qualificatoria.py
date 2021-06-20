@@ -30,9 +30,11 @@ class Qualificatoria:
         self.corridaEnd = False
         corrida = self.autorama.getCorridaAtual()
         qualificatoria = corrida['qualificatoria']
+        subscriber = True # variavel para determinar se um subscriber deve ser enviadado para acompanhar a corrida, se inscrevendo apenas uma vez na rota
         while not self.corridaEnd:
             # result = {"tag": epc , "timestamp": timestamp, "time": timestamp desde o inicio da qualificatoria ) }
-            result = connection.requestRecv(False)['headers']#aguarda o leitor responder com uma tag
+            result = connection.requestRecv(False, subscriber)['headers']#aguarda o leitor responder com uma tag
+            subscriber = False
             if 'tag' in result:
                 qualificacao = qualificatoria[result['tag']]
                 if(qualificacao['timestamp'] == 0):
@@ -66,12 +68,13 @@ class Qualificatoria:
                 self.save()
                 self.publicarDadosQualificatoria(result['tag'], connection)
         connection.request('/corrida/encerrar')
+        self.autorama.setCorridaAtiva()
         self.setPosInicialForCorrida()
         
     def publicarDadosQualificatoria(self, tag, pub):
         self.getDadosQualificatoria()
-        pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']), self.dadosCorrida, True, False, False)
-        for piloto in self.dadosCorrida:
+        pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']), self.dadosQualificatoria, True, False, False)
+        for piloto in self.dadosQualificatoria:
             if piloto['carro_epc'] == tag:
                 pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']) + '/piloto/' + tag, piloto, True, False, False)
                 break
@@ -94,7 +97,32 @@ class Qualificatoria:
             pos['voltas'] = qualificacao['voltas']
             self.dadosQualificatoria.append(pos)
         self.dadosQualificatoria = sorted(self.dadosQualificatoria, key=lambda pos: pos['timestamp'])
+        self.dadosQualificatoria[0]['posicao'] = 1
+        self.posicaoEntrePilotos(self.dadosQualificatoria[0], None, self.dadosQualificatoria[1])
+        for i in range(1, len(self.dadosQualificatoria) ):
+            posPrimeiro = self.dadosQualificatoria[0]
+            pos = self.dadosQualificatoria[i]
+            pos['posicao'] = i+1
+            pos['tempo_corrida'] = "+" + self.autorama.timestampFormat( pos['timestamp'] - posPrimeiro['timestamp'])
+            if i == (len(self.dadosQualificatoria) - 1):
+                self.posicaoEntrePilotos(pos, self.dadosQualificatoria[i-1])
+            else:
+                self.posicaoEntrePilotos(pos, self.dadosQualificatoria[i-1], self.dadosQualificatoria[i+1] )
+            self.dadosQualificatoria[i] = pos
         return self.dadosQualificatoria
+    
+    def posicaoEntrePilotos(self, pos, proximo=None, anterior=None):
+        pos['piloto_proximo'] = False
+        pos['piloto_anterior'] = False
+        if proximo:
+            pos['piloto_proximo'] = proximo['nome_piloto']
+            pos['num_proximo'] = proximo['num_carro']
+            pos['tempo_proximo'] = "+" + self.autorama.timestampFormat( pos['timestamp'] - proximo['timestamp'])
+            
+        if anterior:
+            pos['piloto_anterior'] = anterior['nome_piloto']
+            pos['num_anterior'] = anterior['num_carro']
+            pos['tempo_anterior'] = "+" + self.autorama.timestampFormat( pos['timestamp'] - anterior['timestamp'])
     
     def setPosInicialForCorrida(self):
         self.getDadosQualificatoria()

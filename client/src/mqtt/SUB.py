@@ -58,6 +58,10 @@ class Subscriber:
     def setTopic(self, topic):
         self.topic = topic
 
+    def disconnect(self):
+        self.client.disconnect()
+        self.client.loop_stop()
+        
 # para teste
 '''
 sub = Subscriber("node02.myqtthub.com", 1883, "2", "cliente2", "135790")

@@ -129,17 +129,17 @@
             "nome": "Monza",
             "pais": "Italia",
             "tempoMinimoVolta": 30,
-            "recorde": "-1:29:868",
-            "autor": "Elisangêla"
+            "recorde": "00:30:001",
+            "autor": "Tales"
         }
     ],
     "corridas": [
         {
             "corrida_id": 1,
-            "quantidadeDeVoltas": 5,
-            "qualificatoriaDuracao": "05:00:000",
+            "quantidadeDeVoltas": 4,
+            "qualificatoriaDuracao": "04:20:00",
             "circuito_id": 1,
-            "qualificatoriaCompleta": 2,
+            "qualificatoriaCompleta": 1,
             "corridaCompleta": 0,
             "pilotos": [
                 {
@@ -167,64 +167,64 @@
                 "E2000017221101241890547C": {
                     "piloto_id": 1,
                     "carro_epc": "E2000017221101241890547C",
-                    "tempo_menor": "00:30:042",
-                    "timestamp": 1619557479.882,
-                    "voltas": 1,
-                    "tempo_menor_timestamp": 30.042916536331177
+                    "tempo_menor": "00:30:009",
+                    "timestamp": 1619557539.907,
+                    "voltas": 3,
+                    "tempo_menor_timestamp": 30.009999990463257
                 },
                 "E20000172211011718905474": {
                     "piloto_id": 2,
                     "carro_epc": "E20000172211011718905474",
-                    "tempo_menor": "99:99:999",
-                    "timestamp": 0,
-                    "voltas": 0,
-                    "tempo_menor_timestamp": 0
+                    "tempo_menor": "00:30:006",
+                    "timestamp": 1619557513.023,
+                    "voltas": 2,
+                    "tempo_menor_timestamp": 30.00600004196167
                 },
                 "E2000017221101321890548C": {
                     "piloto_id": 3,
                     "carro_epc": "E2000017221101321890548C",
-                    "tempo_menor": "99:99:999",
-                    "timestamp": 0,
-                    "voltas": 0,
-                    "tempo_menor_timestamp": 0
+                    "tempo_menor": "00:30:030",
+                    "timestamp": 1619557519.12,
+                    "voltas": 2,
+                    "tempo_menor_timestamp": 30.030999898910522
                 },
                 "E20000172211012518905484": {
                     "piloto_id": 4,
                     "carro_epc": "E20000172211012518905484",
-                    "tempo_menor": "99:99:999",
-                    "timestamp": 0,
-                    "voltas": 0,
-                    "tempo_menor_timestamp": 0
+                    "tempo_menor": "00:30:012",
+                    "timestamp": 1619557522.874,
+                    "voltas": 2,
+                    "tempo_menor_timestamp": 30.01200008392334
                 },
                 "E20000172211013118905493": {
                     "piloto_id": 5,
                     "carro_epc": "E20000172211013118905493",
-                    "tempo_menor": "99:99:999",
-                    "timestamp": 0,
-                    "voltas": 0,
-                    "tempo_menor_timestamp": 0
+                    "tempo_menor": "00:30:026",
+                    "timestamp": 1619557509.946,
+                    "voltas": 2,
+                    "tempo_menor_timestamp": 30.02691650390625
                 }
             },
             "classificacao": {
                 "E2000017221101241890547C": {
                     "piloto_id": 1,
                     "carro_epc": "E2000017221101241890547C",
-                    "tempo_total": "02:00:133",
+                    "tempo_total": "02:30:511",
                     "tempo_menor": "00:30:009",
-                    "tempo_atual": "00:30:065",
-                    "timestamp": 1619557569.973,
-                    "voltas": 4,
+                    "tempo_atual": "00:30:378",
+                    "timestamp": 1619557600.351,
+                    "voltas": 5,
                     "pits": 0,
                     "pos_inicial": 1
                 },
                 "E20000172211011718905474": {
                     "piloto_id": 2,
                     "carro_epc": "E20000172211011718905474",
-                    "tempo_total": "02:03:308",
+                    "tempo_total": "02:33:314",
                     "tempo_menor": "00:30:006",
-                    "tempo_atual": "00:30:075",
-                    "timestamp": 1619557573.148,
-                    "voltas": 4,
+                    "tempo_atual": "00:30:006",
+                    "timestamp": 1619557603.154,
+                    "voltas": 5,
                     "pits": 0,
                     "pos_inicial": 2
                 },
@@ -242,22 +242,22 @@
                 "E20000172211012518905484": {
                     "piloto_id": 4,
                     "carro_epc": "E20000172211012518905484",
-                    "tempo_total": "01:43:077",
+                    "tempo_total": "02:13:499",
                     "tempo_menor": "00:30:012",
-                    "tempo_atual": "00:30:042",
-                    "timestamp": 1619557552.917,
-                    "voltas": 3,
+                    "tempo_atual": "00:30:421",
+                    "timestamp": 1619557583.339,
+                    "voltas": 4,
                     "pits": 0,
                     "pos_inicial": 4
                 },
                 "E20000172211013118905493": {
                     "piloto_id": 5,
                     "carro_epc": "E20000172211013118905493",
-                    "tempo_total": "02:00:125",
+                    "tempo_total": "02:30:503",
                     "tempo_menor": "00:30:001",
-                    "tempo_atual": "00:30:001",
-                    "timestamp": 1619557569.965,
-                    "voltas": 3,
+                    "tempo_atual": "00:30:378",
+                    "timestamp": 1619557600.343,
+                    "voltas": 5,
                     "pits": 0,
                     "pos_inicial": 3
                 }

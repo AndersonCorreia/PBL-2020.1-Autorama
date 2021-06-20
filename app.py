@@ -244,6 +244,7 @@ def about():
 def indexUsuario():
     if (request.method == "GET"):
         autorama = AutoramaUser()
+        autorama.updateCorridaAtual(True)
         if autorama.dados['corrida_ativa']: 
             corrida = autorama.dados['corrida']
             circuito = autorama.dados['circuito']
@@ -305,12 +306,12 @@ def updateCorridaUsuario():
     autorama = AutoramaUser()
     return autorama.updateCorridaAtual()
 
-@app.route('/usuario/classificacao/escolher/piloto', methods=['GET', 'POST'])
+@app.route('/usuario/corrida/escolher/piloto', methods=['GET', 'POST'])
 def acompanharPiloto():
     if (request.method == "POST"):
         return redirect(url_for('getPiloto', id=request.form['piloto']))
 
-@app.route('/usuario/classificacao/piloto/<int:id>', methods=['GET', 'POST'])
+@app.route('/usuario/corrida/piloto/<int:id>', methods=['GET', 'POST'])
 def getPiloto(id):
     user = AutoramaUser()
     if (request.method == "GET"):

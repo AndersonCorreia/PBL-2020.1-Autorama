@@ -68,6 +68,7 @@ class Autorama:
                 self.dados['carros'] = corrida['carros']
                 self.dados['corrida_ativa'] = True
                 self.save()
+        # connection.disconnect()
         return {'atualizado': atualizado }
         
     def getStatusCorrida(self):
@@ -77,14 +78,14 @@ class Autorama:
     def getDataPilot(self, tag):
         sub = self.getConnection()
         sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/piloto/' + tag)
-        dados = sub.requestRecv().payload
+        dados = sub.requestRecv(False).payload
         return dados
     
     #realiza a inscrição para acompanhar dados de um piloto
     def getDadosCorrida(self):
         sub = self.getConnection()
         sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']))
-        dados = sub.requestRecv().payload
+        dados = sub.requestRecv(True).payload
         return dados
       
     #retorna os dados necessários para a tela de acompanhar piloto    

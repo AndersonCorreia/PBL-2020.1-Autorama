@@ -108,19 +108,19 @@
                     time.innerHTML = pastTime + " - Finalizada";
                     clearInterval(interval);
                     //enviar o tempo de duração da classificação para ser armazenado
-                    $.ajax({
-                        url: "{{url_for('updateQualificatoriaUsuario')}}",
-                        type: 'POST',
-                        data: {
-                            time: pastTime
-                        },
-                        success: function(){},
-                        error: function(err){
-                            console.log(err);
-                        }
-                    }).done(function(data){
-                        console.log("tempo enviado com sucesso");
-                    });
+                    // $.ajax({
+                    //     url: "{{url_for('updateQualificatoriaUsuario')}}",
+                    //     type: 'POST',
+                    //     data: {
+                    //         time: pastTime
+                    //     },
+                    //     success: function(){},
+                    //     error: function(err){
+                    //         console.log(err);
+                    //     }
+                    // }).done(function(data){
+                    //     console.log("tempo enviado com sucesso");
+                    // });
                 }
             });
             

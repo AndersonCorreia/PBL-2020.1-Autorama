@@ -59,9 +59,10 @@ class Autorama:
             self.dados['corridas'].append(corrida)
             self.save()
     
-    def setCorridaAtiva(self, dados):
-        self.dados['corrida_ativa'] = int(dados['corrida_ativa'])
-        self.save()
+    def setCorridaAtiva(self, dados = None):
+        if dados != None:
+            self.dados['corrida_ativa'] = int(dados['corrida_ativa'])
+            self.save()
         pub = self.getConnection()
         corrida = self.getCorridaAtual()
         corrida['qualificatoria'] = None
@@ -83,7 +84,7 @@ class Autorama:
                  'carros': carros,
                  'equipes': equipes
                  }
-        pub.request('/corrida/acompanhar/atual', dados, True, False)
+        pub.request('/corrida/acompanhar/atual', dados, True, False, False)
 
     def getCorridas(self):
         corridas = self.dados['corridas']
