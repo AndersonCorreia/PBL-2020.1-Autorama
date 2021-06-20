@@ -78,15 +78,28 @@ class Autorama:
     def getDataPilot(self, tag):
         sub = self.getConnection()
         sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/piloto/' + tag)
-        dados = sub.requestRecv(False).payload
-        return dados
+        while True:
+            dados = sub.requestRecv(False).payload
+            self.dados['corrida']['acompanhar'][tag] = dados
+            self.save()
     
-    #realiza a inscrição para acompanhar dados de um piloto
-    def getDadosCorrida(self):
+    def getDataPilot(self, tag):
+        return self.dados['corrida']['acompanhar'][tag]
+    
+    def getDadosCorrida(self, classificação = True):
+        if classificação:
+            return self.dados['corrida']['classificacao']
+        return self.dados['corrida']['qualificatoria']
+    
+    def getDadosCorridaMqtt(self, classificação = True):
         sub = self.getConnection()
         sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']))
-        dados = sub.requestRecv(True).payload
-        return dados
+        while True:
+            dados = sub.requestRecv(False).payload
+            if classificação:
+                self.dados['corrida']['classificacao'] = dados
+            self.dados['corrida']['qualificatoria'] = dados
+            self.save()
       
     #retorna os dados necessários para a tela de acompanhar piloto    
     def showPilot(self, id):
