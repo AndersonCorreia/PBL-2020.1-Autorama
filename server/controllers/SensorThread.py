@@ -15,10 +15,10 @@ class SensorThread(Thread):
 	def run(self):
 		if( self.funcao == 'read_send' or self.funcao == 'read'):
 			try:
-				# if( self.funcao == 'read_send'):
-				# 	reader.start_reading(self.readAndSend)
-				# else:
-				# 	reader.start_reading(self.read)
+				if( self.funcao == 'read_send'):
+					reader.start_reading(self.readAndSend)
+				else:
+					reader.start_reading(self.read)
 		
 				while(not self.buffer['close']):
 					print("Buffer:")
@@ -26,7 +26,7 @@ class SensorThread(Thread):
 					time.sleep(self.buffer['tempoMinimoVolta']/2)
 			finally:
 				saveLog(self.buffer)
-				# reader.stop_reading()
+				reader.stop_reading()
 			return
 		elif(self.funcao == 'send'):
 			while(not self.buffer['close']):
@@ -59,8 +59,8 @@ class SensorThread(Thread):
 					print('\n')
 					self.sub.publishResponse( "/corrida/acompanhar", tag )
 					self.buffer['tagsSend'].append(tag)
-					# print ("Tag não foi enviada com sucesso")
-					# self.buffer['tagsNoSend'].insert(0,tag)
+					print ("Tag não foi enviada com sucesso")
+					self.buffer['tagsNoSend'].insert(0,tag)
 			except Exception as e: 
 				print ("Other exception: %s" %str(e))
 				print ("Tag não foi enviada com sucesso")
@@ -88,8 +88,8 @@ class SensorThread(Thread):
 				self.sub.publishResponse( "/corrida/acompanhar",tag )
 				self.buffer['tagsSend'].append(tag)
 				time.sleep(1)
-				# print ("Tag não foi enviada com sucesso")
-				# self.buffer['tagsNoSend'].insert(0,tag)
+				print ("Tag não foi enviada com sucesso")
+				self.buffer['tagsNoSend'].insert(0,tag)
 		except Exception as e: 
 			print ("Exception: %s" %str(e))
 			print ("Tag não foi enviada com sucesso")

@@ -39,8 +39,8 @@ class AutoramaController:
     @staticmethod  
     def corrida(headers, sub):
         log = loadLog()
-        # sensorTRead = SensorThread(pub, log, 'read')
-        # sensorTRead.start()
+        sensorTRead = SensorThread(pub, log, 'read')
+        sensorTRead.start()
         sensorTSend = SensorThread(sub, log, 'send')
         sensorTSend.start()
         sensorTEncerrar = SensorThread(sub, log, 'encerrar')

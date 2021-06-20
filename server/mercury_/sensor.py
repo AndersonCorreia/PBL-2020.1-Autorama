@@ -43,10 +43,10 @@ def setTagsForRead(tags, tempoMinimoVolta):
     log['tags'] = tags
     log['tempoMinimoVolta'] = tempoMinimoVolta
     log['close'] = False
-    # log['timestamp_inicial'] = time.time()
-    # log['tagsSend'] = []
-    # log['tagsNoSend'] = []
-    log['tagsNoSend'] = log['tagsSend']
+    log['timestamp_inicial'] = time.time()
+    log['tagsSend'] = []
+    log['tagsNoSend'] = []
+    # log['tagsNoSend'] = log['tagsSend']
 
     ultimaLeitura = {}
     for tag in tags:
