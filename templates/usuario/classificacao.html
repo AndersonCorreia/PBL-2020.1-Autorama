@@ -76,7 +76,7 @@
         const zeroFill = n => {
             return ('0' + n).slice(-2);
         }
-        const interval = setInterval(() => {
+        function atualizar(){
             var qualificatoria = [];
             let dados = document.getElementById("dados");
             let time = document.getElementById("time");
@@ -113,25 +113,13 @@
                 time.innerHTML = pastTime;
                 if(result.status == 1){
                     time.innerHTML = pastTime + " - Finalizada";
-                    clearInterval(interval);
-                    //enviar o tempo de duração da classificação para ser armazenado
-                    $.ajax({
-                        url: "{{url_for('updateClassificacaoUsuario')}}",
-                        type: 'POST',
-                        data: {
-                            time: pastTime
-                        },
-                        success: function(){},
-                        error: function(err){
-                            console.log(err);
-                        }
-                    }).done(function(data){
-                        console.log("tempo enviado com sucesso");
-                    });
+                }
+                else {
+                    atualizar();
                 }
             });
-            
-        }, 1000);
+        }
+        atualizar()
     }
 </script>
 {% endblock %}

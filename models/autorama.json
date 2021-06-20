@@ -140,7 +140,7 @@
             "qualificatoriaDuracao": "04:20:00",
             "circuito_id": 1,
             "qualificatoriaCompleta": 1,
-            "corridaCompleta": 0,
+            "corridaCompleta": 1,
             "pilotos": [
                 {
                     "piloto_id": 1,
@@ -209,22 +209,22 @@
                 "E2000017221101241890547C": {
                     "piloto_id": 1,
                     "carro_epc": "E2000017221101241890547C",
-                    "tempo_total": "02:30:511",
+                    "tempo_total": "02:00:133",
                     "tempo_menor": "00:30:009",
-                    "tempo_atual": "00:30:378",
-                    "timestamp": 1619557600.351,
-                    "voltas": 5,
+                    "tempo_atual": "00:30:065",
+                    "timestamp": 1619557569.973,
+                    "voltas": 4,
                     "pits": 0,
                     "pos_inicial": 1
                 },
                 "E20000172211011718905474": {
                     "piloto_id": 2,
                     "carro_epc": "E20000172211011718905474",
-                    "tempo_total": "02:33:314",
+                    "tempo_total": "02:03:308",
                     "tempo_menor": "00:30:006",
-                    "tempo_atual": "00:30:006",
-                    "timestamp": 1619557603.154,
-                    "voltas": 5,
+                    "tempo_atual": "00:30:075",
+                    "timestamp": 1619557573.148,
+                    "voltas": 4,
                     "pits": 0,
                     "pos_inicial": 2
                 },
@@ -253,16 +253,16 @@
                 "E20000172211013118905493": {
                     "piloto_id": 5,
                     "carro_epc": "E20000172211013118905493",
-                    "tempo_total": "02:30:503",
+                    "tempo_total": "02:00:125",
                     "tempo_menor": "00:30:001",
-                    "tempo_atual": "00:30:378",
-                    "timestamp": 1619557600.343,
-                    "voltas": 5,
+                    "tempo_atual": "00:30:001",
+                    "timestamp": 1619557569.965,
+                    "voltas": 4,
                     "pits": 0,
                     "pos_inicial": 3
                 }
             },
-            "classificacaoDuracao": "00:03:19"
+            "classificacaoDuracao": "00:00:24"
         },
         {
             "corrida_id": 2,
