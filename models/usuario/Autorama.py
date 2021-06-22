@@ -62,6 +62,8 @@ class Autorama:
             if self.dados['corrida']['corrida_id'] != corrida['corrida']['corrida_id'] or force:
                 atualizado = True
                 self.dados['corrida'] = corrida['corrida']
+                self.dados['corrida']['qualificatoria'] = []
+                self.dados['corrida']['classificacao'] = []
                 self.dados['circuito'] = corrida['circuito']
                 self.dados['pilotos'] = corrida['pilotos']
                 self.dados['equipes'] = corrida['equipes']
@@ -74,14 +76,6 @@ class Autorama:
     def getStatusCorrida(self):
         return self.dados['corrida_ativa'] and self.dados['corrida']['corridaCompleta'] != 1
 
-    #realiza a inscrição para acompanhar dados de um piloto
-    def getDataPilot(self, tag):
-        sub = self.getConnection()
-        sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/piloto/' + tag)
-        while True:
-            dados = sub.requestRecv(False).payload
-            self.dados['corrida']['acompanhar'][tag] = dados
-            self.save()
     
     def getDataPilot(self, tag):
         return self.dados['corrida']['acompanhar'][tag]
@@ -90,6 +84,17 @@ class Autorama:
         if classificação:
             return self.dados['corrida']['classificacao']
         return self.dados['corrida']['qualificatoria']
+    
+    #realiza a inscrição para acompanhar dados de um piloto
+    def getDataPilotMqtt(self, id):
+        piloto = self.getPiloto(id)
+        tag = piloto['carro_epc']
+        sub = self.getConnection()
+        sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/piloto/' + tag)
+        while True:
+            dados = sub.requestRecv(False).payload
+            self.dados['corrida']['acompanhar'][tag] = dados
+            self.save()
     
     def getDadosCorridaMqtt(self, classificação = True):
         sub = self.getConnection()

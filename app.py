@@ -10,6 +10,8 @@ from models.usuario.Autorama import Autorama as AutoramaUser
 from threads.QualificatoriaThread import QualificatoriaThread
 from threads.ClassificacaoThread import ClassificacaoThread
 from threads.InterromperCorridaThread import InterromperCorridaThread
+from threads.CorridaUsuarioThread import CorridaUsuarioThread
+from threads.AcompanharPilotoThread import AcompanharPilotoThread
 
 app = Flask(__name__)
 app.secret_key = "pbl"
@@ -200,8 +202,8 @@ def qualificatoriaThread():
     if (request.method == "GET"):
         qualificatoriaT = QualificatoriaThread()
         qualificatoriaT.start()
-        # interromperCorridaT = InterromperCorridaThread(qualificatoriaT.corrida)
-        # interromperCorridaT.start()
+        interromperCorridaT = InterromperCorridaThread(qualificatoriaT.corrida)
+        interromperCorridaT.start()
         return {'success': True}
     
 @app.route('/thread/corrida/classificacao', methods=['GET'])
@@ -268,7 +270,6 @@ def updateQualificatoriaUsuario():
     qualificatoria = QualificatoriaUser()
     if (request.method == "GET"):
         autorama = AutoramaUser()
-        autorama.updateCorridaAtual(True)
         qualificatoriaDados = qualificatoria.getDadosQualificatoria()
         return {'data': qualificatoriaDados, 'status': qualificatoria.corrida['qualificatoriaCompleta'] }
     if (request.method == "POST"):
@@ -288,6 +289,27 @@ def classificacaoUsuario():
                 classificacao=classificacaoDados,
                 circuito = autorama.getPista(corrida['circuito_id']), 
                 pilotos = autorama.dados['pilotos'],contentLarge=True)
+
+@app.route('/usuario/classificacao/thread', methods=['GET'])
+def updateClassificacaoUsuarioThread():
+    if (request.method == "GET"):
+        corridaThread = CorridaUsuarioThread(True)
+        corridaThread.start()
+        return {'success':True }
+    
+@app.route('/usuario/qualificatoria/thread', methods=['GET'])
+def updateQualificatoriaUsuarioThread():
+    if (request.method == "GET"):
+        corridaThread = CorridaUsuarioThread(False)
+        corridaThread.start()
+        return {'success':True }
+    
+@app.route('/usuario/corrida/piloto/<int:tag>', methods=['GET'])
+def acompanharPilotoThread(tag):
+    if (request.method == "GET"):
+        pilotoThread = AcompanharPilotoThread(tag)
+        pilotoThread.start()
+        return {'success':True}
 
 @app.route('/usuario/classificacao/atualizar', methods=['GET', 'POST'])
 def updateClassificacaoUsuario():

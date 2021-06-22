@@ -70,13 +70,27 @@
 {% block js %}
 <script type="application/javascript">
     
+    function iniciarThread(){
+        $.getJSON("{{url_for('updateCorridaUsuarioThread')}}", function (data) {
+            if(data.success){
+                console.log( "thread iniciada com sucesso" );
+            }
+            else {
+                console.log( "Possivelmente algum erro no inicio da thread" );
+                console.log(data)
+            }
+        })
+        .fail(function() {
+            console.log( "error na solicitação ajax" );
+        })
+    }
     if ('{{status}}' != '1') { // se a classificacao não estiver completa excecuta o javascript
         const count = new Date();
         count.setHours(00,00,00);
         const zeroFill = n => {
             return ('0' + n).slice(-2);
         }
-        function atualizar(){
+        const interval = setInterval(() => {
             var qualificatoria = [];
             let dados = document.getElementById("dados");
             let time = document.getElementById("time");
@@ -113,13 +127,11 @@
                 time.innerHTML = pastTime;
                 if(result.status == 1){
                     time.innerHTML = pastTime + " - Finalizada";
-                }
-                else {
-                    atualizar();
+                    clearInterval(interval)
                 }
             });
-        }
-        atualizar()
+        }, 1000);
+        iniciarThread()
     }
 </script>
 {% endblock %}
