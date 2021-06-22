@@ -75,12 +75,13 @@ class Classificacao:
                 else: 
                     self.corrida['corridaCompleta'] = 2  #sendo realizada
                 self.save()
-                self.publicarDadosClassificacao(result['tag'], connection)
+                self.publicarDadosClassificacao(result['tag'],self.corridaEnd, connection)
         connection.request('/corrida/encerrar')
         self.autorama.setCorridaAtiva()
     
-    def publicarDadosClassificacao(self, tag, pub):
+    def publicarDadosClassificacao(self, tag, status, pub):
         self.getDadosClassificacao()
+        pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']) + "/classificao/status", status, False, False, False)
         pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']), self.dadosCorrida, True, False, False)
         for piloto in self.dadosCorrida:
             if piloto['carro_epc'] == tag:

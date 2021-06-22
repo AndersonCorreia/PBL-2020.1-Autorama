@@ -66,13 +66,14 @@ class Qualificatoria:
                 else: 
                     self.corrida['qualificatoriaCompleta'] = 2  #sendo realizada
                 self.save()
-                self.publicarDadosQualificatoria(result['tag'], connection)
+                self.publicarDadosQualificatoria(result['tag'], self.corridaEnd, connection)
         connection.request('/corrida/encerrar')
         self.autorama.setCorridaAtiva()
         self.setPosInicialForCorrida()
         
-    def publicarDadosQualificatoria(self, tag, pub):
+    def publicarDadosQualificatoria(self, tag, status, pub):
         self.getDadosQualificatoria()
+        pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']) + "/qualificatoria/status", status, False, False, False)
         pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']), self.dadosQualificatoria, True, False, False)
         for piloto in self.dadosQualificatoria:
             if piloto['carro_epc'] == tag:

@@ -68,7 +68,6 @@ def qualificatoria():
 @app.route('/qualificatoria/atualizar', methods=['GET'])
 def updateQualificatoria():
     if (request.method == "GET"):
-        autorama = Autorama()
         qualificatoria = Qualificatoria()
         qualificatoriaDados = qualificatoria.getDadosQualificatoria()
         return {'data': qualificatoriaDados, 'status': qualificatoria.corrida['qualificatoriaCompleta'] }
@@ -211,8 +210,8 @@ def classificacaoThread():
     if (request.method == "GET"):
         classificacaoT = ClassificacaoThread()
         classificacaoT.start()
-        # interromperCorridaT = InterromperCorridaThread(classificacaoT.corrida)
-        # interromperCorridaT.start()
+        interromperCorridaT = InterromperCorridaThread(classificacaoT.corrida)
+        interromperCorridaT.start()
         return {'success': True}
 
 @app.route('/configuração/corridas', methods=['GET'])
@@ -269,8 +268,7 @@ def qualificatoriaUsuario():
 def updateQualificatoriaUsuario():
     qualificatoria = QualificatoriaUser()
     if (request.method == "GET"):
-        autorama = AutoramaUser()
-        qualificatoriaDados = qualificatoria.getDadosQualificatoria()
+        qualificatoriaDados = qualificatoria.getDadosQualificatoria(False)
         return {'data': qualificatoriaDados, 'status': qualificatoria.corrida['qualificatoriaCompleta'] }
     if (request.method == "POST"):
         qualificatoria.setTime(request.form['time'])
@@ -304,7 +302,7 @@ def updateQualificatoriaUsuarioThread():
         corridaThread.start()
         return {'success':True }
     
-@app.route('/usuario/corrida/piloto/<int:tag>', methods=['GET'])
+@app.route('/usuario/corrida/thread/piloto/<int:tag>', methods=['GET'])
 def acompanharPilotoThread(tag):
     if (request.method == "GET"):
         pilotoThread = AcompanharPilotoThread(tag)
@@ -315,8 +313,6 @@ def acompanharPilotoThread(tag):
 def updateClassificacaoUsuario():
     classificacao = ClassificacaoUser()
     if (request.method == "GET"):
-        autorama = AutoramaUser()
-        autorama.updateCorridaAtual(True)
         classificacaoDados = classificacao.getDadosClassificacao()
         return {'data': classificacaoDados, 'status': classificacao.corrida['corridaCompleta'] }
     if (request.method == "POST"):

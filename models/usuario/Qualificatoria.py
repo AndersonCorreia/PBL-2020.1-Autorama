@@ -14,8 +14,8 @@ class Qualificatoria:
         self.autorama.dados['corrida'] = self.corrida
         self.autorama.save()
         
-    def getDadosQualificatoria(self):
-        return self.autorama.getDadosCorrida()
+    def getDadosQualificatoria(self, classificacao = False):
+        return self.autorama.getDadosCorrida(classificacao)
 
     def setTime(self, time):
         self.corrida['classificacaoDuracao'] = time

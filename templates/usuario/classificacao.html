@@ -71,7 +71,7 @@
 <script type="application/javascript">
     
     function iniciarThread(){
-        $.getJSON("{{url_for('updateCorridaUsuarioThread')}}", function (data) {
+        $.getJSON("{{url_for('updateClassificacaoUsuarioThread')}}", function (data) {
             if(data.success){
                 console.log( "thread iniciada com sucesso" );
             }

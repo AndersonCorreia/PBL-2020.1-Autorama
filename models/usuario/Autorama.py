@@ -64,6 +64,9 @@ class Autorama:
                 self.dados['corrida'] = corrida['corrida']
                 self.dados['corrida']['qualificatoria'] = []
                 self.dados['corrida']['classificacao'] = []
+                self.dados['corrida']['acompanhar'] = {}
+                for piloto in self.dados['corrida']['pilotos']:
+                    self.dados['corrida']['acompanhar'][piloto['carro_epc']] = {}
                 self.dados['circuito'] = corrida['circuito']
                 self.dados['pilotos'] = corrida['pilotos']
                 self.dados['equipes'] = corrida['equipes']
@@ -91,19 +94,33 @@ class Autorama:
         tag = piloto['carro_epc']
         sub = self.getConnection()
         sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/piloto/' + tag)
+        sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/classificao/status')
+        sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/qualificatoria/status')
         while True:
-            dados = sub.requestRecv(False).payload
-            self.dados['corrida']['acompanhar'][tag] = dados
+            dados = sub.requestRecv(False)
+            if dados.topic == '/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/classificacao/status':
+                self.dados['corrida']['corridaCompleta'] = dados.payload
+            elif dados.topic == '/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/qualificatoria/status':
+                self.dados['corrida']['qualificatoriaCompleta'] = dados.payload
+            else:
+                self.dados['corrida']['acompanhar'][tag] = dados.payload
             self.save()
     
     def getDadosCorridaMqtt(self, classificação = True):
         sub = self.getConnection()
         sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']))
+        sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/classificao/status')
+        sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/qualificatoria/status')
         while True:
-            dados = sub.requestRecv(False).payload
-            if classificação:
-                self.dados['corrida']['classificacao'] = dados
-            self.dados['corrida']['qualificatoria'] = dados
+            dados = sub.requestRecv(False)
+            if dados.topic == '/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/classificacao/status':
+                self.dados['corrida']['corridaCompleta'] = dados.payload
+            elif dados.topic == '/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/qualificatoria/status':
+                self.dados['corrida']['qualificatoriaCompleta'] = dados.payload
+            else:
+                if classificação:
+                    self.dados['corrida']['classificacao'] = dados.payload
+                self.dados['corrida']['qualificatoria'] = dados.payload
             self.save()
       
     #retorna os dados necessários para a tela de acompanhar piloto    
