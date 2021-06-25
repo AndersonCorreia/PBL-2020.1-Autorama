@@ -39,8 +39,8 @@ class ServerThread(Thread):
             return {'success': True, 'dados': ''}
 
         if path == "/config/carro":
-            #return AutoramaController.readTag()
-            return AutoramaController.readTagSimulate() 
+            return AutoramaController.readTag()
+            #return AutoramaController.readTagSimulate() 
 
         if path == "/autorama/tags/read":
             return AutoramaController.readTag()
