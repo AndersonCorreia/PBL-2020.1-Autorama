@@ -8,8 +8,11 @@ from client.src.mqtt.SUB import Subscriber
 class Autorama:
     def __init__(self, file=os.path.dirname(os.path.realpath(__file__))+"/autorama.json"):
         self.fileName = file
+        if open(file, 'r', encoding="UTF-8").read() == "":
+            open(file, 'w', encoding="UTF-8").write('{"corrida_ativa": false}')
         self.dados = json.loads(open(file, 'r', encoding="UTF-8").read() )
-    
+        self.isQualificatoria=True
+
     def save(self):
         try:
             open(self.fileName, 'w', encoding="UTF-8").write( json.dumps(self.dados, indent=4, ensure_ascii=False))
@@ -50,7 +53,7 @@ class Autorama:
 
     def getConnection(self):
         return Subscriber("node02.myqtthub.com", 1883, "usuario", "usuario", "usuario")
-        # return Subscriber("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
+        #return Subscriber("node02.myqtthub.com", 1883, "usuario1", "usuario", "usuario")
         
     def updateCorridaAtual(self, force = False):
         connection = self.getConnection()
@@ -77,11 +80,15 @@ class Autorama:
         return {'atualizado': atualizado }
         
     def getStatusCorrida(self):
-        return self.dados['corrida_ativa'] and self.dados['corrida']['corridaCompleta'] != 1
-
+        if self.isQualificatoria:
+            return self.dados['corrida']['qualificatoriaCompleta']
+        else:
+            return self.dados['corrida']['corridaCompleta']
     
     def getDataPilot(self, tag):
-        return self.dados['corrida']['acompanhar'][tag]
+        for dado in self.dados['corrida']['classificacao']:
+            if dado['carro_epc'] == tag:
+                return dado
     
     def getDadosCorrida(self, classificação = True):
         if classificação:
@@ -94,12 +101,13 @@ class Autorama:
         tag = piloto['carro_epc']
         sub = self.getConnection()
         sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/piloto/' + tag)
-        sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/classificao/status')
+        sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/classificacao/status')
         sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/qualificatoria/status')
         while True:
             dados = sub.requestRecv(False)
             if dados.topic == '/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/classificacao/status':
                 self.dados['corrida']['corridaCompleta'] = dados.payload
+                self.isQualificatoria = False
             elif dados.topic == '/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/qualificatoria/status':
                 self.dados['corrida']['qualificatoriaCompleta'] = dados.payload
             else:
@@ -109,7 +117,7 @@ class Autorama:
     def getDadosCorridaMqtt(self, classificação = True):
         sub = self.getConnection()
         sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']))
-        sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/classificao/status')
+        sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/classificacao/status')
         sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/qualificatoria/status')
         while True:
             dados = sub.requestRecv(False)
@@ -120,7 +128,8 @@ class Autorama:
             else:
                 if classificação:
                     self.dados['corrida']['classificacao'] = dados.payload
-                self.dados['corrida']['qualificatoria'] = dados.payload
+                else: 
+                    self.dados['corrida']['qualificatoria'] = dados.payload
             self.save()
       
     #retorna os dados necessários para a tela de acompanhar piloto    
@@ -134,11 +143,13 @@ class Autorama:
         dados=[]
         if self.dados['corrida_ativa']:
             dados = self.getDataPilot(carro['epc'])
+            print("dado1 ", dados)
             dados['bandeira_piloto'] = "/static/img/pilotos/" + random.choice(bandeiras)   
             dados['foto_piloto'] = "/static/img/pilotos/" + random.choice(fotos)
             dados['logo_equipe'] = "/static/img/equipes/logo_" + str(equipe['equipe_id'])+".png"
         else:
             dados = {
+                'piloto_id': piloto['piloto_id'],
                 'nome_piloto': piloto['nome'],
                 'apelido_piloto': piloto['apelido'],
                 'bandeira_piloto': "/static/img/pilotos/" + random.choice(bandeiras),

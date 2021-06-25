@@ -78,12 +78,12 @@ class Autorama:
             carros.append( self.getCarro(piloto['carro_epc']))
             equipes.append( self.getEquipe(piloto['equipe_id']))
         dados = { 
-                 'corrida': self.getCorridaAtual(), 
-                 'circuito': self.getPista(corrida['circuito_id']),
-                 'pilotos': pilotos,
-                 'carros': carros,
-                 'equipes': equipes
-                 }
+            'corrida': self.getCorridaAtual(), 
+            'circuito': self.getPista(corrida['circuito_id']),
+            'pilotos': pilotos,
+            'carros': carros,
+            'equipes': equipes
+        }
         pub.request('/corrida/acompanhar/atual', dados, True, False, False)
 
     def getCorridas(self):
@@ -177,4 +177,4 @@ class Autorama:
     
     def getConnection(self):
         return Publisher("node02.myqtthub.com", 1883, "cliente", "cliente", "cliente")
-        # return Publisher("node02.myqtthub.com", 1883, "2", "cliente2", "135790")
+        #return Publisher("node02.myqtthub.com", 1883, "adm", "adm", "adm")

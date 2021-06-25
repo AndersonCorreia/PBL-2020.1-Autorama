@@ -52,8 +52,25 @@
 
 {% block js %}
 <script type="application/javascript">
+    function iniciarThread(){
+        let piloto_id = '{{piloto_id}}';
+        console.log("id: "+piloto_id);
+        $.getJSON("{{url_for('acompanharPilotoThread', id=piloto_id)}}", function (data) {
+            if(data.success){
+                console.log( "thread iniciada com sucesso" );
+            }
+            else {
+                console.log( "Possivelmente algum erro no inicio da thread" );
+                console.log(data)
+            }
+        })
+        .fail(function() {
+            console.log( "error na solicitação ajax" );
+        })
+    }
     console.log('{{status}}');
-    if ('{{status}}') {  // se a corrida estiver ativa excecuta o javascript
+    if (!'{{status}}') {  // se a corrida estiver ativa excecuta o javascript
+        iniciarThread()
         const interval = setInterval(() => {
             var qualificatoria = [];
             let voltas = document.getElementById("voltas");
@@ -69,7 +86,6 @@
             }).done(function(result){
                 dados = result.data;
                 console.log(result.status);
-                // console.log(result.data);
                 voltas.innerHTML = dados['voltas'];
                 dadosCorrida.innerHTML = 
                 '<h5 class="row mt-4 border-top border-light rounded">Posição '+ dados['posicao'] + '</h5>';
@@ -85,7 +101,7 @@
                 '<h5 class="row mt-2 border-top border-light rounded">Último Tempo '+ dados['tempo_volta'] + '</h5>' + 
                 '<h5 class="row mt-2 border-top border-light rounded">Melhor Tempo '+ dados['tempo_menor'] + '</h5>';
 
-                if(!result.status){
+                if(result.status){
                     clearInterval(interval);
                 }
             });

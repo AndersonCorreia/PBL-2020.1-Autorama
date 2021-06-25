@@ -302,10 +302,10 @@ def updateQualificatoriaUsuarioThread():
         corridaThread.start()
         return {'success':True }
     
-@app.route('/usuario/corrida/thread/piloto/<int:tag>', methods=['GET'])
-def acompanharPilotoThread(tag):
+@app.route('/usuario/corrida/thread/piloto/<int:id>', methods=['GET'])
+def acompanharPilotoThread(id):
     if (request.method == "GET"):
-        pilotoThread = AcompanharPilotoThread(tag)
+        pilotoThread = AcompanharPilotoThread(id)
         pilotoThread.start()
         return {'success':True}
 

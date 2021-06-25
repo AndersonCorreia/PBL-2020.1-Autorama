@@ -1,0 +1,283 @@
+{
+    "carros": [
+        {
+            "carro_id": 1,
+            "epc": "E2000017221101241890547C",
+            "modelo": "formula 1",
+            "cor": "#54545f",
+            "marca": "Mercedes",
+            "num": "1"
+        },
+        {
+            "carro_id": 2,
+            "epc": "E20000172211011718905474",
+            "modelo": "formula 1",
+            "cor": "#a19797",
+            "marca": "Mercedes",
+            "num": "2"
+        },
+        {
+            "carro_id": 3,
+            "epc": "E2000017221101321890548C",
+            "modelo": "formula 1",
+            "cor": "#0a0797",
+            "marca": "Red Bull",
+            "num": "3"
+        },
+        {
+            "carro_id": 4,
+            "epc": "E20000172211012518905484",
+            "modelo": "formula 1",
+            "cor": "#120995",
+            "marca": "Red Bull",
+            "num": "4"
+        },
+        {
+            "carro_id": 5,
+            "epc": "E20000172211013118905493",
+            "modelo": "formula 1",
+            "cor": "#e70404",
+            "marca": "Ferrari",
+            "num": "5"
+        }
+    ],
+    "pilotos": [
+        {
+            "piloto_id": 1,
+            "nome": "Mariana",
+            "apelido": "Mari",
+            "nacionalidade": "Brasil",
+            "nascimento": "00/00/0000",
+            "carro_id": 1,
+            "equipe_id": 1,
+            "ativo": true,
+            "carro_epc": "E2000017221101241890547C"
+        },
+        {
+            "piloto_id": 2,
+            "nome": "Elisangêla",
+            "apelido": "Eli",
+            "nacionalidade": "Brasil",
+            "nascimento": "00/00/0000",
+            "carro_id": 2,
+            "equipe_id": 1,
+            "ativo": true,
+            "carro_epc": "E20000172211011718905474"
+        },
+        {
+            "piloto_id": 3,
+            "nome": "Anderson",
+            "apelido": "And",
+            "nacionalidade": "BRASIL",
+            "nascimento": "00/00/0000",
+            "carro_id": 3,
+            "equipe_id": 2,
+            "ativo": true,
+            "carro_epc": "E2000017221101321890548C"
+        },
+        {
+            "piloto_id": 4,
+            "nome": "Antonio",
+            "apelido": "Prof",
+            "nacionalidade": "Brasil",
+            "nascimento": "00/00/0000",
+            "carro_id": 4,
+            "equipe_id": 2,
+            "ativo": true,
+            "carro_epc": "E20000172211012518905484"
+        },
+        {
+            "piloto_id": 5,
+            "nome": "Tales",
+            "apelido": "tales",
+            "nacionalidade": "brasil",
+            "nascimento": "00/00/0000",
+            "carro_id": 5,
+            "equipe_id": 3,
+            "ativo": true,
+            "carro_epc": "E20000172211013118905493"
+        }
+    ],
+    "equipes": [
+        {
+            "equipe_id": 1,
+            "nome": "Mercedes",
+            "apelido": "Mer",
+            "nacionalidade": "Alemanha",
+            "ano": "01/01/1920",
+            "logo": "/static/img/equipes/logo_1.png",
+            "pontos": 0
+        },
+        {
+            "equipe_id": 1,
+            "nome": "Mercedes",
+            "apelido": "Mer",
+            "nacionalidade": "Alemanha",
+            "ano": "01/01/1920",
+            "logo": "/static/img/equipes/logo_1.png",
+            "pontos": 0
+        },
+        {
+            "equipe_id": 2,
+            "nome": "Red Bull",
+            "apelido": "RB",
+            "nacionalidade": "Austria",
+            "ano": "01/01/1920",
+            "logo": "/static/img/equipes/logo_2.png",
+            "pontos": 0
+        },
+        {
+            "equipe_id": 2,
+            "nome": "Red Bull",
+            "apelido": "RB",
+            "nacionalidade": "Austria",
+            "ano": "01/01/1920",
+            "logo": "/static/img/equipes/logo_2.png",
+            "pontos": 0
+        },
+        {
+            "equipe_id": 3,
+            "nome": "Ferrari",
+            "apelido": "Fer",
+            "nacionalidade": "Italia",
+            "ano": "01/01/1920",
+            "logo": "/static/img/equipes/logo_3.png",
+            "pontos": 0
+        }
+    ],
+    "circuito": {
+        "circuito_id": 1,
+        "nome": "Monza",
+        "pais": "Italia",
+        "tempoMinimoVolta": 30,
+        "recorde": "00:30:001",
+        "autor": "Tales"
+    },
+    "corrida": {
+        "corrida_id": 1,
+        "quantidadeDeVoltas": 4,
+        "qualificatoriaDuracao": "01:20:000",
+        "circuito_id": 1,
+        "qualificatoriaCompleta": 0,
+        "corridaCompleta": 0,
+        "pilotos": [
+            {
+                "piloto_id": 1,
+                "carro_epc": "E2000017221101241890547C"
+            },
+            {
+                "piloto_id": 2,
+                "carro_epc": "E20000172211011718905474"
+            },
+            {
+                "piloto_id": 3,
+                "carro_epc": "E2000017221101321890548C"
+            },
+            {
+                "piloto_id": 4,
+                "carro_epc": "E20000172211012518905484"
+            },
+            {
+                "piloto_id": 5,
+                "carro_epc": "E20000172211013118905493"
+            }
+        ],
+        "qualificatoria": [
+            {
+                "carro_epc": "E20000172211011718905474",
+                "nome_piloto": "Elisangêla",
+                "nome_equipe": "Mercedes",
+                "cor_carro": "#a19797",
+                "num_carro": "2",
+                "tempo_volta": "00:30:006",
+                "timestamp": 30.00600004196167,
+                "voltas": 2,
+                "posicao": 1,
+                "piloto_proximo": false,
+                "piloto_anterior": "Mariana",
+                "num_anterior": "1",
+                "tempo_anterior": "+00:59:990"
+            },
+            {
+                "carro_epc": "E2000017221101241890547C",
+                "nome_piloto": "Mariana",
+                "nome_equipe": "Mercedes",
+                "cor_carro": "#54545f",
+                "num_carro": "1",
+                "tempo_volta": "00:30:015",
+                "timestamp": 30.015000104904175,
+                "voltas": 2,
+                "posicao": 2,
+                "tempo_corrida": "+00:00:009",
+                "piloto_proximo": "Elisangêla",
+                "piloto_anterior": "Tales",
+                "num_proximo": "2",
+                "tempo_proximo": "+00:00:009",
+                "num_anterior": "5",
+                "tempo_anterior": "+00:59:988"
+            },
+            {
+                "carro_epc": "E20000172211013118905493",
+                "nome_piloto": "Tales",
+                "nome_equipe": "Ferrari",
+                "cor_carro": "#e70404",
+                "num_carro": "5",
+                "tempo_volta": "00:30:026",
+                "timestamp": 30.02691650390625,
+                "voltas": 2,
+                "posicao": 3,
+                "tempo_corrida": "+00:00:020",
+                "piloto_proximo": "Mariana",
+                "piloto_anterior": "Anderson",
+                "num_proximo": "1",
+                "tempo_proximo": "+00:00:011",
+                "num_anterior": "3",
+                "tempo_anterior": "+00:50:776"
+            },
+            {
+                "carro_epc": "E2000017221101321890548C",
+                "nome_piloto": "Anderson",
+                "nome_equipe": "Red Bull",
+                "cor_carro": "#0a0797",
+                "num_carro": "3",
+                "tempo_volta": "00:39:249",
+                "timestamp": 39.249916553497314,
+                "voltas": 1,
+                "posicao": 4,
+                "tempo_corrida": "+00:09:243",
+                "piloto_proximo": "Tales",
+                "piloto_anterior": "Antonio",
+                "num_proximo": "5",
+                "tempo_proximo": "+00:09:223",
+                "num_anterior": "4",
+                "tempo_anterior": "+00:56:226"
+            },
+            {
+                "carro_epc": "E20000172211012518905484",
+                "nome_piloto": "Antonio",
+                "nome_equipe": "Red Bull",
+                "cor_carro": "#120995",
+                "num_carro": "4",
+                "tempo_volta": "00:43:022",
+                "timestamp": 43.02291655540466,
+                "voltas": 1,
+                "posicao": 5,
+                "tempo_corrida": "+00:13:016",
+                "piloto_proximo": "Anderson",
+                "piloto_anterior": false,
+                "num_proximo": "3",
+                "tempo_proximo": "+00:03:773"
+            }
+        ],
+        "classificacao": [],
+        "classificacaoDuracao": "00:00:24",
+        "acompanhar": {
+            "E2000017221101241890547C": {},
+            "E20000172211011718905474": {},
+            "E2000017221101321890548C": {},
+            "E20000172211012518905484": {},
+            "E20000172211013118905493": {}
+        }
+    },
+    "corrida_ativa": true
+}

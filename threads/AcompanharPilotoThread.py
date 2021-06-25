@@ -4,10 +4,10 @@ from threading import Thread
 
 class AcompanharPilotoThread(Thread):
 
-	def __init__ (self, tag):
+	def __init__ (self, id):
 		Thread.__init__(self)
 		self.autorama = AutoramaUser() 
-		self.tag = tag
+		self.piloto_id = id
   
 	def run(self):
-		self.autorama.getDataPilotMqtt(self.tag)
+		self.autorama.getDataPilotMqtt(self.piloto_id)
