@@ -69,7 +69,8 @@
         })
     }
     console.log('{{status}}');
-    if (!'{{status}}') {  // se a corrida estiver ativa excecuta o javascript
+    let status = '{{status}}';
+    if (status == false) {  // se a corrida estiver ativa excecuta o javascript
         iniciarThread()
         const interval = setInterval(() => {
             var qualificatoria = [];
@@ -77,7 +78,7 @@
             let dadosCorrida = document.getElementById("dadosCorrida");
             let piloto_id = '{{piloto_id}}';
             $.ajax({
-                url: "{{ url_for('updatePiloto', id=piloto_id)}}",
+                url: "{{ url_for('updatePilotoQualificatoria', id=piloto_id)}}",
                 type: 'GET',
                 success: function(){},
                 error: function(err){

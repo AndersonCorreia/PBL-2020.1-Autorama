@@ -1,0 +1,112 @@
+{% extends 'usuario/base.html' %}
+{% block css %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch&family=Orbitron:wght@400;450;460&display=swap');
+    </style>
+    <link rel="stylesheet" href="/static/css/user.css">
+{% endblock %}
+
+{% block content %}
+
+<diV class="container">
+    <div class="row">
+        <div class="col-8">
+            <h2 class="text-left m-4">{% block title %} {{dados['nome_piloto']}} {% endblock %}</h2>
+        </div>
+        <div class="col-4">
+            <h4 class="mt-5 float-left"> Corrida Volta <span  id="voltas">{{dados['voltas']}}</span> </h4>
+            <img src="{{dados['bandeira_piloto']}}" class="img-fluid rounded float-right mt-5" alt="bandeira" width="50" height="40">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8 foto">
+            <img src="{{dados['foto_piloto']}}" class="img-fluid rounded" alt="foto">
+        </div>
+        <div class="col-4">
+            <div class="row mt-4">
+                <div class="col-6">
+                    <img src="{{dados['logo_equipe']}}" class="img-fluid" alt="logo" width="60" height="50">
+                    <h5>{{dados['nome_equipe']}}</h5>
+                </div>
+                <div class="col-6">
+                    <p class="num">{{dados['num_carro']}}</p>
+                </div>
+            </div>
+            <div id="dadosCorrida">
+                <h5 class="row mt-4 border-top border-light rounded">Posição {{dados['posicao']}}</h5>
+                {% if dados[piloto_proximo] != False %}
+                <h5 class="row mt-2 border-top border-light rounded">&uarr; {{dados['posicao_proximo']}} {{dados['piloto_proximo']}}  {{dados['tempo_proximo']}} </h5>
+                {% endif %}
+                {% if dados[piloto_anterior] != False %}
+                <h5 class="row mt-2 border-top border-light rounded">&darr; {{dados['posicao_anterior']}} {{dados['piloto_anterior']}}  {{dados['tempo_anterior']}} </h5>
+                {% endif %}
+                <h5 class="row mt-2 border-top border-light rounded">Último Tempo {{dados['tempo_volta']}}</h5>
+                <h5 class="row mt-2 border-top border-light rounded">Melhor Tempo {{dados['tempo_menor']}}</h5>
+            </div>
+        </div>
+    </div>
+</diV>
+    
+{% endblock %}
+
+
+{% block js %}
+<script type="application/javascript">
+    function iniciarThread(){
+        let piloto_id = '{{piloto_id}}';
+        console.log("id: "+piloto_id);
+        $.getJSON("{{url_for('acompanharPilotoThread', id=piloto_id)}}", function (data) {
+            if(data.success){
+                console.log( "thread iniciada com sucesso" );
+            }
+            else {
+                console.log( "Possivelmente algum erro no inicio da thread" );
+                console.log(data)
+            }
+        })
+        .fail(function() {
+            console.log( "error na solicitação ajax" );
+        })
+    }
+    console.log('{{status}}');
+    let status = '{{status}}';
+    if (status == false) {  // se a corrida estiver ativa excecuta o javascript
+        iniciarThread()
+        const interval = setInterval(() => {
+            var qualificatoria = [];
+            let voltas = document.getElementById("voltas");
+            let dadosCorrida = document.getElementById("dadosCorrida");
+            let piloto_id = '{{piloto_id}}';
+            $.ajax({
+                url: "{{ url_for('updatePilotoClassificacao', id=piloto_id)}}",
+                type: 'GET',
+                success: function(){},
+                error: function(err){
+                    console.log(err);
+                }
+            }).done(function(result){
+                dados = result.data;
+                console.log(result.status);
+                voltas.innerHTML = dados['voltas'];
+                dadosCorrida.innerHTML = 
+                '<h5 class="row mt-4 border-top border-light rounded">Posição '+ dados['posicao'] + '</h5>';
+                if( dados['piloto_proximo'] ) {
+                    dadosCorrida.innerHTML = dadosCorrida.innerHTML + '<h5 class="row mt-2 border-top border-light rounded">&uarr; '+ 
+                        dados['piloto_proximo'] + " " + dados['tempo_proximo'] + '</h5>';
+                }
+                if( dados['piloto_anterior'] ) {
+                    dadosCorrida.innerHTML = dadosCorrida.innerHTML + '<h5 class="row mt-2 border-top border-light rounded">&darr; '+
+                        dados['piloto_anterior'] + " " + dados['tempo_anterior'] + '</h5>';
+                }
+                dadosCorrida.innerHTML = dadosCorrida.innerHTML + 
+                '<h5 class="row mt-2 border-top border-light rounded">Último Tempo '+ dados['tempo_volta'] + '</h5>' + 
+                '<h5 class="row mt-2 border-top border-light rounded">Melhor Tempo '+ dados['tempo_menor'] + '</h5>';
+
+                if(result.status){
+                    clearInterval(interval);
+                }
+            });
+        }, 1000);
+    }
+</script>
+{% endblock %}

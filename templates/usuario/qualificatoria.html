@@ -48,7 +48,7 @@
         
     </table>
     <div class="form-group col-12 d-flex">
-        <form action="{{url_for('acompanharPiloto')}}" method="POST" class="row mr-auto">
+        <form action="{{url_for('acompanharPilotoQualificatoria')}}" method="POST" class="row mr-auto">
             <h4 class="align-self-center"> Acompanhar piloto individualmente: </h4>
             <select class="m-3 pb-1 align-self-center"  name="piloto">
                 {% for piloto in pilotos %}
@@ -80,8 +80,10 @@
             console.log( "error na solicitação ajax" );
         })
     }
-    console.log('{{status}}');
-    if (!'{{status}}') { // se a qualificatoria não estiver completa excecuta o javascript
+    let status = '{{status}}';
+    if ( status == false) { // se a qualificatoria não estiver completa excecuta o javascript
+        console.log(status);
+
         const count = new Date();
         count.setHours(00,00,00);
         const zeroFill = n => {

@@ -324,27 +324,48 @@ def updateCorridaUsuario():
     autorama = AutoramaUser()
     return autorama.updateCorridaAtual()
 
-@app.route('/usuario/corrida/escolher/piloto', methods=['GET', 'POST'])
-def acompanharPiloto():
+@app.route('/usuario/qualificatoria/escolher/piloto', methods=['GET', 'POST'])
+def acompanharPilotoQualificatoria():
     if (request.method == "POST"):
-        return redirect(url_for('getPiloto', id=request.form['piloto']))
+        return redirect(url_for('getPilotoQualificatoria', id=request.form['piloto']))
 
-@app.route('/usuario/corrida/piloto/<int:id>', methods=['GET', 'POST'])
-def getPiloto(id):
-    user = AutoramaUser()
+@app.route('/usuario/classificacao/escolher/piloto', methods=['GET', 'POST'])
+def acompanharPilotoClassificacao():
+    if (request.method == "POST"):
+        return redirect(url_for('getPilotoClassificacao', id=request.form['piloto']))
+
+@app.route('/usuario/qualificatoria/piloto/<int:id>', methods=['GET', 'POST'])
+def getPilotoQualificatoria(id):
+    user = AutoramaUser(isQualificatoria=True)
     if (request.method == "GET"):
         status = user.getStatusCorrida()
         dados = user.showPilot(id)
-        return render_template('usuario/acompanhaPiloto.html', dados=dados, status=status, piloto_id=id)
+        return render_template('usuario/acompanhaPilotoQualificatoria.html', dados=dados, status=status, piloto_id=id)
 
-@app.route('/usuario/classificacao/piloto/<int:id>/atualizar', methods=['GET', 'POST'])
-def updatePiloto(id):
-    user = AutoramaUser()
+@app.route('/usuario/classificacao/piloto/<int:id>', methods=['GET', 'POST'])
+def getPilotoClassificacao(id):
+    user = AutoramaUser(isQualificatoria=False)
+    if (request.method == "GET"):
+        status = user.getStatusCorrida()
+        dados = user.showPilot(id)
+        return render_template('usuario/acompanhaPilotoClassificacao.html', dados=dados, status=status, piloto_id=id)
+
+@app.route('/usuario/qualificatoria/piloto/<int:id>/atualizar', methods=['GET', 'POST'])
+def updatePilotoQualificatoria(id):
+    user = AutoramaUser(isQualificatoria=True)
     if (request.method == "GET"):
         status = user.getStatusCorrida()
         dados = user.showPilot(id)
         return {'data': dados, 'status': status}
     
+@app.route('/usuario/classificacao/piloto/<int:id>/atualizar', methods=['GET', 'POST'])
+def updatePilotoClassificacao(id):
+    user = AutoramaUser(isQualificatoria=False)
+    if (request.method == "GET"):
+        status = user.getStatusCorrida()
+        dados = user.showPilot(id)
+        return {'data': dados, 'status': status}
+ 
 @app.route('/usuario/teste', methods=['GET'])
 def telaTeste():
     if (request.method == "GET"):

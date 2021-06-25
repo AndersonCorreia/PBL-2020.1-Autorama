@@ -6,12 +6,12 @@ import random
 from client.src.mqtt.SUB import Subscriber
 
 class Autorama:
-    def __init__(self, file=os.path.dirname(os.path.realpath(__file__))+"/autorama.json"):
+    def __init__(self, isQualificatoria=True, file=os.path.dirname(os.path.realpath(__file__))+"/autorama.json"):
         self.fileName = file
         if open(file, 'r', encoding="UTF-8").read() == "":
             open(file, 'w', encoding="UTF-8").write('{"corrida_ativa": false}')
         self.dados = json.loads(open(file, 'r', encoding="UTF-8").read() )
-        self.isQualificatoria=True
+        self.isQualificatoria=isQualificatoria
 
     def save(self):
         try:
@@ -62,6 +62,7 @@ class Autorama:
         while( not atualizado):
             time.sleep(2)
             corrida = connection.requestRecv(False).payload
+            status = self.getStatusCorrida()
             if self.dados['corrida']['corrida_id'] != corrida['corrida']['corrida_id'] or force:
                 atualizado = True
                 self.dados['corrida'] = corrida['corrida']
@@ -86,9 +87,16 @@ class Autorama:
             return self.dados['corrida']['corridaCompleta']
     
     def getDataPilot(self, tag):
-        for dado in self.dados['corrida']['classificacao']:
+        '''print(self.isQualificatoria)
+        if self.isQualificatoria:
+            corrida = self.dados['corrida']['qualificatoria']
+        else: 
+            corrida = self.dados['corrida']['classificacao']
+        for dado in corrida:
             if dado['carro_epc'] == tag:
                 return dado
+        '''
+        return self.dados['corrida']['acompanhar'][tag]
     
     def getDadosCorrida(self, classificação = True):
         if classificação:
@@ -110,7 +118,9 @@ class Autorama:
                 self.isQualificatoria = False
             elif dados.topic == '/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/qualificatoria/status':
                 self.dados['corrida']['qualificatoriaCompleta'] = dados.payload
+                self.isQualificatoria = True
             else:
+                print("acompanhar ", dados.payload)
                 self.dados['corrida']['acompanhar'][tag] = dados.payload
             self.save()
     
@@ -121,11 +131,15 @@ class Autorama:
         sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/qualificatoria/status')
         while True:
             dados = sub.requestRecv(False)
+            print("topic: ", dados.topic)
             if dados.topic == '/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/classificacao/status':
                 self.dados['corrida']['corridaCompleta'] = dados.payload
+                self.isQualificatoria = False
             elif dados.topic == '/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/qualificatoria/status':
                 self.dados['corrida']['qualificatoriaCompleta'] = dados.payload
+                self.isQualificatoria = True
             else:
+                print("classificaçao: ", classificação)
                 if classificação:
                     self.dados['corrida']['classificacao'] = dados.payload
                 else: 
