@@ -2,7 +2,7 @@
 from __future__ import print_function
 import time
 from datetime import datetime
-# import mercury
+import mercury
 from models.Autorama import Autorama
 import json
 import os
@@ -11,24 +11,24 @@ from models.Leitor import Leitor
 leitor = Leitor()
 autorama = Autorama()
 config = leitor.getDados()
-# reader = mercury.Reader(config['serial'], int(config['baudrate']))
-# reader.set_region(config['region'])
-# reader.set_read_plan([int(config['antena'])], config['protocol'], read_power=int(config['read_power']))
+reader = mercury.Reader(config['serial'], int(config['baudrate']))
+reader.set_region(config['region'])
+reader.set_read_plan([int(config['antena'])], config['protocol'], read_power=int(config['read_power']))
 
 
-# def read():
-#     print(reader.get_model())
-#     print(reader.get_supported_regions())
-#     tags = reader.read(2000)
-#     print(tags)
-#     if len(tags):
-#         tagsData = []
-#         for tag in tags:
-#             tagsData.append({"tag": tag.epc.decode("utf-8") , "timestamp": tag.timestamp})
-#         data = {"dados": tagsData , 'success': True }
-#         return data
+def read():
+    print(reader.get_model())
+    print(reader.get_supported_regions())
+    tags = reader.read(2000)
+    print(tags)
+    if len(tags):
+        tagsData = []
+        for tag in tags:
+            tagsData.append({"tag": tag.epc.decode("utf-8") , "timestamp": tag.timestamp})
+        data = {"dados": tagsData , 'success': True }
+        return data
     
-#     return {"dados": {"tag": '', "timestamp": ''}, 'success': False }
+    return {"dados": {"tag": '', "timestamp": ''}, 'success': False }
 
 def loadLog():
     log = json.loads(open(os.path.dirname(os.path.realpath(__file__))+"/logleitura.json", 'r').read() )
