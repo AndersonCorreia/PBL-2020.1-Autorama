@@ -113,6 +113,7 @@ class Autorama:
         sub.request('/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/qualificatoria/status')
         while True:
             dados = sub.requestRecv(False)
+            print("topico: ", dados.topic)
             if dados.topic == '/corrida/acompanhar/' + str(self.dados['corrida']['corrida_id']) + '/classificacao/status':
                 self.dados['corrida']['corridaCompleta'] = dados.payload
                 self.isQualificatoria = False

@@ -14,7 +14,7 @@
             <h2 class="text-left m-4">{% block title %} {{dados['nome_piloto']}} {% endblock %}</h2>
         </div>
         <div class="col-4">
-            <h4 class="mt-5 float-left"> Corrida Volta <span  id="voltas">{{dados['voltas']}}</span> </h4>
+            <h4 class="mt-5 float-left"> Qualificatoria Volta <span  id="voltas">{{dados['voltas']}}</span> </h4>
             <img src="{{dados['bandeira_piloto']}}" class="img-fluid rounded float-right mt-5" alt="bandeira" width="50" height="40">
         </div>
     </div>
@@ -40,8 +40,7 @@
                 {% if dados[piloto_anterior] != False %}
                 <h5 class="row mt-2 border-top border-light rounded">&darr; {{dados['posicao_anterior']}} {{dados['piloto_anterior']}}  {{dados['tempo_anterior']}} </h5>
                 {% endif %}
-                <h5 class="row mt-2 border-top border-light rounded">Último Tempo {{dados['tempo_volta']}}</h5>
-                <h5 class="row mt-2 border-top border-light rounded">Melhor Tempo {{dados['tempo_menor']}}</h5>
+                <h5 class="row mt-2 border-top border-light rounded">Melhor Tempo {{dados['tempo_volta']}}</h5>
             </div>
         </div>
     </div>

@@ -69,7 +69,7 @@ class Qualificatoria:
                 self.publicarDadosQualificatoria(result['tag'], self.corridaEnd, connection)
         connection.request('/corrida/encerrar')
         self.autorama.setCorridaAtiva()
-        #self.setPosInicialForCorrida()
+        self.setPosInicialForCorrida()
         
     def publicarDadosQualificatoria(self, tag, status, pub):
         self.getDadosQualificatoria()
