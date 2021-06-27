@@ -5,7 +5,8 @@
 Para rodar a aplicação web, você vai precisar ter instalado em sua máquina as seguintes ferramentas 🛠:
 [Python 3.5 ou superior](https://www.python.org/downloads/) - 
 [Pip](https://pypi.org/project/pip/) - 
-[Flask](https://flask.palletsprojects.com/en/1.1.x/installation/)
+[Flask](https://flask.palletsprojects.com/en/1.1.x/installation/) - 
+[Paho-mqtt](https://pypi.org/project/paho-mqtt/)
 
 ```bash
 # Clone este repositório
@@ -45,5 +46,6 @@ $ flask run
 # Ou então
 $ py -m flask run
 
-Ao acessar a URL <http://127.0.0.1:5000/>, que será exibida no terminal, a aplicação já poderá ser usada. 
+A página do administrador pode ser acessada em: <http://127.0.0.1:5000/>
+A página do usuário pode ser acessada em: <http://127.0.0.1:5000/usuario> 
 ```
