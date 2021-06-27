@@ -73,8 +73,6 @@ class Qualificatoria:
         
     def publicarDadosQualificatoria(self, tag, status, pub):
         self.getDadosQualificatoria()
-        if self.corrida['qualificatoriaCompleta'] == 0:
-            self.resetQualificatoria()
         print(self.corrida['qualificatoriaCompleta'])
         pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']) + "/qualificatoria/status", status, False, False, False)
         pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']), self.dadosQualificatoria, True, False, False)

@@ -81,8 +81,6 @@ class Classificacao:
     
     def publicarDadosClassificacao(self, tag, status, pub):
         self.getDadosClassificacao()
-        if self.corrida['corridaCompleta'] == 0:
-            self.resetClassificacao()
         pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']) + "/classificacao/status", status, False, False, False)
         pub.request('/corrida/acompanhar/' + str(self.corrida['corrida_id']), self.dadosCorrida, True, False, False)
         for piloto in self.dadosCorrida:

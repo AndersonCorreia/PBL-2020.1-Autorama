@@ -4,6 +4,9 @@ import os
 import time
 import random
 from client.src.mqtt.SUB import Subscriber
+# Arquivo de configurações com informações do servidor broker MQTT
+configFile=os.path.dirname(os.path.realpath(__file__))+"/config.json"
+CONFIG = json.loads(open(configFile, 'r').read())
 
 class Autorama:
     def __init__(self, isQualificatoria=True, file=os.path.dirname(os.path.realpath(__file__))+"/autorama.json"):
@@ -52,8 +55,7 @@ class Autorama:
         return "" + minutos + ":" + segundos  + ":" + milisegundos
 
     def getConnection(self):
-        return Subscriber("node02.myqtthub.com", 1883, "usuario", "usuario", "usuario")
-        #return Subscriber("node02.myqtthub.com", 1883, "usuario1", "usuario", "usuario")
+        return Subscriber(CONFIG['host'], CONFIG['port'], CONFIG['id'], CONFIG['username'], CONFIG['password'])
         
     def updateCorridaAtual(self, force = False):
         connection = self.getConnection()
@@ -87,15 +89,6 @@ class Autorama:
             return self.dados['corrida']['corridaCompleta']
     
     def getDataPilot(self, tag):
-        '''print(self.isQualificatoria)
-        if self.isQualificatoria:
-            corrida = self.dados['corrida']['qualificatoria']
-        else: 
-            corrida = self.dados['corrida']['classificacao']
-        for dado in corrida:
-            if dado['carro_epc'] == tag:
-                return dado
-        '''
         return self.dados['corrida']['acompanhar'][tag]
     
     def getDadosCorrida(self, classificação = True):

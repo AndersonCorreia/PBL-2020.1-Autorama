@@ -3,7 +3,9 @@
 import json
 import os
 from client.src.mqtt.PUB import Publisher
-
+# Arquivo de configurações com informações do servidor broker MQTT
+configFile=os.path.dirname(os.path.realpath(__file__))+"/config.json"
+CONFIG = json.loads(open(configFile, 'r').read())
 class Carro:
     def __init__(self, file=os.path.dirname(os.path.realpath(__file__))+"/autorama.json"):
         self.fileName = file
@@ -21,5 +23,4 @@ class Carro:
         return connection.requestRecv()['headers']
 
     def getConnection(self):
-        return Publisher("node02.myqtthub.com", 1883, "cliente", "cliente", "cliente")
-        #return Publisher("node02.myqtthub.com", 1883, "adm", "adm", "adm")
+        return Publisher(CONFIG['host'], CONFIG['port'], CONFIG['id'], CONFIG['username'], CONFIG['password'])

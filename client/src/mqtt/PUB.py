@@ -107,8 +107,3 @@ class Publisher:
             self.client.disconnect()
             self.client.loop_stop()
         return self.msg
-# para teste
-'''
-pub = Publisher("node02.myqtthub.com", 1883, "1", "cliente1", "24680")
-pub.request("/config/carro", "12345c")
-'''

@@ -1,0 +1,7 @@
+{
+    "host": "node02.myqtthub.com",
+    "port": 1883,
+    "id": "cliente", 
+    "username": "cliente", 
+    "password": "cliente"
+}

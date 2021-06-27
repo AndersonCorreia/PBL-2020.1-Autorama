@@ -139,8 +139,8 @@
             "quantidadeDeVoltas": 4,
             "qualificatoriaDuracao": "04:20:000",
             "circuito_id": 1,
-            "qualificatoriaCompleta": 2,
-            "corridaCompleta": 2,
+            "qualificatoriaCompleta": 1,
+            "corridaCompleta": 1,
             "pilotos": [
                 {
                     "piloto_id": 1,
